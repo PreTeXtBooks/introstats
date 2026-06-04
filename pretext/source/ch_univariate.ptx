@@ -36,31 +36,31 @@
     <p>Before we can analyze the data, they must be read in the data analysis program. R uses a lot of so-called "packages" (i.e., software add-ons that facilitate or simplify specific parts of data analysis). For example, the package "readxl" allows us to read data that is stored in an Excel format. As another example, the package "ggplot2" allows us to create print-ready figures. Packages often have a specific syntax to which we refer along the way.</p>
 
     <program language="r">
-      <input><![CDATA[knitr::opts_chunk$set(echo = TRUE)]]></input>
+      <code><![CDATA[knitr::opts_chunk$set(echo = TRUE)]]></code>
     </program>
 
     <program language="r">
-      <input><![CDATA[# Required packages are installed and loaded here. If more packages are needed, they can be added to the list
+      <code><![CDATA[# Required packages are installed and loaded here. If more packages are needed, they can be added to the list
 packages <- c("tidyverse", "readxl", "knitr", "stargazer", "ggplot2", "sf", "dplyr", "viridis","Hmisc", "kableExtra")
 installed_packages <- packages %in% rownames(installed.packages())
 if (any(installed_packages == FALSE)) {
   install.packages(packages[!installed_packages], repos = "https://cran.r-project.org/")
 }
-invisible(lapply(packages, library, character.only = TRUE))]]></input>
+invisible(lapply(packages, library, character.only = TRUE))]]></code>
     </program>
 
     <program language="r">
-      <input><![CDATA[library(readxl) # This command loads the package "readxl". In the markdown document, all required packages are installed in the background using the command "install.packages('packagename')". In the downloadable script files, the installation and activation of the packages is automated. 
+      <code><![CDATA[library(readxl) # This command loads the package "readxl". In the markdown document, all required packages are installed in the background using the command "install.packages('packagename')". In the downloadable script files, the installation and activation of the packages is automated. 
 
-data_nrw <- read_excel("data/inkar_nrw.xls") # Reads data from Excel format; the directory where the data is to be found can be changed (e.g., "C:/user/documents/folderxyz/inkar_nrw.xls")]]></input>
+data_nrw <- read_excel("data/inkar_nrw.xls") # Reads data from Excel format; the directory where the data is to be found can be changed (e.g., "C:/user/documents/folderxyz/inkar_nrw.xls")]]></code>
     </program>
 
     <p>After reading the file "inkar_nrw.xlsx", it is stored as an object in R. We can now work with the data. As a first step, we print the first ten rows of the data frame:</p>
 
     <program language="r">
-      <input><![CDATA[kable(head(data_nrw, 10), format = "html", caption = "Selected social indicators NRW") %>%
+      <code><![CDATA[kable(head(data_nrw, 10), format = "html", caption = "Selected social indicators NRW") %>%
   kable_paper() %>% #Font scheme of the table
-  scroll_box(width = "100%", height = "100%") #Scrollable box]]></input>
+  scroll_box(width = "100%", height = "100%") #Scrollable box]]></code>
     </program>
 
     <p>The data contains the following variables for all 53 districts and large cities in North-Rhine Westphalia (reference year is 2020):</p>
@@ -91,7 +91,7 @@ data_nrw <- read_excel("data/inkar_nrw.xls") # Reads data from Excel format; the
     <p>One option to represent spatially structured data is in the form of a map.</p>
 
     <program language="r">
-      <input><![CDATA[
+      <code><![CDATA[
 # Read a so-called shape file for NRW which contains the polygones (e.g., district boundaries) necessary to build maps and merging with structural data
 nrw_shp <- st_read("data/dvg2krs_nw.shp")
 nrw_shp$KN <- as.numeric(as.character(nrw_shp$KN))
@@ -106,7 +106,7 @@ ggtitle("North-Rhine Westphalia, Germany") +
   guides(fill=guide_colorbar(title="Unemployment in %")) + 
   scale_fill_gradientn(colours=rev(magma(3)),
                        na.value = "grey100", 
-                      ) ]]></input>
+                      ) ]]></code>
     </program>
 
     <p>Question: What information is conveyed by the map? What information remains implicit?
@@ -136,7 +136,7 @@ Your answer:</p>
     <p>To get an impression about the distribution of the data, histograms can be used (e.g., What are minimum or maximum values? Do observed values are clustered around the center of the distribution or are they widely spread?). Histograms show the frequency of observations across the range of values of a variable. It does not matter how the single observations (i.e., districts in our case) appear in the data set. The histogram ranks observations depending on the values they have on a specific variable. The height of the displayed bars is proportional to the frequency of observations that have corresponding variable values. The width of the bars (also known as bins) represents an interval of values and can be customized (i.e., a few wide bars comprise more observations than many narrow ones).</p>
 
     <program language="r">
-      <input><![CDATA[library(lattice)
+      <code><![CDATA[library(lattice)
 
 data_nrw$popdens <- data_nrw$population/data_nrw$flaeche # This generates the variable for the population density
 
@@ -154,7 +154,7 @@ histogram( ~ popdens + unemp + avage + crimerate,
 ## Alternative approach with the "hist"-function
 #hist(data_nrw$unemp)
 #hist(data_nrw$avage)
-#hist(data_nrw$crimerate)]]></input>
+#hist(data_nrw$crimerate)]]></code>
     </program>
 
     <p>Question: Which characteristics of the data can be identified with histograms? Which aspects remain hidden?
@@ -183,7 +183,7 @@ What can be seen: The distribution of the data, including the center(s) where mo
     <p>Let's take a look at the means and other information on the variables in the data set:</p>
 
     <program language="r">
-      <input><![CDATA[summary(data_nrw)]]></input>
+      <code><![CDATA[summary(data_nrw)]]></code>
     </program>
 
     <p>Question: Interpret two means of your choice. Why is no mean displayed for the variable `area`?
@@ -226,7 +226,7 @@ $s^2 = \frac{\sum_{i=1}^n (x_i-\bar x)^2}{n-1}$ (Notation for the sample; If we 
     <p>Here you find a graphical representation of the dispersion of the variables `unemp` and `crimerate`. Note that the deviations between observations on the x-axis are purely random to increase the readability of the plot (otherwise, all observations would be lined up like a vertical pearl necklace). The red line is the mean value.</p>
 
     <program language="r">
-      <input><![CDATA[
+      <code><![CDATA[
 s_unemp <- ggplot(data=data_nrw, aes(y=unemp, x=reorder(area, area), color=area)) +
   geom_jitter(height = 0) + 
   ggtitle("Unemployment rate 2020 in %")
@@ -238,7 +238,7 @@ s_crime <- ggplot(data=data_nrw, aes(y=crimerate, x=reorder(area, area), color=a
   geom_jitter(height = 0) + 
   ggtitle("Crime rate 2020")
 
-s_crime + geom_hline(yintercept=6244, linetype="solid", color = "red", size=0.1)  + theme(legend.position="bottom") + theme(legend.text = element_text(size=5)) + theme(axis.title.x=element_blank(),        axis.text.x=element_blank(),        axis.ticks.x=element_blank())]]></input>
+s_crime + geom_hline(yintercept=6244, linetype="solid", color = "red", size=0.1)  + theme(legend.position="bottom") + theme(legend.text = element_text(size=5)) + theme(axis.title.x=element_blank(),        axis.text.x=element_blank(),        axis.ticks.x=element_blank())]]></code>
     </program>
 
     <p>Question: Can you spot which district has the highest unemployment rate? Which county has the lowest crime rate? Can we infer from the graphs which of the two variables is more dispersed?
@@ -254,21 +254,21 @@ It is quite hard to match the color of the dots with the ones of the legend. Gel
     <p>Standard deviation, range, and coefficient of variation calculated with R (unemployment):</p>
 
     <program language="r">
-      <input><![CDATA[sd(data_nrw$unemp)
+      <code><![CDATA[sd(data_nrw$unemp)
 range <- max(data_nrw$unemp, na.rm=TRUE) - min(data_nrw$unemp, na.rm=TRUE)
 range 
 varcoef <- sd(data_nrw$unemp) / mean(data_nrw$unemp) * 100 #how much percent of the mean is the standard deviation?
-varcoef]]></input>
+varcoef]]></code>
     </program>
 
     <p>Standard deviation, min/max, and coefficient of variation calculated with R (crime rate):</p>
 
     <program language="r">
-      <input><![CDATA[sd(data_nrw$crimerate)
+      <code><![CDATA[sd(data_nrw$crimerate)
 range <- max(data_nrw$crimerate, na.rm=TRUE) - min(data_nrw$crimerate, na.rm=TRUE)
 range 
 varcoef <- sd(data_nrw$crimerate) / mean(data_nrw$crimerate) * 100
-varcoef]]></input>
+varcoef]]></code>
     </program>
 
     <p>To compare the dispersion of variables measured on different scales, we cannot use the variance or standard deviation (as they are measured on the units of the scale) but employ the coefficient of variation (i.e., standard deviation over the mean times 100). Here, higher values imply a higher dispersion of the data.</p>
@@ -290,19 +290,19 @@ varcoef]]></input>
     <p>Quartiles and IQR for unemployment rate:</p>
 
     <program language="r">
-      <input><![CDATA[quantile(data_nrw$unemp)
+      <code><![CDATA[quantile(data_nrw$unemp)
 
 unemp.score.quart <- quantile(data_nrw$unemp, names = FALSE)
-unemp.score.quart[4] - unemp.score.quart[2]]]></input>
+unemp.score.quart[4] - unemp.score.quart[2]]]></code>
     </program>
 
     <p>Quartiles and IQR for crime rate:</p>
 
     <program language="r">
-      <input><![CDATA[quantile(data_nrw$crimerate)
+      <code><![CDATA[quantile(data_nrw$crimerate)
 
 crimerate.score.quart <- quantile(data_nrw$crimerate, names = FALSE)
-crimerate.score.quart[4] - crimerate.score.quart[2]]]></input>
+crimerate.score.quart[4] - crimerate.score.quart[2]]]></code>
     </program>
 
     <p>Boxplots graphically represent the key figures Q1, Q2, Q3. The lower and upper ends of the whiskers are usually the minimum and maximum observed values. To mark observations that are far away from the median (so-called outliers), the maximal width of a whisker is restricted to Q1 - 1.5 x IQR (for the lower whisker) and Q3 + 1.5 x IQR (for the higher upper whisker) respectively. Outliers are represented by points outside of the range of the whisker. The lowest and highest outlier would then mark the minimum/maximum value. For crime rate, the end of the whiskers represent the minimum/maximum value. For unemployment, we find an outlier that represents the maximum of observed values (i.e., Gelsenkirchen with 14.9% unemployment).</p>
@@ -310,7 +310,7 @@ crimerate.score.quart[4] - crimerate.score.quart[2]]]></input>
     <p>Apart from that, the larger the single parts in the boxplot, the greater the dispersion of the data in this area (which can also give an impression of the skewness of the data distribution).</p>
 
     <program language="r">
-      <input><![CDATA[
+      <code><![CDATA[
 boxplot(data_nrw$unemp, 
         col = 'blue', 
         horizontal = FALSE,
@@ -321,7 +321,7 @@ boxplot(data_nrw$crimerate,
         col = 'orange', 
         horizontal = FALSE,
         ylab = 'in cases per 100.000 inhab.', 
-        main = 'Crime rate')]]></input>
+        main = 'Crime rate')]]></code>
     </program>
 
   </section>
@@ -338,6 +338,7 @@ This may inspire additional questions, like: Why are the observed structures the
   <section xml:id="uni-outlook">
     <title>Outlook: Does unemployment cause more crime?</title>
 
+    <introduction>
     <p>To test causal claims like "more unemployment leads to more crime" with observational data (i.e., from surveys or official records) is heroic and rests on various assumptions that need to be fulfilled. The main reason why causal inference with observational (i.e., non-experimental) data is so difficult is that all possible alternative explanations must be eliminated. Otherwise, we cannot be sure whether unemployment is the cause or some other unobserved phenomenon that correlates with unemployment.</p>
 
     <p>For causal inference, the following three conditions must be met:</p>
@@ -350,30 +351,32 @@ This may inspire additional questions, like: Why are the observed structures the
 
     <p>We will revisit these assumptions in <xref ref="ch-regression"/>.</p>
 
+    </introduction>
+
     <subsection xml:id="uni-bivariate-analysis-correlation">
       <title>Bivariate analysis: Correlation</title>
 
       <p>A good way to get an impression of the direction of a correlation is using a scatter plot.</p>
 
       <program language="r">
-        <input><![CDATA[
+        <code><![CDATA[
 sc1 <- ggplot(data=data_nrw, aes(x = unemp, y = crimerate)) + 
   geom_point() + 
   xlab("Unemployment rate 2020 in %") +
   ylab("Crime rate")
-sc1]]></input>
+sc1]]></code>
       </program>
 
       <p>A line that describes the linear relationship between the two variables can be added:</p>
 
       <program language="r">
-        <input><![CDATA[
+        <code><![CDATA[
 sc1 <- ggplot(data=data_nrw, aes(x = unemp, y = crimerate)) + 
   geom_point() + 
   geom_smooth(method = lm, se = FALSE) +
   xlab("Unemployment rate in %") +
   ylab("Crime rate")
-sc1]]></input>
+sc1]]></code>
       </program>
 
       <p>Interpretation: The depicted observations and the fitted line imply a positive correlation. (The higher the unemployment rate, the higher the crime rate.)  </p>
@@ -381,9 +384,9 @@ sc1]]></input>
       <p>Pearson's correlation coefficient "r" quantifies the correlation: -1 = perfect neg. correlation, 0 = no correlation, +1 = perfect pos. correlation.</p>
 
       <program language="r">
-        <input><![CDATA[vars <- c("unemp", "crimerate")
+        <code><![CDATA[vars <- c("unemp", "crimerate")
 cor.vars <- data_nrw[vars]
-rcorr(as.matrix(cor.vars))]]></input>
+rcorr(as.matrix(cor.vars))]]></code>
       </program>
 
       <p>Interpretation: In this case, the correlation coefficient is r = 0.72 with a p-value of &lt; 0.001. That means that we find a strong positive correlation. The correlation is also statistically significant (we typically speak of a statistically significant result if the p-value is below 0.05), which means that we can be fairly certain that the result is not due to chance but can be interpreted as systematic.</p>
@@ -401,11 +404,11 @@ rcorr(as.matrix(cor.vars))]]></input>
       </ul>
 
       <program language="r">
-        <input><![CDATA[
+        <code><![CDATA[
 model1 <- lm(crimerate ~ 1 + unemp, data = data_nrw)
 model2 <- lm(crimerate ~ 1 + unemp + popdens, data = data_nrw)
 
-stargazer(model1, model2, type = "text")]]></input>
+stargazer(model1, model2, type = "text")]]></code>
       </program>
 
       <p>Interpretation: If unemployment increases by one percentage point, crime increases by 517 cases per 100,000 inhabitants (Model 1). The relationship is statistically significant. If we now control for population density in Model 2 (and thus hold the influence of population density constant), a one-unit increase in unemployment is associated with an increase of only 215 cases. Population density is also positively associated with crime. Both coefficient estimates are statistically significant at p &lt; 0.01.
