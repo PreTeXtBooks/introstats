@@ -20,27 +20,28 @@
   <section xml:id="bi-data-overview">
     <title>Data overview and descriptive analyses</title>
 
+    <introduction>
     <p>The data are read from a CSV file (comma-separated values). By using the "head" command, the first six lines of the data are displayed.</p>
 
     <program language="r">
-      <input><![CDATA[knitr::opts_chunk$set(echo = TRUE)]]></input>
+      <code><![CDATA[knitr::opts_chunk$set(echo = TRUE)]]></code>
     </program>
 
     <program language="r">
-      <input><![CDATA[# Required packages are installed and loaded here. If more packages are needed, they can be added to the list
+      <code><![CDATA[# Required packages are installed and loaded here. If more packages are needed, they can be added to the list
 packages <- c("foreign" , "dplyr", "sjPlot", "lattice", "lmtest", "ggplot2", "Hmisc", "rcompanion", "kableExtra")
 installed_packages <- packages %in% rownames(installed.packages())
 if (any(installed_packages == FALSE)) {
   install.packages(packages[!installed_packages], repos = "https://cran.r-project.org/")
 }
-invisible(lapply(packages, library, character.only = TRUE))]]></input>
+invisible(lapply(packages, library, character.only = TRUE))]]></code>
     </program>
 
     <program language="r">
-      <input><![CDATA[data_us <- read.csv("data/data_election.csv")
+      <code><![CDATA[data_us <- read.csv("data/data_election.csv")
 knitr::kable(head(data_us, 10), booktabs = TRUE,  caption = 'A table of the first 10 rows of the vote data.') %>%
   kable_paper() %>%
-  scroll_box(width = "100%", height = "100%")]]></input>
+  scroll_box(width = "100%", height = "100%")]]></code>
     </program>
 
     <p>We can see from this that the following variables are included in the dataset:</p>
@@ -65,28 +66,30 @@ knitr::kable(head(data_us, 10), booktabs = TRUE,  caption = 'A table of the firs
       <li>`age` --&gt; metric (i.e., interval between ranked variable values can be compared; e.g., moving up 2 years from 20 to 22 is equivalent to moving up from 52 to 54)</li>
     </ul>
 
+    </introduction>
+
     <subsection xml:id="bi-frequency-tables">
       <title>Frequency tables</title>
 
       <p>The following table shows the observed frequencies of the values of the variable `vote`.</p>
 
       <program language="r">
-        <input><![CDATA[dim(data_us) #total number of cases
-table(data_us$vote)]]></input>
+        <code><![CDATA[dim(data_us) #total number of cases
+table(data_us$vote)]]></code>
       </program>
 
       <p>We can see that 3,016 respondents chose Trump, whereas 3,759 opted for Biden. A difference of a couple of hundred responses. For a variable with only a few categories, looking at absolute numbers of observations might be informative. However, using relative frequencies in terms of proportions is typically more informative. Let's get to it!</p>
 
       <program language="r">
-        <input><![CDATA[prop.table(table(data_us$vote))]]></input>
+        <code><![CDATA[prop.table(table(data_us$vote))]]></code>
       </program>
 
       <p>The relative difference between the group of Trump supporters and Biden supporters seems to be quite marginal in terms of percentage points. To be able to compare the figures from the survey data with the official vote result, we need to exclude the categories “refused (e.g., because respondent stated not going to vote) / don't know". To do so, we assign this category as "missing values,"</p>
 
       <program language="r">
-        <input><![CDATA[data_us$vote[data_us$vote == "refused / don't know"] <- NA # Set "refused / don't know" to NA (i.e., missing), so that this category is no longer displayed in the table command
+        <code><![CDATA[data_us$vote[data_us$vote == "refused / don't know"] <- NA # Set "refused / don't know" to NA (i.e., missing), so that this category is no longer displayed in the table command
 
-prop.table(table(data_us$vote))]]></input>
+prop.table(table(data_us$vote))]]></code>
       </program>
 
       <p>Question: How well did the results from the survey predict the actual election outcome? Can we conclude from that whether or not the sample is representative?</p>
@@ -102,7 +105,7 @@ prop.table(table(data_us$vote))]]></input>
       <p>We will below also exclude the category "other candidates" that could have chosen in the survey and the election (together these candidates gathered less than 2% of the votes in the election). We will show later on how to recode variables. In the meantime, we can rely on the variable `trump` in which the categories “refused/don't know” and "other" have already been set to NA (*not available* which is equal to *missing values* in terms of data analysis).</p>
 
       <program language="r">
-        <input><![CDATA[prop.table(table(data_us$trump))]]></input>
+        <code><![CDATA[prop.table(table(data_us$trump))]]></code>
       </program>
 
     </subsection>
@@ -123,7 +126,10 @@ prop.table(table(data_us$vote))]]></input>
   <section xml:id="bi-who-supports-trump">
     <title>Who supports Trump? - Delving into bivariate statistics</title>
 
+    <introduction>
     <p>In the following, we are interested in which groups of people were more likely to support Trump in the US presidential election. To do so, we focus on respondents’ education and age. Education is measured with a few categories. Hence, setting up a cross tabulation or cross tab (= a table involving two variables) is appropriate. In contrast, age is measured in years and thus comprises many more categories. This would make a cross tab involving age rather cumbersome. We could recode age into a few age categories and use them in a cross tab or we could compare age distributions across voting intentions. Below, we will explore both options.</p>
+
+    </introduction>
 
     <subsection xml:id="bi-education-and-trump-vote">
       <title>Education and Trump vote</title>
@@ -131,8 +137,8 @@ prop.table(table(data_us$vote))]]></input>
       <p>First, we are interested in whether or not people's vote choice differs across education groups. If this is the case, we could state that education and voting intentions are statistically related or associated with each other. If not, both would be independent. Following conventions, the "variable to be explained" (a.k.a. outcome or dependent variable) is represented by the rows of the cross tab and the "explanatory variable" (a.k.a. causal factor or independent variable) by the columns. We calculate column percentages for the interpretation (i.e., the number of observations for each cell divided by the total number of observations for each column. Hence, adding all proportions per column adds up to 100%). In our case, the causal order is quite clear. We have good reason to believe that (if anything) `education` determines voting intentions (`trump`) and **not** the other way around (i.e., voting intentions would cause higher or lower education). Note that in many other cases, the causal order is not as clear and we can freely choose which variable goes in the rows and which in the columns.</p>
 
       <program language="r">
-        <input><![CDATA[tab_xtab(var.row = data_us$trump, var.col = data_us$education, show.col.prc = TRUE, show.obs = TRUE, show.summary = FALSE) #show.col.prc = TRUE displays column percentages
-]]></input>
+        <code><![CDATA[tab_xtab(var.row = data_us$trump, var.col = data_us$education, show.col.prc = TRUE, show.obs = TRUE, show.summary = FALSE) #show.col.prc = TRUE displays column percentages
+]]></code>
       </program>
 
       <p>For column percentages, the interpretation begins by picking two categories (adjacent or extreme) of the explanatory variable and then comparing a relevant category of the outcome.</p>
@@ -144,9 +150,9 @@ prop.table(table(data_us$vote))]]></input>
       <p>Important additions to the made interpretation would be (1) to quantify the strength of the empirical relationship (e.g., weak, medium, strong) and (2) to make a statement about how confident we can be that the empirical relationship found in the sample reflects the properties of the population the sample has been drawn from. There are procedures for both purposes, to which we will return to at the end of this case study. Before that, however, let’s go back to cross tabs for a moment. Here, we see the same cross tab as above but with row percentages instead.</p>
 
       <program language="r">
-        <input><![CDATA[
+        <code><![CDATA[
 tab_xtab(var.row = data_us$trump, var.col = data_us$education, show.row.prc = TRUE, show.obs = TRUE, show.summary = FALSE) #show.row.prc = TRUE displays row percentages
-]]></input>
+]]></code>
       </program>
 
       <p>Question: Which conclusions can be drawn from a cross tab with row percentages?</p>
@@ -160,9 +166,9 @@ tab_xtab(var.row = data_us$trump, var.col = data_us$education, show.row.prc = TR
       <p>As a third possibility, below a cross tab with total percentages:</p>
 
       <program language="r">
-        <input><![CDATA[
+        <code><![CDATA[
 tab_xtab(var.row = data_us$trump, var.col = data_us$education, show.cell.prc = TRUE, show.obs = TRUE, show.summary = FALSE) #show.cell.prc = TRUE displays cell or total percentages
-]]></input>
+]]></code>
       </program>
 
       <p>Question: Which conclusions can be drawn from a cross tab with cell percentages?</p>
@@ -181,7 +187,7 @@ tab_xtab(var.row = data_us$trump, var.col = data_us$education, show.cell.prc = T
       <p>Due to the 'age' variable being recorded in years and thus having a large number of categories, a cross tab would be quite cumbersome and thus less informative. Therefore, we first create histograms displaying the distribution of the age variable for both categories of `trump` and then compare them with each other.</p>
 
       <program language="r">
-        <input><![CDATA[
+        <code><![CDATA[
 histogram( ~ age | trump ,
            breaks = 10, 
            ylim=c(0,12),
@@ -193,7 +199,7 @@ histogram( ~ age | trump ,
            scales = list(relation="free"),
            col = 'grey',
            data = data_us)
-]]></input>
+]]></code>
       </program>
 
       <p>Question: What can be inferred from the graphs?</p>
@@ -209,17 +215,17 @@ histogram( ~ age | trump ,
       <p>*Age mean, median, and standard deviation for Biden supporters:*</p>
 
       <program language="r">
-        <input><![CDATA[mean(data_us$age[data_us$trump == 0], na.rm=TRUE)
+        <code><![CDATA[mean(data_us$age[data_us$trump == 0], na.rm=TRUE)
 median(data_us$age[data_us$trump == 0], na.rm=TRUE)
-sd(data_us$age[data_us$trump == 0], na.rm=TRUE)]]></input>
+sd(data_us$age[data_us$trump == 0], na.rm=TRUE)]]></code>
       </program>
 
       <p>*Age mean, median, and standard deviation for Trump supporters:*</p>
 
       <program language="r">
-        <input><![CDATA[mean(data_us$age[data_us$trump == 1], na.rm=TRUE)
+        <code><![CDATA[mean(data_us$age[data_us$trump == 1], na.rm=TRUE)
 median(data_us$age[data_us$trump == 1], na.rm=TRUE)
-sd(data_us$age[data_us$trump == 1], na.rm=TRUE)]]></input>
+sd(data_us$age[data_us$trump == 1], na.rm=TRUE)]]></code>
       </program>
 
       <p>By comparing the mean and median values of both groups, we find that the Trump-supporting group is older than the group that supports Biden. The standard deviation (which can be thought of as the average deviation between the age of respondents and the mean) in the Biden group is slightly larger (17.2 years) than the standard deviation of the Trump group (16.5 years). This means that the age of respondents in the Biden group is slightly more dispersed than in the Trump group.</p>
@@ -227,7 +233,7 @@ sd(data_us$age[data_us$trump == 1], na.rm=TRUE)]]></input>
       <p>In the next step, we recode the age variable into the categories "young" (1), "middle-aged" (2), and "old" (3). We then use a cross tab with column percentages.</p>
 
       <program language="r">
-        <input><![CDATA[
+        <code><![CDATA[
 data_us <- data_us %>%  
   mutate(age_cat =  
            case_when(age <= 35 ~ 1,   
@@ -236,7 +242,7 @@ data_us <- data_us %>%
 
 
 tab_xtab(var.row = data_us$trump, var.col = data_us$age_cat, show.col.prc = TRUE, show.obs = TRUE, show.summary = FALSE)
-]]></input>
+]]></code>
       </program>
 
       <p>Question: Interpret the cross tab. What can be concluded? Why don't we always go straight to categorizing metric variables and using the recoded variable in a cross tab?</p>
@@ -252,7 +258,7 @@ tab_xtab(var.row = data_us$trump, var.col = data_us$age_cat, show.col.prc = TRUE
       <p>Here is a way to visualize a cross tab with stacked bar charts. The first figure corresponds to a cross tab with column percentages and the second figure relates to a cross tab with row percentages.</p>
 
       <program language="r">
-        <input><![CDATA[
+        <code><![CDATA[
 # Age variable will be subdivided into the three dummy variables "young", "middle-aged", and "old"
 data_us <- data_us %>%  
   mutate(age_cat_nom =  
@@ -280,11 +286,11 @@ ggplot(data_us_counted, aes(fill=trump_nom, y=n, x=age_cat_nom)) +
        y = "Shares",
        fill = "Voting intention US presidential election") +
     theme_minimal()
-]]></input>
+]]></code>
       </program>
 
       <program language="r">
-        <input><![CDATA[
+        <code><![CDATA[
 ggplot(data_us_counted, aes(fill=age_cat_nom, y=n, x=trump_nom)) +
     geom_bar(position="fill", stat="identity") +
     scale_y_continuous(labels = scales::percent) +
@@ -294,7 +300,7 @@ ggplot(data_us_counted, aes(fill=age_cat_nom, y=n, x=trump_nom)) +
        fill = "Age groups") +
     theme_minimal()
  
-]]></input>
+]]></code>
       </program>
 
     </subsection>
@@ -304,6 +310,7 @@ ggplot(data_us_counted, aes(fill=age_cat_nom, y=n, x=trump_nom)) +
   <section xml:id="bi-scatter-correlation">
     <title>Scatter plot and correlation</title>
 
+    <introduction>
     <p>Scatter plots and correlation are suitable for showing relationships between two variables. In the following, we use the average approval of Trump across US states in % (`perc_trump`) as the variable to be explained (a.k.a. the outcome or dependent variable). State-specific variations in voting patterns are illustrated in the following map. As an explanatory variable, we use the proportion of people in the state who have a high level of education (Master's or postgraduate) in % (`perc_higheducation`). Both variables originate from individual-level data of the ANES study and have been aggregated to the state level (i.e., the means per region were stored in a new dataset).</p>
 
     <figure xml:id="fig-bi-2">
@@ -316,16 +323,18 @@ ggplot(data_us_counted, aes(fill=age_cat_nom, y=n, x=trump_nom)) +
     <p>Next, the data are read and the first six rows are displayed:</p>
 
     <program language="r">
-      <input><![CDATA[data_states <- read.csv("data/data_states.csv")
+      <code><![CDATA[data_states <- read.csv("data/data_states.csv")
 knitr::kable(
   head(data_states, 10), booktabs = TRUE,
   caption = 'A table of the first 10 rows of the regional vote data.') %>%
   kable_paper() %>%
   scroll_box(width = "100%", height = "100%")
-]]></input>
+]]></code>
     </program>
 
     <p>The variable `state` identifies the region.</p>
+
+    </introduction>
 
     <subsection xml:id="bi-scatter-plot">
       <title>Scatter plot</title>
@@ -333,7 +342,7 @@ knitr::kable(
       <p>To get a first impression of the empirical relationship between both variables, we use a scatter plot. Each point represents one of the 50 US states and Washington D.C. Note that it is a convention that the dependent variable is shown on the y-axis, whereas the independent variable is shown on the x-axis.</p>
 
       <program language="r">
-        <input><![CDATA[
+        <code><![CDATA[
 sc1 <- ggplot(data=data_states, aes(x = perc_higheducation, y = perc_trump)) + 
   geom_point() + 
   xlab("Share of highly-educated persons in %") +
@@ -342,7 +351,7 @@ sc1 <- ggplot(data=data_states, aes(x = perc_higheducation, y = perc_trump)) +
   scale_x_continuous(labels = scales::percent)
 
 sc1
-]]></input>
+]]></code>
       </program>
 
       <p>Question: What can be inferred from the figure?</p>
@@ -361,7 +370,7 @@ sc1
       <p>In the next step, we will take a graphical approach to how a correlation is determined. For this, we plot a vertical and a horizontal line that represents the mean of the variables through the cloud of observations represented by the black dots. We see that the dots are mainly in the upper-left quadrant (= low proportion of high education AND high Trump approval) and the lower-right quadrant (= high proportion of high education AND low Trump approval). This indicates that higher average education tends to be associated with *lower* average Trump approval. In other words: The correlation is negative.</p>
 
       <program language="r">
-        <input><![CDATA[#Obtaining means for each variable
+        <code><![CDATA[#Obtaining means for each variable
 mean(data_states$perc_trump, na.rm=TRUE)
 mean(data_states$perc_higheducation, na.rm=TRUE)
 
@@ -375,7 +384,7 @@ sc2 <- ggplot(data=data_states, aes(x = perc_higheducation, y = perc_trump)) +
   scale_x_continuous(labels = scales::percent) +
   geom_hline(yintercept=0.470922, linetype="dashed", color = "red", size=1) +
   geom_vline(xintercept=0.1927645, linetype="dashed", color = "red", size=1)
-sc2]]></input>
+sc2]]></code>
       </program>
 
       <p>To quantify the relationship, we can calculate the covariance and subsequently the correlation (= standardized covariance fitted into the value range of -1 to +1). The widely used Pearson's correlation coefficient is given as:</p>
@@ -400,7 +409,7 @@ sc2]]></input>
       <p>In the next step, the correlation between the share of highly educated people and the share of Trump supporters is calculated and a line representing their relationship is plotted. The line essentially depicts the bivariate association in the form of a regression slope, which always runs in the direction of the correlation. However, its interpretation differs from correlation.</p>
 
       <program language="r">
-        <input><![CDATA[
+        <code><![CDATA[
 sc3 <- ggplot(data=data_states, aes(x = perc_higheducation, y = perc_trump)) + 
   geom_point() + 
   xlab("Share of highly-educated persons in %") +
@@ -408,14 +417,14 @@ sc3 <- ggplot(data=data_states, aes(x = perc_higheducation, y = perc_trump)) +
   scale_y_continuous(labels = scales::percent) +
   scale_x_continuous(labels = scales::percent) +
   geom_smooth(method = lm, se = FALSE)
-sc3]]></input>
+sc3]]></code>
       </program>
 
       <program language="r">
-        <input><![CDATA[vars <- c("perc_higheducation", "perc_trump")
+        <code><![CDATA[vars <- c("perc_higheducation", "perc_trump")
 cor.vars <- data_states[vars]
 rcorr(as.matrix(cor.vars))
-]]></input>
+]]></code>
       </program>
 
       <p>In the case of correlation and regression coefficients, the interpretation always begins with mentioning x (or the **independent** variable) which exerts an effect on y (or the **dependent** variable).</p>
@@ -444,10 +453,10 @@ rcorr(as.matrix(cor.vars))
     <p>Now we return to cross tabs and how to make a statement about whether there is a correlation between the displayed variables and if so, how strong it is. To do so, we once again revisit the individual-level survey data and display the cross tab between `education` and `trump`.</p>
 
     <program language="r">
-      <input><![CDATA[
+      <code><![CDATA[
 tab_xtab(var.row = data_us$trump, var.col = data_us$education, show.col.prc = TRUE, show.obs = TRUE, show.summary = TRUE) #setting show.summary = TRUE displays summary statistics at the bottom of the table
 
-]]></input>
+]]></code>
     </program>
 
     <p>It has already become quite clear that low-educated people were more likely to support Trump compared to high-educated people (who were more in favor of Biden). To quantify the empirical association, we can calculate Cramér's V. This measure quantifies empirical relationships if a nominal variable is involved (here: `trump`). It is based on a chi-square test for independence. The chi-square value indicates how strongly the real observations deviate from a theoretical distribution, wherein all observations are equally distributed (relative to marginal distribution) across the cells of the cross tab. The more the measured observations deviate from the theoretical distribution, the higher the chi-square value and subsequently Cramér's V gets, which is normalized for the table size and ranges between 0 (= no association) and 1 (= exceedingly strong association).</p>
@@ -471,11 +480,11 @@ tab_xtab(var.row = data_us$trump, var.col = data_us$education, show.col.prc = TR
     <p>In R, chi-square and Cramér's V can be calculated with the following commands:</p>
 
     <program language="r">
-      <input><![CDATA[
+      <code><![CDATA[
 chisq.test(data_us$trump, data_us$education)
 cramerV_tabelle <- table(data_us$trump, data_us$education)
 cramerV(cramerV_tabelle)
-]]></input>
+]]></code>
     </program>
 
     <p>Question: How can Cramér's V be interpreted in this case?</p>
