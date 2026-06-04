@@ -2,14 +2,16 @@
 <preface xml:id="ch-preface" xmlns:xi="http://www.w3.org/2001/XInclude">
   <title>Preface</title>
 
-  <figure xml:id="fig-preface-cover">
-    <image source="../assets/images/BC_V3_blau1.png" width="67%"/>
-  </figure>
+  <introduction>
+    <figure xml:id="fig-preface-cover">
+      <image source="../assets/images/BC_V3_blau1.png" width="67%"/>
+    </figure>
 
-  <p><em>Suggested citation:</em></p>
-  <p>Ziller, Conrad (2024). <em>Introduction to Statistics and Data Analysis – A Case-Based Approach.</em> Available online at <url href="https://bookdown.org/conradziller/introstatistics"/>.</p>
-  <p>To download the R-Scripts and data used in this book, go to <url href="https://conradziller.com/wp-content/uploads/2024/09/introstatsfiles_v3.zip"/>.</p>
-  <p>A PDF-version of the book can be downloaded at <url href="https://conradziller.com/wp-content/uploads/2024/09/ziller_introstats_book.pdf"/>.</p>
+    <p><em>Suggested citation:</em></p>
+    <p>Ziller, Conrad (2024). <em>Introduction to Statistics and Data Analysis – A Case-Based Approach.</em> Available online at <url href="https://bookdown.org/conradziller/introstatistics"/>.</p>
+    <p>To download the R-Scripts and data used in this book, go to <url href="https://conradziller.com/wp-content/uploads/2024/09/introstatsfiles_v3.zip"/>.</p>
+    <p>A PDF-version of the book can be downloaded at <url href="https://conradziller.com/wp-content/uploads/2024/09/ziller_introstats_book.pdf"/>.</p>
+  </introduction>
 
   <section xml:id="preface-motivation">
     <title>Motivation for this Book</title>
