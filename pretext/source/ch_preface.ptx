@@ -15,20 +15,25 @@
 
   <section xml:id="preface-motivation">
     <title>Motivation for this Book</title>
+    <introduction>
     <p>This short book is a complete introduction to statistics and data analysis using R and RStudio. It contains hands-on exercises with real data—mostly from social sciences. In addition, this book presents four key ingredients of statistical data analysis (univariate statistics, bivariate statistics, statistical inference, and regression analysis) as brief case studies. The motivation for this was to provide students with practical cases that help them navigate new concepts and serve as an anchor for recalling the acquired knowledge in exams or while conducting their own data analysis.</p>
     <p>The case study logic is expected to increase motivation for engaging with the materials. As we all know, academic teaching is not the same as before the pandemic. Students are (rightfully) increasingly reluctant to chalk-and-talk techniques of teaching, and we have all developed dopamine-related addictions to social media content which have considerably shortened our ability to concentrate. This poses challenges to academic teaching in general and complex content such as statistics and data science in particular.</p>
+    </introduction>
   </section>
 
   <section xml:id="preface-how-to-use">
     <title>How to Use the Book</title>
+    <introduction>
     <p>This book consists of four case studies that provide a short, yet comprehensive, introduction to statistics and data analysis. The examples used in the book are based on real data from official statistics and publicly available surveys. While each case study follows its own logic, I advise reading them consecutively. The goal is to provide readers with an opportunity to learn independently and to gather a solid foundation of hands-on knowledge of statistics and data analysis. Each case study contains questions that can be answered in the boxes below. The solutions to the questions can be viewed below the boxes (by clicking on the arrow next to the word "solution"). It is advised to save answers to a separate document because this content is not saved and cannot be accessed after reloading the book page.</p>
     <p>A working sheet with questions, answer boxes, and solutions can be downloaded together with the R-Scripts at <url href="https://conradziller.com/wp-content/uploads/2024/09/introstatsfiles_v3.zip"/>. You can read this book online for free. Copies in printable format may be ordered from the author.</p>
     <p>This book can be used for teaching by university instructors, who may use data examples and analyses provided in this book as illustrations in lectures (and by acknowledging the source). This book can be used for self-study by everyone who wants to acquire foundational knowledge in basic statistics and practical skills in data analysis. The materials can also be used as a refresher on statistical foundations.</p>
     <p>Beginners in R and RStudio are advised to install the programs via the following link <url href="https://posit.co/download/rstudio-desktop/"/> and to download the materials from <url href="https://conradziller.com/wp-content/uploads/2024/09/introstatsfiles_v3.zip"/>. The scripts from this material can then be executed while reading the book. This helps to get familiar with statistical analysis, and it is just an awesome feeling to get your own script running! (On the downside, it is completely normal and part of the process that code for statistical analysis does not work. This is what helpboards across the web and, more recently, ChatGPT are for. Just google your problem and keep on trying, it is, as always, 20% inspiration and 80% consistency.)</p>
+    </introduction>
   </section>
 
   <section xml:id="preface-organization">
     <title>Organization of the Book</title>
+    <introduction>
     <p>The book contains four case studies, each showcasing unique statistical and data-analysis-related techniques.</p>
     <ul>
       <li><xref ref="ch-univariate"/>: Univariate Statistics – Case Study Socio-Demographic Reporting</li>
@@ -46,20 +51,26 @@
       <li><xref ref="ch-regression"/>: Regression Analysis - Case Study Attitudes Toward Justice</li>
     </ul>
     <p>Section 5 covers how to conduct multiple regression analysis and interpret the corresponding results. Multiple regression investigates the relationship between an outcome variable (e.g., beliefs about justice) and multiple variables that represent different competing explanations for the outcome.</p>
+    </introduction>
   </section>
 
   <section xml:id="preface-acknowledgments">
     <title>Acknowledgments</title>
+    <introduction>
     <p>Thank you to Paul Gies, Phillip Kemper, Jonas Verlande, Teresa Hummler, Paul Vierus, and Felix Diehl for helpful feedback on previous versions of this book. I want to thank Achim Goerres for his feedback early on and for granting me maximal freedom in revising and updating the materials of his introductory lectures on Methods and Statistics, which led to the writing of this book. Earlier versions of this book have been used in teaching courses on statistics in the Political Science undergraduate program at the University of Duisburg-Essen.</p>
+    </introduction>
   </section>
 
   <section xml:id="preface-about-author">
     <title>About the Author</title>
+    <introduction>
     <p>Conrad Ziller is a Senior Researcher in the Department of Political Science at the University of Duisburg-Essen. His research interests focus on the role of immigration in politics and society, immigrant integration, policy effects on citizens, and quantitative methods. He is the principal investigator of research projects funded by the German Research Foundation and the Fritz Thyssen Foundation. More information about his research can be found at <url href="https://conradziller.com/"/>.</p>
+    </introduction>
   </section>
 
   <section xml:id="preface-outlook">
     <title>Outlook</title>
+    <introduction>
     <p>The final part of the book is about linear regression analysis, which is the natural endpoint for a course on introductory statistics. However, the "ordinary" regression is where many further useful techniques come into play—most of which can subsumed under the label "Advanced Regression Models". You will need them when analyzing, for example, panel data where the same respondents were interviewed multiple times or spatially clustered data from cross-national surveys.</p>
     <p>I will extend this introduction with case studies on advanced regression techniques soon. If you want to get notified when this material is online, please sign up with your email address at <url href="https://forms.gle/T8Hvhq3EmcywkTdFA"/>.</p>
     <p>In the meantime, I have a chapter on <em>Multiple Regression with Non-Independent Observations: Random-Effects and Fixed-Effects</em> that can be downloaded at <url href="https://ssrn.com/abstract=4747607"/>.</p>
@@ -69,5 +80,6 @@
       <image source="../assets/images/by-nc-sa.PNG" width="30%"/>
     </figure>
     <p>The online version of this book is licensed under the Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License: <url href="https://creativecommons.org/licenses/by-nc-sa/4.0/"/>.</p>
+    </introduction>
   </section>
 </preface>
