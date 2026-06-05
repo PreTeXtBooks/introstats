@@ -59,9 +59,14 @@ kable(head(data_allbus, 10), format = "html", booktabs = TRUE, caption = "ALLBUS
 ]]></code>
     </program>
     <p>Next, we build an index from the variables `im19` (agreement: income differences increase motivation), `im20` (agreement: rank differences between people are acceptable) and `im21` (agreement: social differences are fair). Since high values on those variables indicate disagreement, we can label the index **`morejustice`** for which high values represent disagreement with social inequality (i.e., advocacy of more justice).</p>
+    <exercise>
+      <statement>
     <p>Question: Could we have recoded the variables differently? What would change? And what would happen if, for example, we recoded only two of the three variables and then built an index with all three variables?</p>
-    <p>Your answer:</p>
-    <p>Solution:</p>
+      </statement>
+      <answer>
+        <p>Answer: <fillin characters="40" textstyle="box"/></p>
+      </answer>
+      <solution>
     <p>Yes, if we were to recode all items, that would be just as possible. We would then have to label an index as "less justice" or "inequality," since high values represent acceptance of social inequality. Recoding only a few variables is inadmissible, the index would no longer be valid.</p>
     <p>For building scales or indices of items, it is always a good idea to check whether there are substantial correlations between the items. There are also other ways to look at the reliability of an index, for example, by calculating Cronbach's alpha. We go with correlations and also look at the distribution of the index variable.</p>
     <program language="r">
@@ -77,6 +82,8 @@ data_allbus$morejustice <- (data_allbus$im19 + data_allbus$im20 + data_allbus$im
 hist(data_allbus$morejustice)]]></code>
     </program>
     <p>The correlations show that at least most of the indicators are correlated with each other by r &gt; .4. The histogram suggests that the variable values are approximately normally distributed.</p>
+      </solution>
+    </exercise>
     </introduction>
 
     <subsection xml:id="reg-the-foundations-of-bivariate-regression">
@@ -100,18 +107,30 @@ stargazer(model1, type = "text")]]></code>
       </figure>
       <p>We can also think about what would happen if the dots (i.e., the observed values on the two variables) were different. If the dots and the corresponding slope line were steeper (and thus the coefficient larger), then an increase in unemployment by one unit would lead to an even higher increase in crime rates. If the dots and the line indicated a flat pattern, then this would mean that there is no change in crime rates when unemployment increases by one unit. If the line (and the coefficient) was negative, then a one-unit increase in unemployment would be associated with a *decrease* (by $\beta_1$ units) in crime.</p>
       <p>In addition to the coefficients for the independent variables, the regression output displays the so-called constant (or intercept), which is abbreviated as $a$, $\alpha$, or $\beta_0$. It provides the predicted value for the outcome variable $Y$ if all independent variables in the model have the value of 0. Usually, this information is not of much interest and thus ignored.</p>
+      <exercise>
+        <statement>
       <p>Question: What is the value of the constant in the unemployment-crime example (Model 1)? What information content does it carry?</p>
-      <p>Your answer:</p>
-      <p>Solution:</p>
+        </statement>
+        <answer>
+          <p>Answer: <fillin characters="40" textstyle="box"/></p>
+        </answer>
+        <solution>
       <p>The value of the constant in Model 1 is 2399. This indicates the average crime rate (Y) in a municipality with 0% unemployment. In our case, the constant is uninformative because we don't have observations with 0% unemployment in our sample.</p>
+        </solution>
+      </exercise>
     </subsection>
     <subsection xml:id="reg-bivariate-regression-of-income-and-attitudes-toward-justice">
       <title>Bivariate regression of income and attitudes toward justice</title>
       <p>We now estimate a bivariate regression for the relationship between income and attitudes toward justice. Our working hypothesis $H_A$ is that we assume a *negative* relationship - that is, individuals with a higher income advocate *less* strongly social justice compared to individuals with a lower income (e.g., because they fear a loss of income due to redistributive policies).</p>
       <p>*Formally*, $H_A$ can be represented with reference to either a correlation coefficient $r&lt;0$ or a regression coefficient $\beta_1&lt;0$. Accordingly, the null hypothesis would be $\beta_1\geq0$.</p>
+      <exercise>
+        <statement>
       <p>Question: Would it also make sense to formulate a different hypothesis $H_A$?</p>
-      <p>Your answer:</p>
-      <p>Solution:</p>
+        </statement>
+        <answer>
+          <p>Answer: <fillin characters="40" textstyle="box"/></p>
+        </answer>
+        <solution>
       <p>Yes: For example, the higher the income, the higher the preference for social justice (since wealthier people can afford it). Which hypothesis makes sense depends on theory and previous research.</p>
       <p>In a next step, the bivariate regression model is estimated. To do so, we use the index `morejustice` as the outcome and the variable `income` as an independent variable (or predictor), which measures income classes in 26 levels (e.g., 1 = under 200 EUR monthly net income; 14 = 1750 - 1999 EUR; 26 = 10000 EUR and more).</p>
       <program language="r">
@@ -119,6 +138,10 @@ stargazer(model1, type = "text")]]></code>
 summary(model_biv)
 stargazer(model_biv, type = "text")]]></code>
       </program>
+        </solution>
+      </exercise>
+      <exercise>
+        <statement>
       <p>Task: Interpret the output from the regression model using the following heuristics.</p>
       <p>"The empirical relationship between income and attitudes toward justice is positive/negative."</p>
       <p>"The relationship is/is not statistically significant."</p>
@@ -126,8 +149,11 @@ stargazer(model_biv, type = "text")]]></code>
       <p>"Thus, the null hypothesis can be rejected/not be rejected."</p>
       <p>The detailed interpretation of the regression coefficient for income is: "..."</p>
       <p>Interpret additionally the constant and R2 from the model output. What is the value of the constant in the unemployment-crime example (Model 1)? What information content does it carry?</p>
-      <p>Your answer:</p>
-      <p>Solution:</p>
+        </statement>
+        <answer>
+          <p>Answer: <fillin characters="40" textstyle="box"/></p>
+        </answer>
+        <solution>
       <p>The empirical relationship between income and attitudes toward justice is negative.</p>
       <p>The found relationship is statistically significant (given a probability of error of 0.01 or 1% due to ***).</p>
       <p>The probability of finding such a relationship in the population, even though the null hypothesis is true, is less than 1%. Thus, the null hypothesis can be rejected.</p>
@@ -135,6 +161,8 @@ stargazer(model_biv, type = "text")]]></code>
       <p>Constant: An interpretation is tedious because the income variable we used has no zero point. (If we would center the income variable at the mean value, then 0 indicated an average income, and the constant was the predicted level of justice attitudes for individuals with an average income.)</p>
       <p>R2 is a measure of model fit and indicates how well the included independent variables explain the outcome. It can be interpreted as the ratio of explained variance by the model to the total variance: R2=0.016 -&gt; 1.6% of the total variance of the outcome variable can be explained by the predictor variables in the model. If R2 = 0.3, then the variance explained by the model would be 30%.</p>
       <p>Note: The so-called *adjusted R2* is used to compare models with a different number of predictor variables. While it can no longer be interpreted as % of variance explained, it can be compared across models (better model with higher Adj-R2).</p>
+        </solution>
+      </exercise>
     </subsection>
     <subsection xml:id="reg-on-the-correspondence-of-correlation-coefficient-and-standardized-regression-coefficient-in-the-bivariate-case">
       <title>On the correspondence of correlation coefficient and standardized regression coefficient in the bivariate case</title>
@@ -169,13 +197,20 @@ rcorr(as.matrix(cor.vars))
       <title>Basic Idea</title>
       <p>The goal of multiple regression is to explain the outcome variable with multiple independent variables. This is useful when we want to test different explanations for a phenomenon (e.g., attitudes toward justice). The multiple regression model produces *adjusted* estimates because the independent variables control for their mutual influences. Recall the example of unemployment and crime from <xref ref="ch-univariate"/>, where we also included population density as an additional variable. The interpretation of the influence of unemployment (on crime) is in this case adjusted for the influence of population density. For unemployment, we obtained a coefficient estimate of $\beta_1=215.4$. As a thought experiment: If we think of municipalities with the same population density and compare them with each other, then the municipalities with one percentage point more unemployment have on average a 215 higher crime rate per 100T inhabitants. The influence of population density on crime can be interpreted in a corresponding way - also here, the influence of the other factor (unemployment) is "held constant" or is controlled for.</p>
       <p>This mutual "holding constant" or "controlling" in the multiple regression model means that we can account for alternative explanations with additional variables. In the example of attitudes toward justice, we use the variables gender (`female` with the categories male = 0 and female = 1), whether or not respondents were unemployed in the last 10 years (`unemployed` with the categories not unemployed = 0 and been unemployed = 1), and whether respondents live in West or East Germany (`east` with the categories West Germany = 0 and East Germany = 1) as additional variables. Regarding the influence of gender, we would assume that women are more supportive of social justice than men due to their socialization and societal norms and/or because they earn less than men, on average, due to the gender pay gap. Hence, it is important to control for gender so that income does not partially "transport" a gender effect. Controlling for gender in the multiple regression model allows us to obtain a "net" income effect that is separated from the effect of gender that otherwise could confound the relationship between income and attitudes toward justice.</p>
+      <exercise>
+        <statement>
       <p>Question: How relate past or current unemployment and living in East Germany to both variables of interest income and attitudes toward justice?</p>
-      <p>Your answer:</p>
-      <p>Unemployment:</p>
-      <p>East Germany:</p>
-      <p>Solution:</p>
+        </statement>
+        <answer>
+          <p>Answer: <fillin characters="40" textstyle="box"/></p>
+          <p>Unemployment: <fillin characters="40" textstyle="box"/></p>
+          <p>East Germany: <fillin characters="40" textstyle="box"/></p>
+        </answer>
+        <solution>
       <p>Unemployment: If someone was/is unemployed, he/she is expected to advocate social justice more strongly (e.g. due to self-interest) than someone lacking such an experience. If someone is unemployed, he/she has a lower income, on average, compared to someone who is employed.</p>
       <p>East Germany: East Germans are expected to advocate social justice more strongly than West Germans because of a greater sense of disadvantage or their socialization in the socialist GDR. At the same time, residents of East Germany have a higher probability to earn less money in comparable jobs due to a less developed economic situation.</p>
+        </solution>
+      </exercise>
     </subsection>
     <subsection xml:id="reg-formulating-hypotheses">
       <title>Formulating hypotheses</title>
@@ -184,17 +219,22 @@ rcorr(as.matrix(cor.vars))
       <p>Y refers to the outcome variable, $\beta_0$ is the constant, the other $\beta_i$ are the regression coefficients of the corresponding predictor variables $x_i$. $e$ refers to the residual or the part of the variance of the outcome variable that is not explained by the predictor variables in the model.</p>
       <p>If we use the variable names for this, the formula for the specific model would be the following:</p>
       <p>$morejustice = \beta_0 + \beta_1 * income + \beta_2 * female + \beta_3 * unemployed + \beta_4 * east + e$</p>
+      <exercise>
+        <statement>
       <p>Question: Formulate the null and alternative hypotheses for each independent variable.</p>
-      <p>Your answer:</p>
-      <p>Income H_0:</p>
-      <p>H_A:</p>
-      <p>Female H_0:</p>
-      <p>H_A:</p>
-      <p>Unemployed H_0:</p>
-      <p>H_A:</p>
-      <p>East Germany H_0:</p>
-      <p>H_A:</p>
-      <p>Solution:</p>
+        </statement>
+        <answer>
+          <p>Answer: <fillin characters="40" textstyle="box"/></p>
+          <p>Income H_0: <fillin characters="40" textstyle="box"/></p>
+          <p>H_A: <fillin characters="40" textstyle="box"/></p>
+          <p>Female H_0: <fillin characters="40" textstyle="box"/></p>
+          <p>H_A: <fillin characters="40" textstyle="box"/></p>
+          <p>Unemployed H_0: <fillin characters="40" textstyle="box"/></p>
+          <p>H_A: <fillin characters="40" textstyle="box"/></p>
+          <p>East Germany H_0: <fillin characters="40" textstyle="box"/></p>
+          <p>H_A: <fillin characters="40" textstyle="box"/></p>
+        </answer>
+        <solution>
       <p>Income $H_A$: $\beta_1&lt;0$ (Income is negatively related to attitudes toward justice)</p>
       <p>$H_0$: $\beta_1\geq0$ (Income is unrelated or positively related to attitudes toward justice)</p>
       <p>Female $H_A$: $\beta_2&gt;0$ (Being female is positively related to attitudes toward justice, which is the same as women advocate social justice more strongly than men)</p>
@@ -203,6 +243,8 @@ rcorr(as.matrix(cor.vars))
       <p>$H_0$: $\beta_3\leq0$ (Unemployment is unrelated or negatively related to attitudes toward justice)</p>
       <p>East Germany $H_A$: $\beta_4&gt;0$ (Living in East Germany is positively related to attitudes toward justice, which is the same as people from East Germany advocate social justice more strongly than those from West Germany)</p>
       <p>$H_0$: $\beta_4\leq0$ (Living in East Germany is unrelated or negatively related to attitudes toward justice)</p>
+        </solution>
+      </exercise>
     </subsection>
     <subsection xml:id="reg-estimation-and-result-interpretation">
       <title>Estimation and result interpretation</title>
@@ -215,23 +257,37 @@ stargazer(model_biv, model_mult, type = "text")]]></code>
       <p>We can now insert the regression coefficients into the two formulas from above:</p>
       <p>General form: $y = 2.936-0.011 * x_1 + 0.128 * x_2 + 0.066 * x_3 + 0.075 * x_4 + e$</p>
       <p>Specific form: $morejustice = 2.936-0.011 * income + 0.128 * female + 0.066 * unemployed + 0.075 * east + e$</p>
+      <exercise>
+        <statement>
       <p>Question: Interpret the coefficients from the multiple regression model in terms of (a) direction of association, (b) significance, and (c) effect size.</p>
-      <p>Your answer:</p>
-      <p>Income</p>
-      <p>Female</p>
-      <p>Unemployed</p>
-      <p>East Germany</p>
-      <p>Solution:</p>
+        </statement>
+        <answer>
+          <p>Answer: <fillin characters="40" textstyle="box"/></p>
+          <p>Income: <fillin characters="40" textstyle="box"/></p>
+          <p>Female: <fillin characters="40" textstyle="box"/></p>
+          <p>Unemployed: <fillin characters="40" textstyle="box"/></p>
+          <p>East Germany: <fillin characters="40" textstyle="box"/></p>
+        </answer>
+        <solution>
       <p>Income Negative relationship between income and attitudes toward justice, which is statistically significant (p &lt; 0.01). An increase in income by one unit is associated with a **decrease** in attitudes toward justice by 0.011 scale units (while keeping the influence of the other variables in the model constant). In terms of effect size, moving from the lowest to the highest income category would be associated with a decrease in attitudes toward justice by 0.286 scale units (26 categories * 0.011 for the coefficient = 0.286, which corresponds to the effect of a min-max normalized income variable).</p>
       <p>Female Positive relationship between being female and attitudes toward justice, which is statistically significant (p &lt; 0.05). An increase in the variable female by one unit (= the difference between women and men) is associated with an **increase** in attitudes toward justice by 0.128 scale units (while keeping the influence of the other variables in the model constant).</p>
       <p>Unemployed Positive relationship between being unemployed in the last 10 years and attitudes toward justice, which is statistically significant (p &lt; 0.05). An increase in the variable unemployment by one unit (= the difference between those who were unemployed and those who were not) is associated with an **increase** in attitudes toward justice by 0.066 scale units (while keeping the influence of the other variables in the model constant).</p>
       <p>East Germany Positive relationship between living in East Germany and attitudes toward justice, which is statistically significant (p &lt; 0.05). An increase in the variable east by one unit (= the difference between people from East vs. West Germany) is associated with an **increase** in attitudes toward justice by 0.075 scale units (while keeping the influence of the other variables in the model constant).</p>
       <p>In terms of effect comparison, the variables female, unemployed, and east are measured on a comparable scale (0/1). The min-max effect of income is also comparable as this corresponds to recoding the variable to range between 0 and 1. Hence, income is comparatively the strongest predictor in the multiple regression model.</p>
+        </solution>
+      </exercise>
+      <exercise>
+        <statement>
       <p>Question: What changed between the bivariate and the multiple model?</p>
-      <p>Your answer:</p>
-      <p>Solution:</p>
+        </statement>
+        <answer>
+          <p>Answer: <fillin characters="40" textstyle="box"/></p>
+        </answer>
+        <solution>
       <p>In the multiple model (compared to the bivariate model), the coefficient of income (or the relationship between income and attitudes toward justice) is smaller. The underlying reason is that in the bivariate model, the coefficient partly represented unobserved factors, which is corrected in the multiple regression model (at least with respect to the variables included in the model).</p>
       <p>In terms of model fit, the multiple model has a better fit to the data (since adj. R2 is higher).</p>
+        </solution>
+      </exercise>
     </subsection>
   </section>
   <section xml:id="reg-ols-diagnostics-nonlinear-interactions">
@@ -348,10 +404,17 @@ stargazer(model_biv, model_mult, model_nlin, type = "text")]]></code>
       <ul>
         <li>To summarize: The effect of income on justice attitudes is **positive** and **decreases** with higher values of income.</li>
       </ul>
+      <exercise>
+        <statement>
       <p>Question: How would the effect be interpreted if both signs were negative?</p>
-      <p>Your answer:</p>
-      <p>Solution:</p>
+        </statement>
+        <answer>
+          <p>Answer: <fillin characters="40" textstyle="box"/></p>
+        </answer>
+        <solution>
       <p>The effect of income on attitudes toward inequality would be negative and decrease for high values of income.</p>
+        </solution>
+      </exercise>
     </subsection>
     <subsection xml:id="reg-interaction-between-two-different-variables">
       <title>Interaction between two different variables</title>

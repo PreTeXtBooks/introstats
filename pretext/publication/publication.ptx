@@ -74,6 +74,7 @@
   <!-- Common options -->
   <common>
     <!-- Enable syntax highlighting for code blocks -->
+    <fillin textstyle="box"/>
     <chunking level="2"/>
     <tableofcontents level="2"/>
   </common>
