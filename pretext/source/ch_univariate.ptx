@@ -36,20 +36,6 @@
     <p>Before we can analyze the data, they must be read in the data analysis program. R uses a lot of so-called "packages" (i.e., software add-ons that facilitate or simplify specific parts of data analysis). For example, the package "readxl" allows us to read data that is stored in an Excel format. As another example, the package "ggplot2" allows us to create print-ready figures. Packages often have a specific syntax to which we refer along the way.</p>
 
     <program language="r">
-      <code><![CDATA[knitr::opts_chunk$set(echo = TRUE)]]></code>
-    </program>
-
-    <program language="r">
-      <code><![CDATA[# Required packages are installed and loaded here. If more packages are needed, they can be added to the list
-packages <- c("tidyverse", "readxl", "knitr", "stargazer", "ggplot2", "sf", "dplyr", "viridis","Hmisc", "kableExtra")
-installed_packages <- packages %in% rownames(installed.packages())
-if (any(installed_packages == FALSE)) {
-  install.packages(packages[!installed_packages], repos = "https://cran.r-project.org/")
-}
-invisible(lapply(packages, library, character.only = TRUE))]]></code>
-    </program>
-
-    <program language="r">
       <code><![CDATA[library(readxl) # This command loads the package "readxl". In the markdown document, all required packages are installed in the background using the command "install.packages('packagename')". In the downloadable script files, the installation and activation of the packages is automated. 
 
 data_nrw <- read_excel("data/inkar_nrw.xls") # Reads data from Excel format; the directory where the data is to be found can be changed (e.g., "C:/user/documents/folderxyz/inkar_nrw.xls")]]></code>
@@ -63,25 +49,173 @@ data_nrw <- read_excel("data/inkar_nrw.xls") # Reads data from Excel format; the
   scroll_box(width = "100%", height = "100%") #Scrollable box]]></code>
     </program>
 
+<table xml:id="table-nrw-social-indicators">
+  <title>Selected social indicators NRW</title>
+  <tabular halign="right">
+    <col halign="left"/>
+    <col halign="left"/>
+    <col halign="left"/>
+    <col halign="right"/>
+    <col halign="right"/>
+    <col halign="right"/>
+    <col halign="right"/>
+    <col halign="right"/>
+    <col halign="right"/>
+    <col halign="right"/>
+    <row header="yes">
+      <cell>kkziff</cell>
+      <cell>area</cell>
+      <cell>aggregat</cell>
+      <cell>nonnational</cell>
+      <cell>population</cell>
+      <cell>flaeche</cell>
+      <cell>unemp</cell>
+      <cell>avage</cell>
+      <cell>crimerate</cell>
+      <cell>KN</cell>
+    </row>
+    <row>
+      <cell>05111</cell>
+      <cell>Düsseldorf, Stadt</cell>
+      <cell>kreisfreie Stadt</cell>
+      <cell>20.69</cell>
+      <cell>620523</cell>
+      <cell>217</cell>
+      <cell>7.77</cell>
+      <cell>42.65</cell>
+      <cell>9998.762</cell>
+      <cell>5111000</cell>
+    </row>
+    <row>
+      <cell>05112</cell>
+      <cell>Duisburg, Stadt</cell>
+      <cell>kreisfreie Stadt</cell>
+      <cell>21.86</cell>
+      <cell>495885</cell>
+      <cell>233</cell>
+      <cell>12.10</cell>
+      <cell>43.05</cell>
+      <cell>8640.908</cell>
+      <cell>5112000</cell>
+    </row>
+    <row>
+      <cell>05113</cell>
+      <cell>Essen, Stadt</cell>
+      <cell>kreisfreie Stadt</cell>
+      <cell>16.87</cell>
+      <cell>582415</cell>
+      <cell>210</cell>
+      <cell>11.04</cell>
+      <cell>43.68</cell>
+      <cell>7472.201</cell>
+      <cell>5113000</cell>
+    </row>
+    <row>
+      <cell>05114</cell>
+      <cell>Krefeld, Stadt</cell>
+      <cell>kreisfreie Stadt</cell>
+      <cell>17.54</cell>
+      <cell>226844</cell>
+      <cell>138</cell>
+      <cell>11.11</cell>
+      <cell>44.28</cell>
+      <cell>8866.532</cell>
+      <cell>5114000</cell>
+    </row>
+    <row>
+      <cell>05116</cell>
+      <cell>Mönchengladbach, Stadt</cell>
+      <cell>kreisfreie Stadt</cell>
+      <cell>17.09</cell>
+      <cell>259665</cell>
+      <cell>170</cell>
+      <cell>10.02</cell>
+      <cell>43.74</cell>
+      <cell>8256.396</cell>
+      <cell>5116000</cell>
+    </row>
+    <row>
+      <cell>05117</cell>
+      <cell>Mülheim an der Ruhr, Stadt</cell>
+      <cell>kreisfreie Stadt</cell>
+      <cell>16.12</cell>
+      <cell>170921</cell>
+      <cell>91</cell>
+      <cell>8.31</cell>
+      <cell>45.23</cell>
+      <cell>5285.058</cell>
+      <cell>5117000</cell>
+    </row>
+    <row>
+      <cell>05119</cell>
+      <cell>Oberhausen, Stadt</cell>
+      <cell>kreisfreie Stadt</cell>
+      <cell>15.83</cell>
+      <cell>209566</cell>
+      <cell>77</cell>
+      <cell>10.76</cell>
+      <cell>44.52</cell>
+      <cell>7378.869</cell>
+      <cell>5119000</cell>
+    </row>
+    <row>
+      <cell>05120</cell>
+      <cell>Remscheid, Stadt</cell>
+      <cell>kreisfreie Stadt</cell>
+      <cell>19.15</cell>
+      <cell>111516</cell>
+      <cell>75</cell>
+      <cell>7.97</cell>
+      <cell>44.37</cell>
+      <cell>5635.991</cell>
+      <cell>5120000</cell>
+    </row>
+    <row>
+      <cell>05122</cell>
+      <cell>Solingen, Klingenstadt</cell>
+      <cell>kreisfreie Stadt</cell>
+      <cell>17.13</cell>
+      <cell>159193</cell>
+      <cell>90</cell>
+      <cell>8.15</cell>
+      <cell>44.11</cell>
+      <cell>5933.624</cell>
+      <cell>5122000</cell>
+    </row>
+    <row>
+      <cell>05124</cell>
+      <cell>Wuppertal, Stadt</cell>
+      <cell>kreisfreie Stadt</cell>
+      <cell>20.81</cell>
+      <cell>355004</cell>
+      <cell>168</cell>
+      <cell>9.95</cell>
+      <cell>43.11</cell>
+      <cell>8059.42</cell>
+      <cell></cell>
+    </row>
+  </tabular>
+</table>
+
     <p>The data contains the following variables for all 53 districts and large cities in North-Rhine Westphalia (reference year is 2020):</p>
 
-    <p>`kkziff` = identifier code for the county (*Landkreis*) or city (*kreisfreie Stadt*)</p>
+    <p><c>kkziff<\c> = identifier code for the county (*Landkreis*) or city (*kreisfreie Stadt*)</p>
 
-    <p>`area` = County / city name</p>
+    <p><c>area<\c> = County / city name</p>
 
-    <p>`nonnationall` = Proportion of foreign-born residents in %</p>
+    <p><c>nonnationall<\c> = Proportion of foreign-born residents in %</p>
 
-    <p>`population` = Number of inhabitants</p>
+    <p><c>population<\c> = Number of inhabitants</p>
 
-    <p>`flaeche` = Land area in square kilometers</p>
+    <p><c>flaeche<\c> = Land area in square kilometers</p>
 
-    <p>`unemp` = Unemployment rate in %</p>
+    <p><c>unemp<\c> = Unemployment rate in %</p>
 
-    <p>`avage` = Average age of the population</p>
+    <p><c>avage<\c> = Average age of the population</p>
 
-    <p>`crimerate` = Crime rate in cases per 100,000 inhabitants</p>
+    <p><c>crimerate<\c> = Crime rate in cases per 100,000 inhabitants</p>
 
-    <p>`KN` = Alternative id code that we need for the map below</p>
+    <p><c>KN<\c> = Alternative id code that we need for the map below</p>
 
   </section>
 
