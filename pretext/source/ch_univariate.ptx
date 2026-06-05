@@ -12,7 +12,7 @@
     <p>The report and underlying data we are dealing with in this case study can be accessed online via <url href="https://www.sozialberichte.nrw.de">https://www.sozialberichte.nrw.de</url>.</p>
 
     <figure xml:id="fig-cover-sozialbericht">
-      <image source="picture/cover.png" width="50%"/>
+      <image source="assets/images/cover.png" width="50%"/>
       <caption>Cover Sozialbericht</caption>
     </figure>
 
@@ -397,7 +397,7 @@ varcoef]]></code>
     <p>Quartiles divide the ordered data into four parts (Q1 to Q4, where Q4 is the maximum of the observed values), and the median is represented by Q2. Hence, 25% of the observations are below or at Q1, 75% above. Q3-Q1 = interquartile range (IQR), which reflects the range in which the middle 50% of the observations are located.</p>
 
     <figure xml:id="fig-quartiles">
-      <image source="picture/quartiles.PNG" width="50%"/>
+      <image source="assets/images/quartiles.PNG" width="50%"/>
       <caption>Quartiles</caption>
     </figure>
 
