@@ -364,65 +364,6 @@ ciplot
 summary(data_ess$hinctnta_di)
 ]]></code>
       </program>
-      <exercise>
-        <statement>
-      <p>Question: Formulate the null and alternative hypotheses if we assume that persons with a high-income are more satisfied with the government.</p>
-        </statement>
-        <answer>
-          <p>Answer: <fillin characters="40" textstyle="box"/></p>
-          <p>H_0: <fillin characters="40" textstyle="box"/></p>
-          <p>H_A: <fillin characters="40" textstyle="box"/></p>
-        </answer>
-        <solution>
-      <p>Typically, it is easier to start with formulating the alternative hypothesis.</p>
-      <p>$H_A$:</p>
-      <p>High-income individuals are more satisfied with government than low-income individuals (i.e., positive relationship between income and satisfaction with government).</p>
-      <p>Formal: $\mu(satisfaction|highincome)&gt;\mu(satisfaction|lowincome)$ or (equivalent) $\mu(satisfaction|highincome)-\mu(satisfaction|lowincome)&gt;0$</p>
-      <p>$H_0$:</p>
-      <p>High-income individuals are equally or less satisfied with government than low-income individuals (i.e., null or negative relationship between income and satisfaction with government).</p>
-      <p>Formal: $\mu(satisfaction|highincome)\le\mu(satisfaction|lowincome)$ or (equivalent) $\mu(satisfaction|highincome)-\mu(satisfaction|lowincome)\le0$</p>
-      <p>Note that it is important that all possible outcomes are covered by both hypotheses. This means that when formulating a directed hypothesis, the null hypothesis must include the case of no relationship (i.e., "$\le$" instead of just "$&lt;$").</p>
-      <p>Let us then assume an error probability of 5% or 0.05 (Step 2). Next, we calculate the test statistic (Step 3). Generally, this is given as $\frac{estimate - true value}{standard error}$. Since we test against the null hypothesis, the true value is 0. The formula for the so-called z-test statistic is given as:</p>
-      <p>$z=\frac{Estimation}{Standard Error}$.</p>
-      <p>Steps 4 and 5 are about the actual test. Remember that per the alternative hypothesis, we assumed a positive mean difference (i.e., high-income earners are more satisfied with the government than low-income earners). Next, we want to know where the mean difference is located on the null distribution. If it is close to the center of the distribution, we have no reason to reject the null hypothesis. However, if it is at the margins of the distribution, this would provide a reason for rejecting the null hypothesis (and favoring the alternative hypothesis). We use the z-distribution with a mean of 0 and a standard deviation of 1. Remember the properties of this distribution from above. If we set the critical value to be lower than -1.96 and higher than +1.96, we would be in the 5% range of the distribution if our test statistic exceeds those critical values. If this was the case, we can conclude that it would be very unlikely to sample such a value even though $H_0$ holds. Note that we set up a positive and negative area of rejection if we formulate undirected hypotheses (i.e., $H_A$: the mean difference can be higher or lower than zero, $H_0$: the mean difference equals zero) and conduct two-sided tests. For a directed hypothesis (and one-sided tests), like in our example, the rejection area is only in the negative or positive range of the distribution (depending on whether $H_A$ expects a pos. or neg. statistic).</p>
-      <program language="r">
-        <code><![CDATA[# Draw a standard normal distribution:
-z = seq(-4, 4, length.out=1001)
-x = rnorm(z)
-
-# Null distribution of two-sided test
-plot( x=z, y=dnorm(z), bty='n', type='l', main="Null distribution of two-sided test, error probability 0.05", ylab="Probability density", xlab="z", xlim=c(-3,3))
-axis(1, at = seq(-4, 4, by = 1))
-polygon(x=c(z[z<=qnorm(0.025)], qnorm(0.025), min(z)), y=c(dnorm(z[z<=qnorm(0.025)]), 0, 0), col="maroon")
-polygon(x=c(z[z>=qnorm(0.975)], max(z), qnorm(0.975)), y=c(dnorm(z[z>=qnorm(0.975)]), 0, 0), col="maroon")
-
-# Null distribution of one-sided test (H_A>0)
-plot( x=z, y=dnorm(z), bty='n', type='l', main="Null distribution of one-sided test (H_A>0), error probability 0.05", ylab="Probability density", xlab="z", xlim=c(-3,3))
-axis(1, at = seq(-4, 4, by = 1))
-polygon(x=c(z[z>=qnorm(0.95)], max(z), qnorm(0.95)), y=c(dnorm(z[z>=qnorm(0.95)]), 0, 0), col="maroon")
-
-# Null distribution of one-sided test (H_A<0)
-plot( x=z, y=dnorm(z), bty='n', type='l', main="Null distribution of one-sided test (H_A<0), error probability 0.05", ylab="Probability density", xlab="z", xlim=c(-3,3))
-axis(1, at = seq(-4, 4, by = 1))
-polygon(x=c(z[z<=qnorm(0.05)], qnorm(0.05), min(z)), y=c(dnorm(z[z<=qnorm(0.05)]), 0, 0), col="maroon")
-
-]]></code>
-      </program>
-        </solution>
-      </exercise>
-      <exercise>
-        <statement>
-      <p>Question: How would the rejection area change if we test one-sided? What would change if we set a 1% probability of error (two-sided test)?</p>
-        </statement>
-        <answer>
-          <p>Answer: <fillin characters="40" textstyle="box"/></p>
-        </answer>
-        <solution>
-      <p>Assuming a positive mean difference or correlation, the rejection area would be located only on the right side of the distribution. Since we still use an error probability of 5%, this area would be larger than in the two-sided case. Consequently, the critical value c thus moves a bit in the direction of the center of the distribution. For the z-distribution, this value is +1.645 for a positive alternative hypothesis (and -1.645 for a negative hypothesis).</p>
-      <p>If we change the probability of error to 1% and test two-sided, we have a rejection range that is smaller compared to the 5% case. Our estimate and the corresponding z-statistic need to be larger to reject the null hypothesis compared to the 5%-case. In the 1% case, the critical values are -2.326 and +2.326.</p>
-      <p>Critical values at which one can reject the null hypothesis can be obtained from here: <url href="https://www.criticalvaluecalculator.com/"/></p>
-        </solution>
-      </exercise>
       </introduction>
 
       <subsubsection xml:id="inf-null-hypothesis-testing-hypothesis-test-of-a-difference-in-means-general-remarks-on-p-values">
@@ -448,6 +389,65 @@ polygon(x=c(z[z<=qnorm(0.05)], qnorm(0.05), min(z)), y=c(dnorm(z[z<=qnorm(0.05)]
         <ul>
           <li>For example: A mean difference of 0.5 with a 95% confidence interval of [0.35; 0.65] is statistically significant at the $\alpha$=0.05 level (reject $H_0$). However, a mean difference of -0.1 with a 95% confidence interval of [-0.25; 0.05] is statistically <em>not</em> significant at the $\alpha$=0.05 level (confidence intervals include 0, fail to reject $H_0$).</li>
         </ul>
+        <exercise>
+          <statement>
+        <p>Question: Formulate the null and alternative hypotheses if we assume that persons with a high-income are more satisfied with the government.</p>
+          </statement>
+          <answer>
+            <p>Answer: <fillin characters="40" textstyle="box"/></p>
+            <p>H_0: <fillin characters="40" textstyle="box"/></p>
+            <p>H_A: <fillin characters="40" textstyle="box"/></p>
+          </answer>
+          <solution>
+        <p>Typically, it is easier to start with formulating the alternative hypothesis.</p>
+        <p>$H_A$:</p>
+        <p>High-income individuals are more satisfied with government than low-income individuals (i.e., positive relationship between income and satisfaction with government).</p>
+        <p>Formal: $\mu(satisfaction|highincome)&gt;\mu(satisfaction|lowincome)$ or (equivalent) $\mu(satisfaction|highincome)-\mu(satisfaction|lowincome)&gt;0$</p>
+        <p>$H_0$:</p>
+        <p>High-income individuals are equally or less satisfied with government than low-income individuals (i.e., null or negative relationship between income and satisfaction with government).</p>
+        <p>Formal: $\mu(satisfaction|highincome)\le\mu(satisfaction|lowincome)$ or (equivalent) $\mu(satisfaction|highincome)-\mu(satisfaction|lowincome)\le0$</p>
+        <p>Note that it is important that all possible outcomes are covered by both hypotheses. This means that when formulating a directed hypothesis, the null hypothesis must include the case of no relationship (i.e., "$\le$" instead of just "$&lt;$").</p>
+        <p>Let us then assume an error probability of 5% or 0.05 (Step 2). Next, we calculate the test statistic (Step 3). Generally, this is given as $\frac{estimate - true value}{standard error}$. Since we test against the null hypothesis, the true value is 0. The formula for the so-called z-test statistic is given as:</p>
+        <p>$z=\frac{Estimation}{Standard Error}$.</p>
+        <p>Steps 4 and 5 are about the actual test. Remember that per the alternative hypothesis, we assumed a positive mean difference (i.e., high-income earners are more satisfied with the government than low-income earners). Next, we want to know where the mean difference is located on the null distribution. If it is close to the center of the distribution, we have no reason to reject the null hypothesis. However, if it is at the margins of the distribution, this would provide a reason for rejecting the null hypothesis (and favoring the alternative hypothesis). We use the z-distribution with a mean of 0 and a standard deviation of 1. Remember the properties of this distribution from above. If we set the critical value to be lower than -1.96 and higher than +1.96, we would be in the 5% range of the distribution if our test statistic exceeds those critical values. If this was the case, we can conclude that it would be very unlikely to sample such a value even though $H_0$ holds. Note that we set up a positive and negative area of rejection if we formulate undirected hypotheses (i.e., $H_A$: the mean difference can be higher or lower than zero, $H_0$: the mean difference equals zero) and conduct two-sided tests. For a directed hypothesis (and one-sided tests), like in our example, the rejection area is only in the negative or positive range of the distribution (depending on whether $H_A$ expects a pos. or neg. statistic).</p>
+        <program language="r">
+          <code><![CDATA[# Draw a standard normal distribution:
+z = seq(-4, 4, length.out=1001)
+x = rnorm(z)
+
+# Null distribution of two-sided test
+plot( x=z, y=dnorm(z), bty='n', type='l', main="Null distribution of two-sided test, error probability 0.05", ylab="Probability density", xlab="z", xlim=c(-3,3))
+axis(1, at = seq(-4, 4, by = 1))
+polygon(x=c(z[z<=qnorm(0.025)], qnorm(0.025), min(z)), y=c(dnorm(z[z<=qnorm(0.025)]), 0, 0), col="maroon")
+polygon(x=c(z[z>=qnorm(0.975)], max(z), qnorm(0.975)), y=c(dnorm(z[z>=qnorm(0.975)]), 0, 0), col="maroon")
+
+# Null distribution of one-sided test (H_A>0)
+plot( x=z, y=dnorm(z), bty='n', type='l', main="Null distribution of one-sided test (H_A>0), error probability 0.05", ylab="Probability density", xlab="z", xlim=c(-3,3))
+axis(1, at = seq(-4, 4, by = 1))
+polygon(x=c(z[z>=qnorm(0.95)], max(z), qnorm(0.95)), y=c(dnorm(z[z>=qnorm(0.95)]), 0, 0), col="maroon")
+
+# Null distribution of one-sided test (H_A<0)
+plot( x=z, y=dnorm(z), bty='n', type='l', main="Null distribution of one-sided test (H_A<0), error probability 0.05", ylab="Probability density", xlab="z", xlim=c(-3,3))
+axis(1, at = seq(-4, 4, by = 1))
+polygon(x=c(z[z<=qnorm(0.05)], qnorm(0.05), min(z)), y=c(dnorm(z[z<=qnorm(0.05)]), 0, 0), col="maroon")
+
+]]></code>
+        </program>
+          </solution>
+        </exercise>
+        <exercise>
+          <statement>
+        <p>Question: How would the rejection area change if we test one-sided? What would change if we set a 1% probability of error (two-sided test)?</p>
+          </statement>
+          <answer>
+            <p>Answer: <fillin characters="40" textstyle="box"/></p>
+          </answer>
+          <solution>
+        <p>Assuming a positive mean difference or correlation, the rejection area would be located only on the right side of the distribution. Since we still use an error probability of 5%, this area would be larger than in the two-sided case. Consequently, the critical value c thus moves a bit in the direction of the center of the distribution. For the z-distribution, this value is +1.645 for a positive alternative hypothesis (and -1.645 for a negative hypothesis).</p>
+        <p>If we change the probability of error to 1% and test two-sided, we have a rejection range that is smaller compared to the 5% case. Our estimate and the corresponding z-statistic need to be larger to reject the null hypothesis compared to the 5%-case. In the 1% case, the critical values are -2.326 and +2.326.</p>
+        <p>Critical values at which one can reject the null hypothesis can be obtained from here: <url href="https://www.criticalvaluecalculator.com/"/></p>
+          </solution>
+        </exercise>
         <ul>
           <li>To calculate the exact p-value, we rely on tables or statistical software.</li>
         </ul>

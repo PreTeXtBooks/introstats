@@ -59,31 +59,6 @@ kable(head(data_allbus, 10), format = "html", booktabs = TRUE, caption = "ALLBUS
 ]]></code>
     </program>
     <p>Next, we build an index from the variables `im19` (agreement: income differences increase motivation), `im20` (agreement: rank differences between people are acceptable) and `im21` (agreement: social differences are fair). Since high values on those variables indicate disagreement, we can label the index **`morejustice`** for which high values represent disagreement with social inequality (i.e., advocacy of more justice).</p>
-    <exercise>
-      <statement>
-    <p>Question: Could we have recoded the variables differently? What would change? And what would happen if, for example, we recoded only two of the three variables and then built an index with all three variables?</p>
-      </statement>
-      <answer>
-        <p>Answer: <fillin characters="40" textstyle="box"/></p>
-      </answer>
-      <solution>
-    <p>Yes, if we were to recode all items, that would be just as possible. We would then have to label an index as "less justice" or "inequality," since high values represent acceptance of social inequality. Recoding only a few variables is inadmissible, the index would no longer be valid.</p>
-    <p>For building scales or indices of items, it is always a good idea to check whether there are substantial correlations between the items. There are also other ways to look at the reliability of an index, for example, by calculating Cronbach's alpha. We go with correlations and also look at the distribution of the index variable.</p>
-    <program language="r">
-      <code><![CDATA[# Do the items correlate sufficiently high for the index? (>.4 would be desirable)
-# Calculate correlation and output 
-vars <- c("im19", "im20", "im21")
-cor.vars <- data_allbus[vars]
-rcorr(as.matrix(cor.vars))]]></code>
-    </program>
-    <program language="r">
-      <code><![CDATA[# Index creation
-data_allbus$morejustice <- (data_allbus$im19 + data_allbus$im20 + data_allbus$im21)/3
-hist(data_allbus$morejustice)]]></code>
-    </program>
-    <p>The correlations show that at least most of the indicators are correlated with each other by r &gt; .4. The histogram suggests that the variable values are approximately normally distributed.</p>
-      </solution>
-    </exercise>
     </introduction>
 
     <subsection xml:id="reg-the-foundations-of-bivariate-regression">
@@ -164,6 +139,32 @@ stargazer(model_biv, type = "text")]]></code>
         </solution>
       </exercise>
     </subsection>
+
+    <exercise>
+      <statement>
+    <p>Question: Could we have recoded the variables differently? What would change? And what would happen if, for example, we recoded only two of the three variables and then built an index with all three variables?</p>
+      </statement>
+      <answer>
+        <p>Answer: <fillin characters="40" textstyle="box"/></p>
+      </answer>
+      <solution>
+    <p>Yes, if we were to recode all items, that would be just as possible. We would then have to label an index as "less justice" or "inequality," since high values represent acceptance of social inequality. Recoding only a few variables is inadmissible, the index would no longer be valid.</p>
+    <p>For building scales or indices of items, it is always a good idea to check whether there are substantial correlations between the items. There are also other ways to look at the reliability of an index, for example, by calculating Cronbach's alpha. We go with correlations and also look at the distribution of the index variable.</p>
+    <program language="r">
+      <code><![CDATA[# Do the items correlate sufficiently high for the index? (>.4 would be desirable)
+# Calculate correlation and output
+vars <- c("im19", "im20", "im21")
+cor.vars <- data_allbus[vars]
+rcorr(as.matrix(cor.vars))]]></code>
+    </program>
+    <program language="r">
+      <code><![CDATA[# Index creation
+data_allbus$morejustice <- (data_allbus$im19 + data_allbus$im20 + data_allbus$im21)/3
+hist(data_allbus$morejustice)]]></code>
+    </program>
+    <p>The correlations show that at least most of the indicators are correlated with each other by r &gt; .4. The histogram suggests that the variable values are approximately normally distributed.</p>
+      </solution>
+    </exercise>
     <subsection xml:id="reg-on-the-correspondence-of-correlation-coefficient-and-standardized-regression-coefficient-in-the-bivariate-case">
       <title>On the correspondence of correlation coefficient and standardized regression coefficient in the bivariate case</title>
       <p>Pearson's correlation coefficient is the standardized covariance between two variables and corresponds to the so-called *standardized* regression coefficient from bivariate regression. To obtain the standardized regression coefficient, we can either z-transform the variables ($z=\frac{(x-\bar{x})}{S_x}$) before they enter the regression model or transform the coefficient after estimation by multiplying the unstandardized regression coefficient by the standard deviation of $X$ and dividing the result by the standard deviation of $Y$: $\beta_s=\frac{(\beta*S_y)}{S_x}$. In the present case, we obtain the standard deviations and then calculate the standardized coefficient by hand, as well as use the `scale` function in R that automatically z-transforms variables and then estimates the regression model. We will check whether both procedures and the correlation correspond to each other.</p>

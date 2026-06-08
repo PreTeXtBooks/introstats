@@ -54,25 +54,6 @@ knitr::kable(head(data_us, 10), booktabs = TRUE,  caption = 'A table of the firs
 
     <p>`age` = age of respondent in years.</p>
 
-    <exercise>
-      <statement>
-    <p>Question: What is the scale of measurement (nominal, ordinal, metric) of each variable?</p>
-      </statement>
-      <answer>
-
-        <p>Answer: <fillin characters="40" textstyle="box"/></p>
-
-      </answer>
-      <solution>
-
-    <ul>
-      <li>`vote` and `trump` --&gt; nominal (i.e., information on if something is either the case or not, categories cannot be ranked and have no numerical meaning)</li>
-      <li>`education` --&gt; ordinal (i.e., categories (or variable values) can be ranked, information on whether a variable value is "higher"/"more" or "lower"/"less")</li>
-      <li>`age` --&gt; metric (i.e., interval between ranked variable values can be compared; e.g., moving up 2 years from 20 to 22 is equivalent to moving up from 52 to 54)</li>
-    </ul>
-
-      </solution>
-    </exercise>
     </introduction>
 
     <subsection xml:id="bi-frequency-tables">
@@ -123,6 +104,26 @@ prop.table(table(data_us$vote))]]></code>
         </solution>
       </exercise>
     </subsection>
+
+    <exercise>
+      <statement>
+    <p>Question: What is the scale of measurement (nominal, ordinal, metric) of each variable?</p>
+      </statement>
+      <answer>
+
+        <p>Answer: <fillin characters="40" textstyle="box"/></p>
+
+      </answer>
+      <solution>
+
+    <ul>
+      <li>`vote` and `trump` --&gt; nominal (i.e., information on if something is either the case or not, categories cannot be ranked and have no numerical meaning)</li>
+      <li>`education` --&gt; ordinal (i.e., categories (or variable values) can be ranked, information on whether a variable value is "higher"/"more" or "lower"/"less")</li>
+      <li>`age` --&gt; metric (i.e., interval between ranked variable values can be compared; e.g., moving up 2 years from 20 to 22 is equivalent to moving up from 52 to 54)</li>
+    </ul>
+
+      </solution>
+    </exercise>
 
     <subsection xml:id="bi-a-note-on-missing-data-and-missing-values">
       <title>A note on missing data and missing values</title>
