@@ -54,18 +54,6 @@ knitr::kable(head(data_us, 10), booktabs = TRUE,  caption = 'A table of the firs
 
     <p>`age` = age of respondent in years.</p>
 
-    <p>Question: What is the scale of measurement (nominal, ordinal, metric) of each variable?</p>
-
-    <p>Your answer:</p>
-
-    <p>Solution:</p>
-
-    <ul>
-      <li>`vote` and `trump` --&gt; nominal (i.e., information on if something is either the case or not, categories cannot be ranked and have no numerical meaning)</li>
-      <li>`education` --&gt; ordinal (i.e., categories (or variable values) can be ranked, information on whether a variable value is "higher"/"more" or "lower"/"less")</li>
-      <li>`age` --&gt; metric (i.e., interval between ranked variable values can be compared; e.g., moving up 2 years from 20 to 22 is equivalent to moving up from 52 to 54)</li>
-    </ul>
-
     </introduction>
 
     <subsection xml:id="bi-frequency-tables">
@@ -92,11 +80,16 @@ table(data_us$vote)]]></code>
 prop.table(table(data_us$vote))]]></code>
       </program>
 
+      <exercise>
+        <statement>
       <p>Question: How well did the results from the survey predict the actual election outcome? Can we conclude from that whether or not the sample is representative?</p>
+        </statement>
+        <answer>
 
-      <p>Your answer:</p>
+          <p>Answer: <fillin characters="40" textstyle="box"/></p>
 
-      <p>Solution:</p>
+        </answer>
+        <solution>
 
       <p>In the 2020 US presidential election, Biden won the popular vote against Trump by 51.3% to 46.9%. The survey results indicate that at the time the survey was conducted, 53.3% would have voted for Biden (compared to 42.8% for Trump). While the survey correctly predicted Biden as the winner, the result deviated from the actual election outcome by about 2 percentage points. Inferring from samples to the underlying population is always subject to some uncertainty. We can quantify margins of uncertainty, and we will do so in <xref ref="ch-inference"/>. Beyond the role of statistical uncertainty, several further factors (e.g., political campaigning or situational circumstances on voting day) might have contributed to the outcome of the election result and possibly account for the difference between the survey results and the actual vote.</p>
 
@@ -108,7 +101,29 @@ prop.table(table(data_us$vote))]]></code>
         <code><![CDATA[prop.table(table(data_us$trump))]]></code>
       </program>
 
+        </solution>
+      </exercise>
     </subsection>
+
+    <exercise>
+      <statement>
+    <p>Question: What is the scale of measurement (nominal, ordinal, metric) of each variable?</p>
+      </statement>
+      <answer>
+
+        <p>Answer: <fillin characters="40" textstyle="box"/></p>
+
+      </answer>
+      <solution>
+
+    <ul>
+      <li>`vote` and `trump` --&gt; nominal (i.e., information on if something is either the case or not, categories cannot be ranked and have no numerical meaning)</li>
+      <li>`education` --&gt; ordinal (i.e., categories (or variable values) can be ranked, information on whether a variable value is "higher"/"more" or "lower"/"less")</li>
+      <li>`age` --&gt; metric (i.e., interval between ranked variable values can be compared; e.g., moving up 2 years from 20 to 22 is equivalent to moving up from 52 to 54)</li>
+    </ul>
+
+      </solution>
+    </exercise>
 
     <subsection xml:id="bi-a-note-on-missing-data-and-missing-values">
       <title>A note on missing data and missing values</title>
@@ -155,11 +170,16 @@ tab_xtab(var.row = data_us$trump, var.col = data_us$education, show.row.prc = TR
 ]]></code>
       </program>
 
+      <exercise>
+        <statement>
       <p>Question: Which conclusions can be drawn from a cross tab with row percentages?</p>
+        </statement>
+        <answer>
 
-      <p>Your answer:</p>
+          <p>Answer: <fillin characters="40" textstyle="box"/></p>
 
-      <p>Solution:</p>
+        </answer>
+        <solution>
 
       <p>Row percentages are the number of observations for each cell is divided by the total number of observations for each row (adding all proportions per row adds up to 100%). The interpretation would be similar to before, except that we now focus on comparing different categories of the row variable for one selected value of the column variable. Let's select education = 1: Among those who do not support Trump (= Biden supporters), 15.3% have a low education profile, while among Trump supporters 23.1% have a low education profile. The difference of 7.8 percentage points suggests that Trump support and low education are systematically associated. Hence, the conclusion from the cross tab analysis with row percentages is equivalent to that one from column percentages (given that we adjust the interpretation scheme). Moreover, row percentages in this case also show the descriptive *distribution* of the education variable within each category of the vote variable. However, it is often not easy to compare the distributions at one glance.</p>
 
@@ -171,14 +191,23 @@ tab_xtab(var.row = data_us$trump, var.col = data_us$education, show.cell.prc = T
 ]]></code>
       </program>
 
+        </solution>
+      </exercise>
+      <exercise>
+        <statement>
       <p>Question: Which conclusions can be drawn from a cross tab with cell percentages?</p>
+        </statement>
+        <answer>
 
-      <p>Your answer:</p>
+          <p>Answer: <fillin characters="40" textstyle="box"/></p>
 
-      <p>Solution:</p>
+        </answer>
+        <solution>
 
       <p>Total percentages are the number of observations for each cell divided by the total number of observations. This shows the relative frequency of each combination of values of the two variables. The goal is a descriptive understanding of the distribution of cases. (Note: This is rarely used in applied research.)</p>
 
+        </solution>
+      </exercise>
     </subsection>
 
     <subsection xml:id="bi-age-and-trump-vote">
@@ -202,11 +231,16 @@ histogram( ~ age | trump ,
 ]]></code>
       </program>
 
+      <exercise>
+        <statement>
       <p>Question: What can be inferred from the graphs?</p>
+        </statement>
+        <answer>
 
-      <p>Your answer:</p>
+          <p>Answer: <fillin characters="40" textstyle="box"/></p>
 
-      <p>Solution:</p>
+        </answer>
+        <solution>
 
       <p>The age distribution of the respondents supporting Biden (left-hand) is a bit more even than the distribution of those supporting Trump (right-hand side). The latter is also more skewed to the left and its center is more on the right, which indicates that respondents who support Trump are older, on average, than those who support Biden.</p>
 
@@ -245,11 +279,18 @@ tab_xtab(var.row = data_us$trump, var.col = data_us$age_cat, show.col.prc = TRUE
 ]]></code>
       </program>
 
+        </solution>
+      </exercise>
+      <exercise>
+        <statement>
       <p>Question: Interpret the cross tab. What can be concluded? Why don't we always go straight to categorizing metric variables and using the recoded variable in a cross tab?</p>
+        </statement>
+        <answer>
 
-      <p>Your answer:</p>
+          <p>Answer: <fillin characters="40" textstyle="box"/></p>
 
-      <p>Solution:</p>
+        </answer>
+        <solution>
 
       <p>Looking at the category of young respondents (age_cat = 1), 36.9% prefer Trump as president, whereas among old respondents (age_cat = 3), 47.6% opt for Trump. This difference of 10.7 percentage points indicates a systematic (positive) empirical relationship between age and Trump support: Older respondents tend to prefer Trump more than younger voters.</p>
 
@@ -303,6 +344,8 @@ ggplot(data_us_counted, aes(fill=age_cat_nom, y=n, x=trump_nom)) +
 ]]></code>
       </program>
 
+        </solution>
+      </exercise>
     </subsection>
 
   </section>
@@ -354,14 +397,21 @@ sc1
 ]]></code>
       </program>
 
+      <exercise>
+        <statement>
       <p>Question: What can be inferred from the figure?</p>
+        </statement>
+        <answer>
 
-      <p>Your answer:</p>
+          <p>Answer: <fillin characters="40" textstyle="box"/></p>
 
-      <p>Solution:</p>
+        </answer>
+        <solution>
 
       <p>The pattern indicates a *negative* relationship between the two variables. If the proportion of highly educated people in a region increases (moving to the right on the x-axis), we see that this is related to *lower* support for Trump (lower scores on the y-axis).</p>
 
+        </solution>
+      </exercise>
     </subsection>
 
     <subsection xml:id="bi-correlation">
@@ -487,22 +537,36 @@ cramerV(cramerV_tabelle)
 ]]></code>
     </program>
 
+    <exercise>
+      <statement>
     <p>Question: How can Cramér's V be interpreted in this case?</p>
+      </statement>
+      <answer>
 
-    <p>Your answer:</p>
+        <p>Answer: <fillin characters="40" textstyle="box"/></p>
 
-    <p>Solution:</p>
+      </answer>
+      <solution>
 
     <p>Interpretation: There is an association between the variables `education` and `trump`. Given the rule of thumb for small tables, the association of 0.17 is weak. In our case, we know from the interpretation above that the association is negative (the higher the education, the lower the approval of Trump, on average).</p>
 
+      </solution>
+    </exercise>
+    <exercise>
+      <statement>
     <p>Question: Why didn't we calculate the Pearson's correlation coefficient instead?</p>
+      </statement>
+      <answer>
 
-    <p>Your answer:</p>
+        <p>Answer: <fillin characters="40" textstyle="box"/></p>
 
-    <p>Solution:</p>
+      </answer>
+      <solution>
 
     <p>Pearson's correlation coefficient requires (quasi-)metric variables with several categories. For ordinal variables, we have tools such as Kendall's Tau or Spearman's correlation coefficient (see here for more on different correlation types: <url href="https://ademos.people.uic.edu/Chapter22.html"/>). If nominal variables are involved, we use coefficients such as Cramér's V.</p>
 
+      </solution>
+    </exercise>
   </section>
 
 </chapter>
