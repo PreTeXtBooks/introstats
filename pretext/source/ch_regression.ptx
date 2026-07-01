@@ -69,8 +69,8 @@ kable(head(data_allbus, 10), format = "html", booktabs = TRUE, caption = "ALLBUS
       </figure>
       <p>Source: <url href="https://seeing-theory.brown.edu/regression-analysis/index.html"/></p>
       <p>Basically, this method allows us to find a straight line that optimally travels through the dots of observations. The smaller the squares, the better the line fits the data. We have found the optimal solution if any different slope of the line would lead to an increase in the sum of squared deviations. Hence, this estimator is called **ordinary least squares - the OLS estimator**. If we had more than one variable in the regression model, another spatial dimension would be added (a z-axis) and the straight line would become a surface. With more than two independent variables, we are dealing with a multidimensional surface that is no longer depictable. The least squares method remains the same in such a case, except that the computation becomes more complex (done with a software algorithm).</p>
-      <p>The software program computes a so-called regression coefficient for each independent variable (e.g., $\beta_1$ for the corresponding variable $X_1$). In the bivariate case (one independent variable), the regression coefficient represents the "steepness" of the slope in the following way:</p>
-      <p>**If $X_1$ increases by one unit, then $Y$ increases or decreases by $\beta_1$ units (depending on the sign).**</p>
+      <p>The software program computes a so-called regression coefficient for each independent variable (e.g., <m>\beta_1</m> for the corresponding variable <m>X_1</m>). In the bivariate case (one independent variable), the regression coefficient represents the "steepness" of the slope in the following way:</p>
+      <p>**If <m>X_1</m> increases by one unit, then <m>Y</m> increases or decreases by <m>\beta_1</m> units (depending on the sign).**</p>
       <p>Let us now briefly remember the example from <xref ref="uni-outlook"/>, where we focused in the outlook on the empirical relationship between unemployment and crime rates in German counties. There we found a positive bivariate relationship between the two variables. The table below shows the coefficient estimate and the figure that depicts the positive association. If unemployment increases by one unit (here: 1 percentage point), then crime rates increase by 517.46 units (here: cases per 100T inhabitants), on average.</p>
       <program language="r">
         <code><![CDATA[data_nrw <- read_excel("data/inkar_nrw.xls") 
@@ -80,8 +80,8 @@ stargazer(model1, type = "text")]]></code>
       <figure xml:id="fig-reg-2">
         <image source="../assets/images/interpret_en.png"/>
       </figure>
-      <p>We can also think about what would happen if the dots (i.e., the observed values on the two variables) were different. If the dots and the corresponding slope line were steeper (and thus the coefficient larger), then an increase in unemployment by one unit would lead to an even higher increase in crime rates. If the dots and the line indicated a flat pattern, then this would mean that there is no change in crime rates when unemployment increases by one unit. If the line (and the coefficient) was negative, then a one-unit increase in unemployment would be associated with a *decrease* (by $\beta_1$ units) in crime.</p>
-      <p>In addition to the coefficients for the independent variables, the regression output displays the so-called constant (or intercept), which is abbreviated as $a$, $\alpha$, or $\beta_0$. It provides the predicted value for the outcome variable $Y$ if all independent variables in the model have the value of 0. Usually, this information is not of much interest and thus ignored.</p>
+      <p>We can also think about what would happen if the dots (i.e., the observed values on the two variables) were different. If the dots and the corresponding slope line were steeper (and thus the coefficient larger), then an increase in unemployment by one unit would lead to an even higher increase in crime rates. If the dots and the line indicated a flat pattern, then this would mean that there is no change in crime rates when unemployment increases by one unit. If the line (and the coefficient) was negative, then a one-unit increase in unemployment would be associated with a *decrease* (by <m>\beta_1</m> units) in crime.</p>
+      <p>In addition to the coefficients for the independent variables, the regression output displays the so-called constant (or intercept), which is abbreviated as <m>a</m>, <m>\alpha</m>, or <m>\beta_0</m>. It provides the predicted value for the outcome variable <m>Y</m> if all independent variables in the model have the value of 0. Usually, this information is not of much interest and thus ignored.</p>
       <exercise>
         <statement>
       <p>Question: What is the value of the constant in the unemployment-crime example (Model 1)? What information content does it carry?</p>
@@ -96,11 +96,11 @@ stargazer(model1, type = "text")]]></code>
     </subsection>
     <subsection xml:id="reg-bivariate-regression-of-income-and-attitudes-toward-justice">
       <title>Bivariate regression of income and attitudes toward justice</title>
-      <p>We now estimate a bivariate regression for the relationship between income and attitudes toward justice. Our working hypothesis $H_A$ is that we assume a *negative* relationship - that is, individuals with a higher income advocate *less* strongly social justice compared to individuals with a lower income (e.g., because they fear a loss of income due to redistributive policies).</p>
-      <p>*Formally*, $H_A$ can be represented with reference to either a correlation coefficient $r&lt;0$ or a regression coefficient $\beta_1&lt;0$. Accordingly, the null hypothesis would be $\beta_1\geq0$.</p>
+      <p>We now estimate a bivariate regression for the relationship between income and attitudes toward justice. Our working hypothesis <m>H_A</m> is that we assume a *negative* relationship - that is, individuals with a higher income advocate *less* strongly social justice compared to individuals with a lower income (e.g., because they fear a loss of income due to redistributive policies).</p>
+      <p>*Formally*, <m>H_A</m> can be represented with reference to either a correlation coefficient <m>r&lt;0</m> or a regression coefficient <m>\beta_1&lt;0</m>. Accordingly, the null hypothesis would be <m>\beta_1\geq0</m>.</p>
       <exercise>
         <statement>
-      <p>Question: Would it also make sense to formulate a different hypothesis $H_A$?</p>
+      <p>Question: Would it also make sense to formulate a different hypothesis <m>H_A</m>?</p>
         </statement>
         <answer>
           <p>Answer: <fillin characters="40" textstyle="box"/></p>
@@ -167,7 +167,7 @@ hist(data_allbus$morejustice)]]></code>
     </exercise>
     <subsection xml:id="reg-on-the-correspondence-of-correlation-coefficient-and-standardized-regression-coefficient-in-the-bivariate-case">
       <title>On the correspondence of correlation coefficient and standardized regression coefficient in the bivariate case</title>
-      <p>Pearson's correlation coefficient is the standardized covariance between two variables and corresponds to the so-called *standardized* regression coefficient from bivariate regression. To obtain the standardized regression coefficient, we can either z-transform the variables ($z=\frac{(x-\bar{x})}{S_x}$) before they enter the regression model or transform the coefficient after estimation by multiplying the unstandardized regression coefficient by the standard deviation of $X$ and dividing the result by the standard deviation of $Y$: $\beta_s=\frac{(\beta*S_y)}{S_x}$. In the present case, we obtain the standard deviations and then calculate the standardized coefficient by hand, as well as use the `scale` function in R that automatically z-transforms variables and then estimates the regression model. We will check whether both procedures and the correlation correspond to each other.</p>
+      <p>Pearson's correlation coefficient is the standardized covariance between two variables and corresponds to the so-called *standardized* regression coefficient from bivariate regression. To obtain the standardized regression coefficient, we can either z-transform the variables (<m>z=\frac{(x-\bar{x})}{S_x}</m>) before they enter the regression model or transform the coefficient after estimation by multiplying the unstandardized regression coefficient by the standard deviation of <m>X</m> and dividing the result by the standard deviation of <m>Y</m>: <m>\beta_s=\frac{(\beta*S_y)}{S_x}</m>. In the present case, we obtain the standard deviations and then calculate the standardized coefficient by hand, as well as use the `scale` function in R that automatically z-transforms variables and then estimates the regression model. We will check whether both procedures and the correlation correspond to each other.</p>
       <program language="r">
         <code><![CDATA[
 # Standardized regression coefficient by hand
@@ -187,7 +187,7 @@ cor.vars <- data_allbus[vars]
 rcorr(as.matrix(cor.vars))
 ]]></code>
       </program>
-      <p>**Interpret the standardized regression coefficient as follows: If $X$ (income) increases by one *standard deviation*, then Y increases/decreases by $\beta_s$-*standard deviations*. Here, it is a decrease by 0.13 *standard deviations*.**</p>
+      <p>**Interpret the standardized regression coefficient as follows: If <m>X</m> (income) increases by one *standard deviation*, then Y increases/decreases by <m>\beta_s</m>-*standard deviations*. Here, it is a decrease by 0.13 *standard deviations*.**</p>
       <p>Standardized regression coefficients are also widely used in multiple regression (i.e., regressions with more than one independent variable). The advantage is that we "free" the variables from their original scale of measurement and use "standard deviations" as a comparable scale of measurement. We can thus directly compare regression coefficients. If a coefficient is larger, then it also has a larger "effect" on the outcome variable. For example, an increase of one unit on a scale of income that is measured on a scale ranging between 0 and 10,000 would result in a smaller change in the outcome variable than if it was measured on a scale with only 12 categories. Using standardized versions of each variable and using these two versions in two separate regression models should lead to comparable results. As an example of competing explanations that are represented by two independent variables in the same model: If income has a standardized coefficient of -0.13 and age has a standardized coefficient of -0.05, then income has a "greater effect" (on the outcome variable) than age.</p>
       <p>Note that we typically report z-standardized coefficients only for metric (but not binary) predictor variables and that there are other routines for comparing coefficients, such as the min-max normalization where all variables have a minimum of 0 and a maximum of 1 (and ordinal or metric variables additional values in between 0 and 1).</p>
     </subsection>
@@ -196,7 +196,7 @@ rcorr(as.matrix(cor.vars))
     <title>Multiple Regression</title>
     <subsection xml:id="reg-basic-idea">
       <title>Basic Idea</title>
-      <p>The goal of multiple regression is to explain the outcome variable with multiple independent variables. This is useful when we want to test different explanations for a phenomenon (e.g., attitudes toward justice). The multiple regression model produces *adjusted* estimates because the independent variables control for their mutual influences. Recall the example of unemployment and crime from <xref ref="ch-univariate"/>, where we also included population density as an additional variable. The interpretation of the influence of unemployment (on crime) is in this case adjusted for the influence of population density. For unemployment, we obtained a coefficient estimate of $\beta_1=215.4$. As a thought experiment: If we think of municipalities with the same population density and compare them with each other, then the municipalities with one percentage point more unemployment have on average a 215 higher crime rate per 100T inhabitants. The influence of population density on crime can be interpreted in a corresponding way - also here, the influence of the other factor (unemployment) is "held constant" or is controlled for.</p>
+      <p>The goal of multiple regression is to explain the outcome variable with multiple independent variables. This is useful when we want to test different explanations for a phenomenon (e.g., attitudes toward justice). The multiple regression model produces *adjusted* estimates because the independent variables control for their mutual influences. Recall the example of unemployment and crime from <xref ref="ch-univariate"/>, where we also included population density as an additional variable. The interpretation of the influence of unemployment (on crime) is in this case adjusted for the influence of population density. For unemployment, we obtained a coefficient estimate of <m>\beta_1=215.4</m>. As a thought experiment: If we think of municipalities with the same population density and compare them with each other, then the municipalities with one percentage point more unemployment have on average a 215 higher crime rate per 100T inhabitants. The influence of population density on crime can be interpreted in a corresponding way - also here, the influence of the other factor (unemployment) is "held constant" or is controlled for.</p>
       <p>This mutual "holding constant" or "controlling" in the multiple regression model means that we can account for alternative explanations with additional variables. In the example of attitudes toward justice, we use the variables gender (`female` with the categories male = 0 and female = 1), whether or not respondents were unemployed in the last 10 years (`unemployed` with the categories not unemployed = 0 and been unemployed = 1), and whether respondents live in West or East Germany (`east` with the categories West Germany = 0 and East Germany = 1) as additional variables. Regarding the influence of gender, we would assume that women are more supportive of social justice than men due to their socialization and societal norms and/or because they earn less than men, on average, due to the gender pay gap. Hence, it is important to control for gender so that income does not partially "transport" a gender effect. Controlling for gender in the multiple regression model allows us to obtain a "net" income effect that is separated from the effect of gender that otherwise could confound the relationship between income and attitudes toward justice.</p>
       <exercise>
         <statement>
@@ -216,10 +216,10 @@ rcorr(as.matrix(cor.vars))
     <subsection xml:id="reg-formulating-hypotheses">
       <title>Formulating hypotheses</title>
       <p>The multiple regression model with four independent variables can be represented with the following formula:</p>
-      <p>$y = \beta_0 + \beta_1 * x_1 + \beta_2 * x_2 + \beta_3 * x_3 + \beta_4 * x_4 + e$</p>
-      <p>Y refers to the outcome variable, $\beta_0$ is the constant, the other $\beta_i$ are the regression coefficients of the corresponding predictor variables $x_i$. $e$ refers to the residual or the part of the variance of the outcome variable that is not explained by the predictor variables in the model.</p>
+      <p><m>y = \beta_0 + \beta_1 * x_1 + \beta_2 * x_2 + \beta_3 * x_3 + \beta_4 * x_4 + e</m></p>
+      <p>Y refers to the outcome variable, <m>\beta_0</m> is the constant, the other <m>\beta_i</m> are the regression coefficients of the corresponding predictor variables <m>x_i</m>. <m>e</m> refers to the residual or the part of the variance of the outcome variable that is not explained by the predictor variables in the model.</p>
       <p>If we use the variable names for this, the formula for the specific model would be the following:</p>
-      <p>$morejustice = \beta_0 + \beta_1 * income + \beta_2 * female + \beta_3 * unemployed + \beta_4 * east + e$</p>
+      <p><m>morejustice = \beta_0 + \beta_1 * income + \beta_2 * female + \beta_3 * unemployed + \beta_4 * east + e</m></p>
       <exercise>
         <statement>
       <p>Question: Formulate the null and alternative hypotheses for each independent variable.</p>
@@ -236,14 +236,14 @@ rcorr(as.matrix(cor.vars))
           <p>H_A: <fillin characters="40" textstyle="box"/></p>
         </answer>
         <solution>
-      <p>Income $H_A$: $\beta_1&lt;0$ (Income is negatively related to attitudes toward justice)</p>
-      <p>$H_0$: $\beta_1\geq0$ (Income is unrelated or positively related to attitudes toward justice)</p>
-      <p>Female $H_A$: $\beta_2&gt;0$ (Being female is positively related to attitudes toward justice, which is the same as women advocate social justice more strongly than men)</p>
-      <p>$H_0$: $\beta_2\leq0$ (Being female is unrelated or negatively related to attitudes toward justice)</p>
-      <p>Unemployed $H_A$: $\beta_3&gt;0$ (Unemployment is positively related to attitudes toward justice, which is the same as people who experienced unemployment advocate social justice more strongly than those without such an experience)</p>
-      <p>$H_0$: $\beta_3\leq0$ (Unemployment is unrelated or negatively related to attitudes toward justice)</p>
-      <p>East Germany $H_A$: $\beta_4&gt;0$ (Living in East Germany is positively related to attitudes toward justice, which is the same as people from East Germany advocate social justice more strongly than those from West Germany)</p>
-      <p>$H_0$: $\beta_4\leq0$ (Living in East Germany is unrelated or negatively related to attitudes toward justice)</p>
+      <p>Income <m>H_A</m>: <m>\beta_1&lt;0</m> (Income is negatively related to attitudes toward justice)</p>
+      <p><m>H_0</m>: <m>\beta_1\geq0</m> (Income is unrelated or positively related to attitudes toward justice)</p>
+      <p>Female <m>H_A</m>: <m>\beta_2&gt;0</m> (Being female is positively related to attitudes toward justice, which is the same as women advocate social justice more strongly than men)</p>
+      <p><m>H_0</m>: <m>\beta_2\leq0</m> (Being female is unrelated or negatively related to attitudes toward justice)</p>
+      <p>Unemployed <m>H_A</m>: <m>\beta_3&gt;0</m> (Unemployment is positively related to attitudes toward justice, which is the same as people who experienced unemployment advocate social justice more strongly than those without such an experience)</p>
+      <p><m>H_0</m>: <m>\beta_3\leq0</m> (Unemployment is unrelated or negatively related to attitudes toward justice)</p>
+      <p>East Germany <m>H_A</m>: <m>\beta_4&gt;0</m> (Living in East Germany is positively related to attitudes toward justice, which is the same as people from East Germany advocate social justice more strongly than those from West Germany)</p>
+      <p><m>H_0</m>: <m>\beta_4\leq0</m> (Living in East Germany is unrelated or negatively related to attitudes toward justice)</p>
         </solution>
       </exercise>
     </subsection>
@@ -256,8 +256,8 @@ rcorr(as.matrix(cor.vars))
 stargazer(model_biv, model_mult, type = "text")]]></code>
       </program>
       <p>We can now insert the regression coefficients into the two formulas from above:</p>
-      <p>General form: $y = 2.936-0.011 * x_1 + 0.128 * x_2 + 0.066 * x_3 + 0.075 * x_4 + e$</p>
-      <p>Specific form: $morejustice = 2.936-0.011 * income + 0.128 * female + 0.066 * unemployed + 0.075 * east + e$</p>
+      <p>General form: <m>y = 2.936-0.011 * x_1 + 0.128 * x_2 + 0.066 * x_3 + 0.075 * x_4 + e</m></p>
+      <p>Specific form: <m>morejustice = 2.936-0.011 * income + 0.128 * female + 0.066 * unemployed + 0.075 * east + e</m></p>
       <exercise>
         <statement>
       <p>Question: Interpret the coefficients from the multiple regression model in terms of (a) direction of association, (b) significance, and (c) effect size.</p>
@@ -454,7 +454,7 @@ cat_plot(model_interaktion, pred = female, modx = east, geom = "line", point.sha
       <p>The blue line represents West Germany, and the orange line East Germany. The lines with the bars at the end are 95% confidence intervals, thus indirectly showing how "significant" the respective effects are estimated to be.</p>
       <p>Three things stand out:</p>
       <ul>
-        <li>Women and men in East Germany are more supportive of social justice than women and men in West Germany (orange triangles compared to blue dots). The difference is statistically significant for men in West Germany (confidence intervals on the left side do not overlap). To know whether the overall level of support (women and men combined) is statistically significantly higher in the East, we have to go back to **model_mult** and look at the *average* relationship ($\beta_4 = 0.075, p &lt; 0.01$).</li>
+        <li>Women and men in East Germany are more supportive of social justice than women and men in West Germany (orange triangles compared to blue dots). The difference is statistically significant for men in West Germany (confidence intervals on the left side do not overlap). To know whether the overall level of support (women and men combined) is statistically significantly higher in the East, we have to go back to **model_mult** and look at the *average* relationship (<m>\beta_4 = 0.075, p &lt; 0.01</m>).</li>
       </ul>
       <ul>
         <li>Looking at the lines and thus the effect of gender separately for both parts of the country, the difference between women and men is statistically significant in West Germany (see coefficient for `female`, 0.163). In East Germany, the difference is not significant. (This can also be visually inferred by comparing the orange and the blue estimates to each other.)</li>
@@ -463,37 +463,37 @@ cat_plot(model_interaktion, pred = female, modx = east, geom = "line", point.sha
         <li>The effect of being a woman is larger in West Germany than in East Germany (the blue line is steeper than the orange line). This is represented by the coefficient for the interaction term.</li>
       </ul>
       <p>**We can now insert the regression coefficients into a regression formula:**</p>
-      <p>$y = \beta_0 + \beta_1 * x_1 + \beta_2 * x_2 + \beta_3 * x_3 + \beta_4 * x_4 + \beta_5 * x_3*x_4 + e$</p>
-      <p>$morejustice = 2.912 - 0.011 * income + 0.065 * unemployed + 0.163*female + 0.128*east - 0.106*female*east + e$</p>
+      <p><m>y = \beta_0 + \beta_1 * x_1 + \beta_2 * x_2 + \beta_3 * x_3 + \beta_4 * x_4 + \beta_5 * x_3*x_4 + e</m></p>
+      <p><m>morejustice = 2.912 - 0.011 * income + 0.065 * unemployed + 0.163*female + 0.128*east - 0.106*female*east + e</m></p>
       <p>**We can also derive the formulas for the so-called marginal effects by taking the first derivative and entering the variable values in a combination that informs us about the effects for the different groups.**</p>
-      <p>$dy/d(east) = 0.128 – 0.106*female$</p>
+      <p><m>dy/d(east) = 0.128 – 0.106*female</m></p>
       <ol>
         <li>Marginal Effect for the variable `east` (first derivative)</li>
       </ol>
       <ul>
-        <li>We can substitute 0 for the variable female, i.e., the effect of `east` for men: $b(east=1, female=0) = 0.128 – 0.106 * 0 = 0.128$.</li>
+        <li>We can substitute 0 for the variable female, i.e., the effect of `east` for men: <m>b(east=1, female=0) = 0.128 – 0.106 * 0 = 0.128</m>.</li>
       </ul>
       <ul>
         <li>This refers to the difference between East and West in men (plot: distance between blue dot and orange triangle on the left).</li>
       </ul>
       <ul>
-        <li>If we substitute 1 for the variable female: i.e., the effect of `east` for women: $b(east=1, female=1) = 0.128 – 0.106 * 1 = 0.022$.</li>
+        <li>If we substitute 1 for the variable female: i.e., the effect of `east` for women: <m>b(east=1, female=1) = 0.128 – 0.106 * 1 = 0.022</m>.</li>
       </ul>
       <ul>
         <li>This refers to the small difference between East and West in women (distance between blue dot and orange triangle on the right side).</li>
       </ul>
-      <p>$dy/d(female) = 0.163 – 0.106*east$</p>
+      <p><m>dy/d(female) = 0.163 – 0.106*east</m></p>
       <ol>
         <li>Marginal Effect for the variable `female` (first derivative)</li>
       </ol>
       <ul>
-        <li>We can substitute 0 for the variable east, i.e., the effect of `female` for West Germans: $b(female=1, east=0) = 0.163 – 0.106 * 0 = 0.163$.</li>
+        <li>We can substitute 0 for the variable east, i.e., the effect of `female` for West Germans: <m>b(female=1, east=0) = 0.163 – 0.106 * 0 = 0.163</m>.</li>
       </ul>
       <ul>
         <li>This refers to the difference between women and men in West Germany (plot: distance between both blue dots).</li>
       </ul>
       <ul>
-        <li>If we substitute 1 for the variable east, i.e., the effect of `female` for East Germans: $b(female=1, east=1) = 0.163 – 0.106 * 1 = 0.057$.</li>
+        <li>If we substitute 1 for the variable east, i.e., the effect of `female` for East Germans: <m>b(female=1, east=1) = 0.163 – 0.106 * 1 = 0.057</m>.</li>
       </ul>
       <ul>
         <li>This refers to the difference between women and men in East Germany (distance between both orange triangles).</li>

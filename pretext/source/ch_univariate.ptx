@@ -304,9 +304,9 @@ histogram( ~ popdens + unemp + avage + crimerate,
 
     <p><strong>For the calculation of the mean, all observed values for a variable are added and the sum is then divided by the total number of observations (n).</strong></p>
 
-    <p>$\bar x = \frac{1}{n}\sum_{i=1}^n x_i$ or $\mu = \frac{1}{N}\sum_{i=1}^N x_i$</p>
+    <p><m>\bar x = \frac{1}{n}\sum_{i=1}^n x_i</m> or <m>\mu = \frac{1}{N}\sum_{i=1}^N x_i</m></p>
 
-    <p>$\bar x$ and n refer to given data we are working with (e.g., from a <em>sample</em>), $\mu$ and N refer to the <em>population</em> we want to make statistical statements about. (Note: This distinction becomes relevant in statistical testing, where we use a random sample to draw inferences about an underlying larger population.)</p>
+    <p><m>\bar x</m> and n refer to given data we are working with (e.g., from a <em>sample</em>), <m>\mu</m> and N refer to the <em>population</em> we want to make statistical statements about. (Note: This distinction becomes relevant in statistical testing, where we use a random sample to draw inferences about an underlying larger population.)</p>
 
     <p>Let's take a look at the means and other information on the variables in the data set:</p>
 
@@ -350,12 +350,12 @@ histogram( ~ popdens + unemp + avage + crimerate,
 
     <p><strong>The variance is the sum of squared deviations</strong>.</p>
 
-    <p>$\sigma^2 = \frac{\sum_{i=1}^n (x_i-\mu)^2}{N}$ (Notation for the population)<br/>
-$s^2 = \frac{\sum_{i=1}^n (x_i-\bar x)^2}{n-1}$ (Notation for the sample; If we apply statistical inference and use a random sample, we need to apply a correction in the denominator "n-1" – referred to as Bessel’s correction)</p>
+    <p><m>\sigma^2 = \frac{\sum_{i=1}^n (x_i-\mu)^2}{N}</m> (Notation for the population)<br/>
+<m>s^2 = \frac{\sum_{i=1}^n (x_i-\bar x)^2}{n-1}</m> (Notation for the sample; If we apply statistical inference and use a random sample, we need to apply a correction in the denominator "n-1" – referred to as Bessel’s correction)</p>
 
     <p><strong>The standard deviation re-transforms the value back to the scale on which the variable is measured, it is therefore easier to interpret and more commonly used</strong>.</p>
 
-    <p>$s = \sqrt{\frac{\sum_{i=1}^n (x_i-\bar x)^2}{n-1}}$</p>
+    <p><m>s = \sqrt{\frac{\sum_{i=1}^n (x_i-\bar x)^2}{n-1}}</m></p>
 
     <p>Here you find a graphical representation of the dispersion of the variables <c>unemp</c> and <c>crimerate</c>. Note that the deviations between observations on the x-axis are purely random to increase the readability of the plot (otherwise, all observations would be lined up like a vertical pearl necklace). The red line is the mean value.</p>
 
