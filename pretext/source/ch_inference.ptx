@@ -27,7 +27,7 @@ invisible(lapply(packages, library, character.only = TRUE))]]></code>
   </section>
   <section xml:id="inf-probability">
     <title>Probability</title>
-    <p>Probabilities correspond to the ratio of the number of observations that meet a certain criterion (i.e., an "event") to the total number of observations. A classic example is the coin toss and the ratio between heads and the total number of tosses. Probabilities are always positive ($P(A)\ge0$). The probability of all possible events (e.g., heads and tails in the case of a coin toss) is 1 ($P(\Omega)=1$). If events A and B cannot occur simultaneously, then the probability of A or B occurring is the summed probability for both events ($P(A or B)=P(A)+P(B)$).</p>
+    <p>Probabilities correspond to the ratio of the number of observations that meet a certain criterion (i.e., an "event") to the total number of observations. A classic example is the coin toss and the ratio between heads and the total number of tosses. Probabilities are always positive (<m>P(A)\ge0</m>). The probability of all possible events (e.g., heads and tails in the case of a coin toss) is 1 (<m>P(\Omega)=1</m>). If events A and B cannot occur simultaneously, then the probability of A or B occurring is the summed probability for both events (<m>P(A or B)=P(A)+P(B)</m>).</p>
     <p>The probabilities of events that occur in a chance experiment (e.g., a coin toss) can be represented as so-called random variables. Random variables have a probability distribution, for binary variables (0/1) this is the Bernoulli distribution, for continuous variables this is the normal distribution. (There are other distributions like the F-distribution or chi-square distribution, which we will use later for further purposes).</p>
     <p>Here we see a probability distribution for 10 balls (7 blue, 3 red) randomly drawn with replacement, in total 10,000 draws were made. Accordingly, the probability distribution is approximately 0.7 for blue and 0.3 for red:</p>
     <program language="r">
@@ -43,9 +43,9 @@ plot(h,freq=FALSE, axes=FALSE)
 axis(1, at = c(0, 1), labels = c("Blue", "Red"))
 axis(2, at = c(0, 10, 20, 30, 40, 50, 60, 70))]]></code>
     </program>
-    <p>The Bernoulli distribution is characterized by the probability of occurrence of an event $p$. The probability for the counter-event automatically follows from this: $1-p$. <em>We will need this distribution for the calculation of test statistics of proportions.</em></p>
-    <p>The normal distribution for random variables is a bell-shaped probability density function. It gives the probabilities for a <em>continuous random variable</em> with infinite intermediate values. Think of time as a continuous concept. Theoretically, we can measure time in infinitely small units (milliseconds, nanoseconds, etc.). However, in applied research, we would assign discrete values to the variable time. Hence, continuous variables are rather a theoretical concept. Regarding the distribution of a continuous random variable: The normal distribution is characterized by a mean $\mu$ and a standard deviation $\sigma$. The notation for the normal distribution of a random variable is $X \sim N(\mu,\sigma)$. Each combination of $\mu$ and $\sigma$ gives a differently shaped normal distribution. The mean indicates where the center of the distribution is on the x-axis and $\sigma$ indicates how flat or steep the distribution is (the higher, the more spread out and thus the flatter the curve becomes).</p>
-    <p>The so-called <em>standard normal distribution</em> has a mean of 0 and a standard deviation of 1 ($X \sim N(0,1)$). As with all other normal distributions, (1) the ends of the curve spread out to the left and right, approaching the x-axis without ever touching it. Thus, the values can range from - to + infinity. (2) The area under the curve is equal to 1 in total. (3) The so-called "Empirical Rule" states that for a standard normal distribution, 68% of the observations lie between -1 and +1 standard deviations. 95% of the observations lie between approx. -2 and +2 standard deviations (to be exact -1.96 and +1.96), and 99.7% of the observations lie between approximately -3 and +3 standard deviations.</p>
+    <p>The Bernoulli distribution is characterized by the probability of occurrence of an event <m>p</m>. The probability for the counter-event automatically follows from this: <m>1-p</m>. <em>We will need this distribution for the calculation of test statistics of proportions.</em></p>
+    <p>The normal distribution for random variables is a bell-shaped probability density function. It gives the probabilities for a <em>continuous random variable</em> with infinite intermediate values. Think of time as a continuous concept. Theoretically, we can measure time in infinitely small units (milliseconds, nanoseconds, etc.). However, in applied research, we would assign discrete values to the variable time. Hence, continuous variables are rather a theoretical concept. Regarding the distribution of a continuous random variable: The normal distribution is characterized by a mean <m>\mu</m> and a standard deviation <m>\sigma</m>. The notation for the normal distribution of a random variable is <m>X \sim N(\mu,\sigma)</m>. Each combination of <m>\mu</m> and <m>\sigma</m> gives a differently shaped normal distribution. The mean indicates where the center of the distribution is on the x-axis and <m>\sigma</m> indicates how flat or steep the distribution is (the higher, the more spread out and thus the flatter the curve becomes).</p>
+    <p>The so-called <em>standard normal distribution</em> has a mean of 0 and a standard deviation of 1 (<m>X \sim N(0,1)</m>). As with all other normal distributions, (1) the ends of the curve spread out to the left and right, approaching the x-axis without ever touching it. Thus, the values can range from - to + infinity. (2) The area under the curve is equal to 1 in total. (3) The so-called "Empirical Rule" states that for a standard normal distribution, 68% of the observations lie between -1 and +1 standard deviations. 95% of the observations lie between approx. -2 and +2 standard deviations (to be exact -1.96 and +1.96), and 99.7% of the observations lie between approximately -3 and +3 standard deviations.</p>
     <program language="r">
       <code><![CDATA[# Draw a standard normal distribution:
 z = seq(-4, 4, length.out=1001)
@@ -59,7 +59,7 @@ polygon(x=c(z[z>=qnorm(0.975)], max(z), qnorm(0.975)), y=c(dnorm(z[z>=qnorm(0.97
 
 ]]></code>
     </program>
-    <p>With probability distributions such as the standard normal distribution, we do not calculate the probability of a specific value but rather a range of values. For example, the probability that a value is greater than 1.96 standard deviations, i.e., $P(Z\ge1.96)$, is 2.5%. And the probability that a value is less than -1.96 standard deviations, i.e., $P(Z\le-1.96)$, is 2.5% (see the grey areas in the plot above, both areas sum up to 5%).</p>
+    <p>With probability distributions such as the standard normal distribution, we do not calculate the probability of a specific value but rather a range of values. For example, the probability that a value is greater than 1.96 standard deviations, i.e., <m>P(Z\ge1.96)</m>, is 2.5%. And the probability that a value is less than -1.96 standard deviations, i.e., <m>P(Z\le-1.96)</m>, is 2.5% (see the grey areas in the plot above, both areas sum up to 5%).</p>
     <p><em>We will use the standard normal distribution (also referred to as Z-distribution) for various statistical tests. The rule that 95% of observable values are located between -1.96 and 1.96, and 5% at the outer margins will also become important in Null Hypothesis Testing.</em></p>
   </section>
   <section xml:id="inf-basics">
@@ -90,7 +90,7 @@ hist(data, freq = FALSE, col = "gray", xlab = "Data Values", main = "Means of go
 curve(dnorm(x, mean = mean(data), sd = sd(data)), col = "black", lwd = 2, add = TRUE)
 ]]></code>
       </program>
-      <p>Another property of the central limit theorem is that the larger the number of cases ($n$) of each of the individual samples, the better the distribution of sample estimates corresponds to a normal distribution. This works very well with $n&gt;30$. Moreover, it is not important how the distribution of the characteristic to be examined is in the population (e.g., right- or left-skewed). In any case, with increasing samples (and $n&gt;30$), the distribution of sample estimates will (with added samples increasingly) correspond to a normal distribution.</p>
+      <p>Another property of the central limit theorem is that the larger the number of cases (<m>n</m>) of each of the individual samples, the better the distribution of sample estimates corresponds to a normal distribution. This works very well with <m>n&gt;30</m>. Moreover, it is not important how the distribution of the characteristic to be examined is in the population (e.g., right- or left-skewed). In any case, with increasing samples (and <m>n&gt;30</m>), the distribution of sample estimates will (with added samples increasingly) correspond to a normal distribution.</p>
     </subsection>
     <subsection xml:id="inf-basics-why-statistical-laws-are-important">
       <title>Why statistical laws are important</title>
@@ -123,7 +123,7 @@ curve(dnorm(x, mean = mean(data), sd = sd(data)), col = "black", lwd = 2, add = 
         <p>(3) We test our result against a (theoretical) distribution under which we assume the <em>null hypothesis (-&gt; there is NO difference in government satisfaction between men and women)</em> to be true (i.e., the test distribution).</p>
         <p>(4) If the estimate from our sample is located near the center of the distribution that assumes the null hypothesis, this would be not much evidence for the alternative hypothesis; however: If the estimate is at the margins of that distribution, we would conclude that there is evidence that favor the alternative hypothesis, which states that <em>in the population, women are more satisfied with the government than men</em>.</p>
         <ul>
-          <li>The prerequisite for this testing procedure is that we standardize our sample estimate to make it comparable to the test distribution (For example, this can be achieved by: $z = \frac{estimate}{{standard error}}$).</li>
+          <li>The prerequisite for this testing procedure is that we standardize our sample estimate to make it comparable to the test distribution (For example, this can be achieved by: <m>z = \frac{estimate}{{standard error}}</m>).</li>
         </ul>
       </subsubsection>
       <subsubsection xml:id="inf-basics-why-statistical-laws-are-important-standard-error">
@@ -135,7 +135,7 @@ curve(dnorm(x, mean = mean(data), sd = sd(data)), col = "black", lwd = 2, add = 
           <li>However, since in the applied case we do not have many samples, but only one, we need to estimate this variation from the one sample.</li>
         </ul>
         <ul>
-          <li>This estimated variation of an estimate is called the standard error, and the formula for calculating it differs depending on the estimator (usually we normalize a <em>measure of variance or standard deviation</em> using a measure that involves the <em>number of observations</em>; for example, the standard error of mean the formula is given as: $\bar x = \frac{s}{\sqrt{n}}$).</li>
+          <li>This estimated variation of an estimate is called the standard error, and the formula for calculating it differs depending on the estimator (usually we normalize a <em>measure of variance or standard deviation</em> using a measure that involves the <em>number of observations</em>; for example, the standard error of mean the formula is given as: <m>\bar x = \frac{s}{\sqrt{n}}</m>).</li>
         </ul>
       </subsubsection>
     </subsection>
@@ -157,7 +157,7 @@ curve(dnorm(x, mean = mean(data), sd = sd(data)), col = "black", lwd = 2, add = 
         <caption>Confidence intervals of sample correlations</caption>
       </figure>
       <p>Source: <url href="https://github.com/simonheb/metrics1-public"/></p>
-      <p>Here, instead of the mean value, results of a bivariate regression (similar to a correlation) are shown. The bivariate relationship between x and y in the population is represented by the black slope line (regression coefficient $\beta_1=1.2$). The gray dots are the units in the population. From this population, four random samples are drawn and the observations in the sample are represented by the red dots. The point estimate of the correlation is represented by the red slope line. The confidence interval is the light red area around the estimate. In samples 1, 2, and 4, the confidence interval includes the population parameter; only in sample 3 (bottom left) is this no longer the case for parts of the confidence interval. Analogously to the thought experiment regarding means above, 95% of estimates from repeated samples would include the population mean, and 5% would not.</p>
+      <p>Here, instead of the mean value, results of a bivariate regression (similar to a correlation) are shown. The bivariate relationship between x and y in the population is represented by the black slope line (regression coefficient <m>\beta_1=1.2</m>). The gray dots are the units in the population. From this population, four random samples are drawn and the observations in the sample are represented by the red dots. The point estimate of the correlation is represented by the red slope line. The confidence interval is the light red area around the estimate. In samples 1, 2, and 4, the confidence interval includes the population parameter; only in sample 3 (bottom left) is this no longer the case for parts of the confidence interval. Analogously to the thought experiment regarding means above, 95% of estimates from repeated samples would include the population mean, and 5% would not.</p>
     </subsection>
     <subsection xml:id="inf-confidence-intervals-how-to-calculate-and-interpret-the-confidence-interval">
       <title>How to calculate and interpret the confidence interval</title>
@@ -167,13 +167,13 @@ curve(dnorm(x, mean = mean(data), sd = sd(data)), col = "black", lwd = 2, add = 
       <p>We can therefore interpret the confidence intervals primarily as <em>the likely or plausible range of values of the unknown population parameter we are interested in (given the characteristics of our sample).</em> The confidence interval thus gives us, at the same time as the point estimate, a range of variability to be expected if we were to repeat studies similar to ours more often. This is indeed important information, and for many researchers, it is also more intuitive than significance values from null hypothesis tests.</p>
       <p>In addition, there is a relationship between confidence intervals and statistical significance, a concept related to null hypothesis tests. We will look at this relationship at the end of this case study. In short, confidence intervals show a possible range of values of the population parameter <em>and</em> at the same time provide information about statistical significance.</p>
       <p>To compute a confidence interval, we generally use the following formula:</p>
-      <p>$point estimate \pm z_\alpha \times standard error$.</p>
-      <p>$z_\alpha$ refers to the critical Z-value (i.e., a given value of the z-distribution that corresponds a set probability of error, this will be explained in greater detail below).</p>
+      <p><m>point estimate \pm z_\alpha \times standard error</m>.</p>
+      <p><m>z_\alpha</m> refers to the critical Z-value (i.e., a given value of the z-distribution that corresponds a set probability of error, this will be explained in greater detail below).</p>
       </introduction>
 
       <subsubsection xml:id="inf-confidence-intervals-how-to-calculate-and-interpret-the-confidence-interval-mean">
         <title>Mean</title>
-        <p>For the lower and upper 95% confidence intervals of a mean, we use: $95\% CIs=[\bar x - 1.96 \times {\frac{s}{\sqrt n}}, \bar x + 1.96 \times {\frac{s}{\sqrt n}}]$.</p>
+        <p>For the lower and upper 95% confidence intervals of a mean, we use: <m>95\% CIs=[\bar x - 1.96 \times {\frac{s}{\sqrt n}}, \bar x + 1.96 \times {\frac{s}{\sqrt n}}]</m>.</p>
         <p>Let us look into this with real data from the European Social Survey (German sample). First, we read the data and get an overview of the distribution of the variable satisfaction with government `stfgov`. `stfgov` was surveyed using an 11-point scale ranging from 0 "extremely dissatisfied" to 10 "extremely satisfied."</p>
         <program language="r">
           <code><![CDATA[data_ess <- read_dta("data/ESS9_DE.dta", encoding = "latin1") 
@@ -239,8 +239,8 @@ ggplot(df, aes(x = 1, y = xbar)) +
       </subsubsection>
       <subsubsection xml:id="inf-confidence-intervals-how-to-calculate-and-interpret-the-confidence-interval-proportion">
         <title>Proportion</title>
-        <p>Besides the mean, we can calculate a confidence interval for a proportion value of a sample. The formula is slightly different because the calculation of the standard error is different. It is the square root of the variance divided by the number of observations. The variance is obtained by multiplying the probability of an event $p$ times the counter probability $1-p$:</p>
-        <p>$95\% CIs=[p - 1.96 \times \sqrt{\frac{p\times(1-p)}{n}}, p + 1.96 \times \sqrt{\frac{p\times(1-p)}{n}}]$.</p>
+        <p>Besides the mean, we can calculate a confidence interval for a proportion value of a sample. The formula is slightly different because the calculation of the standard error is different. It is the square root of the variance divided by the number of observations. The variance is obtained by multiplying the probability of an event <m>p</m> times the counter probability <m>1-p</m>:</p>
+        <p><m>95\% CIs=[p - 1.96 \times \sqrt{\frac{p\times(1-p)}{n}}, p + 1.96 \times \sqrt{\frac{p\times(1-p)}{n}}]</m>.</p>
         <p>Let's try this by using a dichotomized version of the government satisfaction variable with an initial 11-point rating scale. In this example, values of 5 or less are assigned to 0 ("little or not satisfied") and values above 5 are assigned to 1 ("satisfied"). We can now focus on the proportion of those respondents who are satisfied or rather satisfied with the government (variable value = 1). Note that with a 0/1 coding, the mean of a binary variable corresponds to the proportion of observations with a variable value of 1.</p>
         <program language="r">
           <code><![CDATA[# Recode of variable
@@ -288,7 +288,7 @@ t.test(data_ess$stfgov_di, conf.level = 0.95)]]></code>
       </subsubsection>
       <subsubsection xml:id="inf-confidence-intervals-how-to-calculate-and-interpret-the-confidence-interval-correlation-coefficient">
         <title>Correlation coefficient</title>
-        <p>Next, we look at how a confidence interval for a correlation is computed. For this, we use the following formula: $95\% CIs=r\pm 1.96 \times SE$, where the standard error SE is calculated as follows: $SE_r=\sqrt {\frac{(1-r^2)}{n-2}}$. To illustrate that, we let the software compute the confidence interval of the correlation between household income and satisfaction with the government.  `hinctnta` measures respondents' net household income (after deductions) across 10 quantiles ("deciles" 1-10) - the reason for this measurement is that this way income becomes adjusted to a country's income distribution and is thus comparable across countries. Regarding the correlation, we assume that - in line with economic voting theory - people with a higher income are more satisfied with the government than people with a lower income.</p>
+        <p>Next, we look at how a confidence interval for a correlation is computed. For this, we use the following formula: <m>95\% CIs=r\pm 1.96 \times SE</m>, where the standard error SE is calculated as follows: <m>SE_r=\sqrt {\frac{(1-r^2)}{n-2}}</m>. To illustrate that, we let the software compute the confidence interval of the correlation between household income and satisfaction with the government.  `hinctnta` measures respondents' net household income (after deductions) across 10 quantiles ("deciles" 1-10) - the reason for this measurement is that this way income becomes adjusted to a country's income distribution and is thus comparable across countries. Regarding the correlation, we assume that - in line with economic voting theory - people with a higher income are more satisfied with the government than people with a lower income.</p>
         <program language="r">
           <code><![CDATA[cor <- cor.test(data_ess$hinctnta, data_ess$stfgov)
 cor
@@ -334,19 +334,19 @@ ciplot
       <title>Basic idea and procedure</title>
       <p>Hypothesis testing allows us to test how likely it is that a sample estimate corresponds to another value, more specifically the sampling distribution of another value. We typically use for this purpose the distribution that is obtained under the null hypothesis- that is, for example, the assumption that the difference in means between two groups or the correlation between two variables is zero in the population. The distribution of a test statistic under the assumption that the null hypothesis is true is sometimes labeled "null distribution." We know from the central limit theorem that such a sampling distribution would be normal given repeated sampling and a high enough sample size (&gt;30), which implies that we can use a normal distribution for our statistical tests.</p>
       <p>The goal usually is to test the sample estimate we obtained against the null distribution. If the estimate is so "extreme" that it becomes very unlikely to obtain such a result although the null hypothesis is true, then this would provide evidence against the null hypothesis and in favor of our alternative hypothesis (e.g., the correlation between two variables is positive in the population). Hence, the procedure of Null Hypothesis Testing is a form of <em>proof by contradiction</em>. We assume the opposite of what we want to show and then collect as much evidence as possible against that assumption.</p>
-      <p>To begin with, we first formulate the so-called <em>null hypothesis $H_0$</em> (e.g., there is <em>no</em> or zero correlation in the population). Next, we formulate an <em>alternative hypothesis $H_A$</em> (e.g., the correlation in the population is positive or negative) and then want to show that the correlation we found is strong enough so that it becomes very unlikely that $H_0$ is true. This means that we are trying to disprove $H_0$, which in turn is evidence for $H_A$. Note that we do not assign probabilities for $H_A$ to be true but probabilities to observe a given estimate given that $H_0$ is true (i.e., $P$(correlation | $H_0$).</p>
+      <p>To begin with, we first formulate the so-called <em>null hypothesis <m>H_0</m></em> (e.g., there is <em>no</em> or zero correlation in the population). Next, we formulate an <em>alternative hypothesis <m>H_A</m></em> (e.g., the correlation in the population is positive or negative) and then want to show that the correlation we found is strong enough so that it becomes very unlikely that <m>H_0</m> is true. This means that we are trying to disprove <m>H_0</m>, which in turn is evidence for <m>H_A</m>. Note that we do not assign probabilities for <m>H_A</m> to be true but probabilities to observe a given estimate given that <m>H_0</m> is true (i.e., <m>P</m>(correlation | <m>H_0</m>).</p>
       <p>The following steps illustrate how to do Null Hypothesis Testing:</p>
       <ul>
         <li><em>Step 1:</em> Formulate the null hypothesis and alternative hypothesis.</li>
-        <li><em>Step 2:</em> Determine the probability of error ($\alpha$, i.e., our willingness to err in repeated sampling, the convention is typically 5% or less).</li>
+        <li><em>Step 2:</em> Determine the probability of error (<m>\alpha</m>, i.e., our willingness to err in repeated sampling, the convention is typically 5% or less).</li>
         <li><em>Step 3:</em> Compute the value of the test statistic for your estimate (=estimator/standard error).</li>
         <li><em>Step 4a:</em> Determine a critical value c (e.g., from an online table)</li>
-        <li><em>Step 5a:</em> If the value of the test statistic falls within the rejection range (i.e., exceeds the critical value), reject $H_0$.</li>
+        <li><em>Step 5a:</em> If the value of the test statistic falls within the rejection range (i.e., exceeds the critical value), reject <m>H_0</m>.</li>
       </ul>
       <p>Alternatively:</p>
       <ul>
         <li><em>Step 4b:</em> Calculate p-value (use statistical software).</li>
-        <li><em>Step 5b:</em> If p-value &lt; probability of error, then reject $H_0$.</li>
+        <li><em>Step 5b:</em> If p-value &lt; probability of error, then reject <m>H_0</m>.</li>
       </ul>
       <ul>
         <li><em>Step 6:</em> Interpret the result of the hypothesis test in substantive terms.</li>
@@ -368,13 +368,13 @@ summary(data_ess$hinctnta_di)
 
       <subsubsection xml:id="inf-null-hypothesis-testing-hypothesis-test-of-a-difference-in-means-general-remarks-on-p-values">
         <title>General remarks on P-values</title>
-        <p>P-values <em>indicate the probability of finding an estimate as extreme (or more extreme) as we got from our sample (e.g., a difference in means), even though the null hypothesis is true in the population.</em> In formal terms, that is the probability of the estimate given the null hypothesis $P$(estimate | $H_0$).</p>
+        <p>P-values <em>indicate the probability of finding an estimate as extreme (or more extreme) as we got from our sample (e.g., a difference in means), even though the null hypothesis is true in the population.</em> In formal terms, that is the probability of the estimate given the null hypothesis <m>P</m>(estimate | <m>H_0</m>).</p>
         <p>Some features of p-values:</p>
         <ul>
           <li>The smaller the p-value, the more "statistically significant" the result (or the more reason we have to reject the null hypothesis, which, in turn, provides evidence in favor of the alternative hypothesis).</li>
         </ul>
         <ul>
-          <li>Contingent upon the probability of error, if p is smaller than $\alpha$, then the result is statistically significant (usually &lt; 0.05 or 5%).</li>
+          <li>Contingent upon the probability of error, if p is smaller than <m>\alpha</m>, then the result is statistically significant (usually &lt; 0.05 or 5%).</li>
         </ul>
         <ul>
           <li>If the test statistic associated with the estimate is less than or greater than the critical z- or t-values, respectively, then p &lt; 0.05.</li>
@@ -387,7 +387,7 @@ summary(data_ess$hinctnta_di)
           <li>If the confidence interval does not include 0, it is consistent with a low p-value, suggesting strong evidence against the null hypothesis.</li>
         </ul>
         <ul>
-          <li>For example: A mean difference of 0.5 with a 95% confidence interval of [0.35; 0.65] is statistically significant at the $\alpha$=0.05 level (reject $H_0$). However, a mean difference of -0.1 with a 95% confidence interval of [-0.25; 0.05] is statistically <em>not</em> significant at the $\alpha$=0.05 level (confidence intervals include 0, fail to reject $H_0$).</li>
+          <li>For example: A mean difference of 0.5 with a 95% confidence interval of [0.35; 0.65] is statistically significant at the <m>\alpha</m>=0.05 level (reject <m>H_0</m>). However, a mean difference of -0.1 with a 95% confidence interval of [-0.25; 0.05] is statistically <em>not</em> significant at the <m>\alpha</m>=0.05 level (confidence intervals include 0, fail to reject <m>H_0</m>).</li>
         </ul>
         <exercise>
           <statement>
@@ -400,16 +400,16 @@ summary(data_ess$hinctnta_di)
           </answer>
           <solution>
         <p>Typically, it is easier to start with formulating the alternative hypothesis.</p>
-        <p>$H_A$:</p>
+        <p><m>H_A</m>:</p>
         <p>High-income individuals are more satisfied with government than low-income individuals (i.e., positive relationship between income and satisfaction with government).</p>
-        <p>Formal: $\mu(satisfaction|highincome)&gt;\mu(satisfaction|lowincome)$ or (equivalent) $\mu(satisfaction|highincome)-\mu(satisfaction|lowincome)&gt;0$</p>
-        <p>$H_0$:</p>
+        <p>Formal: <m>\mu(satisfaction|highincome)&gt;\mu(satisfaction|lowincome)</m> or (equivalent) <m>\mu(satisfaction|highincome)-\mu(satisfaction|lowincome)&gt;0</m></p>
+        <p><m>H_0</m>:</p>
         <p>High-income individuals are equally or less satisfied with government than low-income individuals (i.e., null or negative relationship between income and satisfaction with government).</p>
-        <p>Formal: $\mu(satisfaction|highincome)\le\mu(satisfaction|lowincome)$ or (equivalent) $\mu(satisfaction|highincome)-\mu(satisfaction|lowincome)\le0$</p>
-        <p>Note that it is important that all possible outcomes are covered by both hypotheses. This means that when formulating a directed hypothesis, the null hypothesis must include the case of no relationship (i.e., "$\le$" instead of just "$&lt;$").</p>
-        <p>Let us then assume an error probability of 5% or 0.05 (Step 2). Next, we calculate the test statistic (Step 3). Generally, this is given as $\frac{estimate - true value}{standard error}$. Since we test against the null hypothesis, the true value is 0. The formula for the so-called z-test statistic is given as:</p>
-        <p>$z=\frac{Estimation}{Standard Error}$.</p>
-        <p>Steps 4 and 5 are about the actual test. Remember that per the alternative hypothesis, we assumed a positive mean difference (i.e., high-income earners are more satisfied with the government than low-income earners). Next, we want to know where the mean difference is located on the null distribution. If it is close to the center of the distribution, we have no reason to reject the null hypothesis. However, if it is at the margins of the distribution, this would provide a reason for rejecting the null hypothesis (and favoring the alternative hypothesis). We use the z-distribution with a mean of 0 and a standard deviation of 1. Remember the properties of this distribution from above. If we set the critical value to be lower than -1.96 and higher than +1.96, we would be in the 5% range of the distribution if our test statistic exceeds those critical values. If this was the case, we can conclude that it would be very unlikely to sample such a value even though $H_0$ holds. Note that we set up a positive and negative area of rejection if we formulate undirected hypotheses (i.e., $H_A$: the mean difference can be higher or lower than zero, $H_0$: the mean difference equals zero) and conduct two-sided tests. For a directed hypothesis (and one-sided tests), like in our example, the rejection area is only in the negative or positive range of the distribution (depending on whether $H_A$ expects a pos. or neg. statistic).</p>
+        <p>Formal: <m>\mu(satisfaction|highincome)\le\mu(satisfaction|lowincome)</m> or (equivalent) <m>\mu(satisfaction|highincome)-\mu(satisfaction|lowincome)\le0</m></p>
+        <p>Note that it is important that all possible outcomes are covered by both hypotheses. This means that when formulating a directed hypothesis, the null hypothesis must include the case of no relationship (i.e., "<m>\le</m>" instead of just "<m>&lt;</m>").</p>
+        <p>Let us then assume an error probability of 5% or 0.05 (Step 2). Next, we calculate the test statistic (Step 3). Generally, this is given as <m>\frac{estimate - true value}{standard error}</m>. Since we test against the null hypothesis, the true value is 0. The formula for the so-called z-test statistic is given as:</p>
+        <p><m>z=\frac{Estimation}{Standard Error}</m>.</p>
+        <p>Steps 4 and 5 are about the actual test. Remember that per the alternative hypothesis, we assumed a positive mean difference (i.e., high-income earners are more satisfied with the government than low-income earners). Next, we want to know where the mean difference is located on the null distribution. If it is close to the center of the distribution, we have no reason to reject the null hypothesis. However, if it is at the margins of the distribution, this would provide a reason for rejecting the null hypothesis (and favoring the alternative hypothesis). We use the z-distribution with a mean of 0 and a standard deviation of 1. Remember the properties of this distribution from above. If we set the critical value to be lower than -1.96 and higher than +1.96, we would be in the 5% range of the distribution if our test statistic exceeds those critical values. If this was the case, we can conclude that it would be very unlikely to sample such a value even though <m>H_0</m> holds. Note that we set up a positive and negative area of rejection if we formulate undirected hypotheses (i.e., <m>H_A</m>: the mean difference can be higher or lower than zero, <m>H_0</m>: the mean difference equals zero) and conduct two-sided tests. For a directed hypothesis (and one-sided tests), like in our example, the rejection area is only in the negative or positive range of the distribution (depending on whether <m>H_A</m> expects a pos. or neg. statistic).</p>
         <program language="r">
           <code><![CDATA[# Draw a standard normal distribution:
 z = seq(-4, 4, length.out=1001)
@@ -452,15 +452,15 @@ polygon(x=c(z[z<=qnorm(0.05)], qnorm(0.05), min(z)), y=c(dnorm(z[z<=qnorm(0.05)]
           <li>To calculate the exact p-value, we rely on tables or statistical software.</li>
         </ul>
         <ul>
-          <li>A p-value says <em>nothing</em> about the probability that $H_0$ or $H_A$ is true; remember $P$(estimate | $H_0$)!</li>
+          <li>A p-value says <em>nothing</em> about the probability that <m>H_0</m> or <m>H_A</m> is true; remember <m>P</m>(estimate | <m>H_0</m>)!</li>
         </ul>
         <ul>
-          <li>When we formulate one-sided hypotheses but use a two-sided test (which is the norm in social science research), we are especially careful and do not want to make a 1st kind error ($H_0$ is true, but we reject it); we can divide the p-value by 2 and end up with the p-value we would have gotten if we tested one-sided.</li>
+          <li>When we formulate one-sided hypotheses but use a two-sided test (which is the norm in social science research), we are especially careful and do not want to make a 1st kind error (<m>H_0</m> is true, but we reject it); we can divide the p-value by 2 and end up with the p-value we would have gotten if we tested one-sided.</li>
         </ul>
       </subsubsection>
       <subsubsection xml:id="inf-null-hypothesis-testing-hypothesis-test-of-a-difference-in-means-test-implementation">
         <title>Test implementation</title>
-        <p>To actually test the difference in the means of satisfaction with the government between high and low earners, the formula for this is given as $z =\frac{(\bar x_1 - \bar x_2)}{standard error}$ (note that the standard error of the mean difference is not simply the difference of two standard errors).</p>
+        <p>To actually test the difference in the means of satisfaction with the government between high and low earners, the formula for this is given as <m>z =\frac{(\bar x_1 - \bar x_2)}{standard error}</m> (note that the standard error of the mean difference is not simply the difference of two standard errors).</p>
         <p>We now calculate the mean difference and conduct a corresponding hypothesis test:</p>
         <program language="r">
           <code><![CDATA[mean(data_ess$stfgov[data_ess$hinctnta_di==1], na.rm = TRUE)-
@@ -476,15 +476,15 @@ t.test(data_ess$stfgov[data_ess$hinctnta_di==1], data_ess$stfgov[data_ess$hinctn
             <p>Answer: <fillin characters="40" textstyle="box"/></p>
           </answer>
           <solution>
-        <p>The probability of obtaining such a result from the sample, although $H_0$ is true in the population, is 0.11 or 11%. Since this exceeds the threshold of our willingness to err of 5%, we cannot reject the null hypothesis (and thus find no evidence in favor of $H_A$).</p>
-        <p>Even if we take into account that we formulated a directed hypothesis and rely on a one-sided test (we can thus divide the p-value by 2), the p-value still exceeds our assumed probability of error (p-value of 0.055 &gt; $\alpha$ of 0.05). Hence, even with a one-sided test, we are not able to reject the null hypothesis.</p>
+        <p>The probability of obtaining such a result from the sample, although <m>H_0</m> is true in the population, is 0.11 or 11%. Since this exceeds the threshold of our willingness to err of 5%, we cannot reject the null hypothesis (and thus find no evidence in favor of <m>H_A</m>).</p>
+        <p>Even if we take into account that we formulated a directed hypothesis and rely on a one-sided test (we can thus divide the p-value by 2), the p-value still exceeds our assumed probability of error (p-value of 0.055 &gt; <m>\alpha</m> of 0.05). Hence, even with a one-sided test, we are not able to reject the null hypothesis.</p>
           </solution>
         </exercise>
       </subsubsection>
     </subsection>
     <subsection xml:id="inf-null-hypothesis-testing-hypothesis-test-of-a-correlation">
       <title>Hypothesis test of a correlation</title>
-      <p>Instead of a difference in means, we now focus on hypothesis tests of correlations. The procedure is analogous to the one before. We first formulate the null and alternative hypotheses, specify the probability of error (5% in this case), calculate the test statistic ($z=\frac{r}{SE}$), calculate the p-value, and interpret the result.</p>
+      <p>Instead of a difference in means, we now focus on hypothesis tests of correlations. The procedure is analogous to the one before. We first formulate the null and alternative hypotheses, specify the probability of error (5% in this case), calculate the test statistic (<m>z=\frac{r}{SE}</m>), calculate the p-value, and interpret the result.</p>
       <exercise>
         <statement>
       <p>Question: Assume that higher income is either positively or negatively related to satisfaction with government. Formulate the null and alternative hypotheses (undirected).</p>
@@ -495,12 +495,12 @@ t.test(data_ess$stfgov[data_ess$hinctnta_di==1], data_ess$stfgov[data_ess$hinctn
           <p>H_A: <fillin characters="40" textstyle="box"/></p>
         </answer>
         <solution>
-      <p>$H_A$:</p>
+      <p><m>H_A</m>:</p>
       <p>Verbal: Income is either positively or negatively related to satisfaction with government.</p>
-      <p>Formal: $r \ne 0$</p>
-      <p>$H_0$:</p>
+      <p>Formal: <m>r \ne 0</m></p>
+      <p><m>H_0</m>:</p>
       <p>Verbal: Income is unrelated to satisfaction with government.</p>
-      <p>Formal: $r = 0$</p>
+      <p>Formal: <m>r = 0</m></p>
       <p>We now calculate the test statistic and the p-value.</p>
       <program language="r">
         <code><![CDATA[cor <- cor.test(data_ess$hinctnta, data_ess$stfgov)
@@ -517,7 +517,7 @@ cor
           <p>Answer: <fillin characters="40" textstyle="box"/></p>
         </answer>
         <solution>
-      <p>The probability of obtaining such a result from the sample, although $H_0$ is true in the population, is 0.07 or 7%. Since this exceeds the threshold of our willingness to err of 5%, the result is not statistically significant and we cannot reject the null hypothesis (and thus find no evidence in favor of $H_A$).</p>
+      <p>The probability of obtaining such a result from the sample, although <m>H_0</m> is true in the population, is 0.07 or 7%. Since this exceeds the threshold of our willingness to err of 5%, the result is not statistically significant and we cannot reject the null hypothesis (and thus find no evidence in favor of <m>H_A</m>).</p>
         </solution>
       </exercise>
     </subsection>
