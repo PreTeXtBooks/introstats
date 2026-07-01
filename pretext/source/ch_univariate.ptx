@@ -235,16 +235,23 @@ ggtitle("North-Rhine Westphalia, Germany") +
                       ) ]]></code>
     </program>
 
+    <exercise>
+      <statement>
     <p><strong>Question:</strong> What information is conveyed by the map? What information remains implicit?</p>
-    <p>Your answer:</p>
+      </statement>
+      <answer>
+        <p>Answer: <fillin characters="40" textstyle="box"/></p>
 
-    <p>Solution:</p>
+      </answer>
+      <solution>
     <ul>
       <li>Maps give a good first impression of the spatial distribution of data.</li>
       <li>However, insights depend on further (implicit) information ("What are the specifics of the high-unemployment cities in the middle of the map? Which areas are rural, which are urban?").</li>
       <li>Difficult to make general statements about maps and to compare maps (especially if the breaks that underly the colorization differ).</li>
     </ul>
 
+      </solution>
+    </exercise>
   </section>
 
   <section xml:id="uni-distributions">
@@ -274,13 +281,20 @@ histogram( ~ popdens + unemp + avage + crimerate,
 #hist(data_nrw$crimerate)]]></code>
     </program>
 
+    <exercise>
+      <statement>
     <p><strong>Question:</strong> Which characteristics of the data can be identified with histograms? Which aspects remain hidden?</p>
-    <p>Your answer:</p>
+      </statement>
+      <answer>
+        <p>Answer: <fillin characters="40" textstyle="box"/></p>
 
-    <p>Solution:<br/>
-What can be seen: The distribution of the data, including the center(s) where most of the observations are located, patterns of skewness, and outliers.</p>
-    <p>What remains hidden: The specific estimates of the summary statistics (e.g., mean, variance).</p>
+      </answer>
+      <solution>
+      <p>What can be seen: The distribution of the data, including the center(s) where most of the observations are located, patterns of skewness, and outliers.</p>
+      <p>What remains hidden: The specific estimates of the summary statistics (e.g., mean, variance).</p>
 
+      </solution>
+    </exercise>
   </section>
 
   <section xml:id="uni-mean">
@@ -300,11 +314,16 @@ What can be seen: The distribution of the data, including the center(s) where mo
       <code><![CDATA[summary(data_nrw)]]></code>
     </program>
 
+    <exercise>
+      <statement>
     <p><strong>Question:</strong> Interpret two means of your choice. Why is no mean displayed for the variable <c>area</c>?</p>
-    <p>Your answer:</p>
+      </statement>
+      <answer>
+        <p>Answer: <fillin characters="40" textstyle="box"/></p>
 
-    <p>Solution:<br/>
-The average unemployment rate across the observed districts is 7.4 percent. The mean of the population variable is 338,218, which means that about 338,218 people live in a region, on average.</p>
+      </answer>
+      <solution>
+      <p>The average unemployment rate across the observed districts is 7.4 percent. The mean of the population variable is 338,218, which means that about 338,218 people live in a region, on average.</p>
     <p>Means can only be calculated for metric or quasi-metric (typically an ordinal variable with five or more categories) variables. <c>area</c> is a nominal variable.</p>
 
     <p>The displayed tables contain more information than means:</p>
@@ -320,6 +339,8 @@ The average unemployment rate across the observed districts is 7.4 percent. The 
       <li>Measures of position, such as <strong>quartiles</strong> and the interquartile range, which are often graphically depicted using boxplots.</li>
     </ul>
 
+      </solution>
+    </exercise>
   </section>
 
   <section xml:id="uni-dispersion">
@@ -355,11 +376,16 @@ s_crime + geom_hline(yintercept=6244, linetype="solid", color = "red", size=0.1)
 ]]></code>
     </program>
 
+    <exercise>
+      <statement>
     <p><strong>Question:</strong> Can you spot which district has the highest unemployment rate? Which county has the lowest crime rate? Can we infer from the graphs which of the two variables is more dispersed?</p>
-    <p>Your answer:</p>
+      </statement>
+      <answer>
+        <p>Answer: <fillin characters="40" textstyle="box"/></p>
 
-    <p>Solution:<br/>
-It is quite hard to match the color of the dots with the ones of the legend. Gelsenkirchen has the highest unemployment rate at 14.9%. The district with the lowest crime rate is Lippe.</p>
+      </answer>
+      <solution>
+      <p>It is quite hard to match the color of the dots with the ones of the legend. Gelsenkirchen has the highest unemployment rate at 14.9%. The district with the lowest crime rate is Lippe.</p>
 
     <p>Because of the different scaling of the variables, it is not possible to infer from this plot which variable is more dispersed. To do so, we would need to calculate the so-called coefficient of variation (see below).</p>
 
@@ -389,6 +415,8 @@ varcoef]]></code>
       <p><em><strong>Interpretation: The variable unemployment is more heterogeneously dispersed (varcoef = 33.3) than the variable crime rate (varcoef = 28.4).</strong></em></p>
     </blockquote>
 
+      </solution>
+    </exercise>
   </section>
 
   <section xml:id="uni-position-measures">
