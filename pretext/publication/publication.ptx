@@ -75,7 +75,7 @@
   <common>
     <!-- Enable syntax highlighting for code blocks -->
     <fillin textstyle="box"/>
-    <chunking level="2"/>
+    <chunking level="1"/>
     <tableofcontents level="2"/>
   </common>
 </publication>
