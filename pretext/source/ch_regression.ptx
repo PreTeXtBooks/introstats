@@ -65,7 +65,7 @@ kable(head(data_allbus, 10), format = "html", booktabs = TRUE, caption = "ALLBUS
       <title>The foundations of (bivariate) regression</title>
       <p>In the next step, we will work our way into bivariate regression analysis. In order to calculate the relationship between two variables, a so-called slope line is calculated using the least squares method. The following figure shows the basic idea. These are fictitious data points.</p>
       <figure xml:id="fig-reg-1">
-        <image source="../assets/images/ols.png" width="90%"/>
+        <image source="images/ols.png" width="90%"/>
       </figure>
       <p>Source: <url href="https://seeing-theory.brown.edu/regression-analysis/index.html"/></p>
       <p>Basically, this method allows us to find a straight line that optimally travels through the dots of observations. The smaller the squares, the better the line fits the data. We have found the optimal solution if any different slope of the line would lead to an increase in the sum of squared deviations. Hence, this estimator is called **ordinary least squares - the OLS estimator**. If we had more than one variable in the regression model, another spatial dimension would be added (a z-axis) and the straight line would become a surface. With more than two independent variables, we are dealing with a multidimensional surface that is no longer depictable. The least squares method remains the same in such a case, except that the computation becomes more complex (done with a software algorithm).</p>
@@ -78,7 +78,7 @@ model1 <- lm(crimerate ~ 1 + unemp, data = data_nrw)
 stargazer(model1, type = "text")]]></code>
       </program>
       <figure xml:id="fig-reg-2">
-        <image source="../assets/images/interpret_en.png"/>
+        <image source="images/interpret_en.png"/>
       </figure>
       <p>We can also think about what would happen if the dots (i.e., the observed values on the two variables) were different. If the dots and the corresponding slope line were steeper (and thus the coefficient larger), then an increase in unemployment by one unit would lead to an even higher increase in crime rates. If the dots and the line indicated a flat pattern, then this would mean that there is no change in crime rates when unemployment increases by one unit. If the line (and the coefficient) was negative, then a one-unit increase in unemployment would be associated with a *decrease* (by <m>\beta_1</m> units) in crime.</p>
       <p>In addition to the coefficients for the independent variables, the regression output displays the so-called constant (or intercept), which is abbreviated as <m>a</m>, <m>\alpha</m>, or <m>\beta_0</m>. It provides the predicted value for the outcome variable <m>Y</m> if all independent variables in the model have the value of 0. Usually, this information is not of much interest and thus ignored.</p>
@@ -300,13 +300,13 @@ stargazer(model_biv, model_mult, type = "text")]]></code>
         <li>The first area ensures that the **estimation method** works at all. The first assumption is that the *coefficients* are additive because otherwise, the coefficients would not be estimable by the least squares method. This assumption is trivial and usually holds. Note that some statistic books erroneously cite this assumption that the empirical relationship between the independent and dependent variables must be linear. This is not the case and multiple linear regression can easily address non-linear relationships by multiplying *variables* with each other (see also below). The second assumption relates to the collinearity of independent variables. This means that two independent variables must not be perfectly correlated. Otherwise, the influence of one variable would be completely displaced by the influence of the other variable, which inhibits the reliable estimation of coefficients. It is rather rare that variables are too highly correlated with each other, and if there are variables in the dataset that measure similar constructs (and are thus highly correlated), one would build an index from those variables, anyway.</li>
       </ol>
       <figure xml:id="fig-reg-3">
-        <image source="../assets/images/OLS1en.png" width="100%"/>
+        <image source="images/OLS1en.png" width="100%"/>
       </figure>
       <ol>
         <li>The second area concerns the unbiasedness of coefficient estimates. The underlying assumption is **exogeneity of independent variables**. If a variable is exogenous, this ensures that the coefficient of this variable reflects the actual relationship and does not represent something else. This is defined as the error term (i.e., the variance of the outcome left unexplained which represents possible unobserved factors that yield an influence on the outcome) is unrelated to the predictor variables. In a randomized experiment, the treatment variable is an exogenous predictor (per design due to the randomization) that is unrelated to unobserved third variables. In a model with observational data (e.g., from a survey), the exogeneity assumption requires the exclusion of alternative explanations by including relevant control variables. If we have all relevant control variables in the model, this assumption would be met. However, if there are unobserved variables that are correlated with the predictor and the outcome variable (which is the rule rather than the exception), we have a problem: the exogeneity assumption is not met and the regression coefficient is biased. We cannot empirically determine the extent of this bias: *There are no diagnostic tests for this assumption*. This means that we need to do good theory work to get clarity about causal relationships between variables and to include relevant control variables in the regression model. Another way to go is - as already mentioned - using experimental designs to rule out alternative explanations.</li>
       </ol>
       <figure xml:id="fig-reg-4">
-        <image source="../assets/images/OLS2en.png" width="100%"/>
+        <image source="images/OLS2en.png" width="100%"/>
       </figure>
       <ol>
         <li>The third area refers to the process of **statistical inference**. If the assumptions are violated, the standard errors and thus the test statistics (e.g., t/z statistics), and significance tests are biased. The unbiasedness of the coefficients (as in 2.) operates independently of this. The first assumption in this area relates to whether we work with a random sample. Without one, there is no basis for inferential statistics, although in practice inferential statistics are done even without a random sample. (Here one uses, for example, significance tests as information about how "reliable" or precise an empirical relationship is estimated.)</li>
@@ -315,7 +315,7 @@ stargazer(model_biv, model_mult, type = "text")]]></code>
       <p>The assumption that the **errors must be normally distributed** often serves as a rationale for assessing the distribution of variable values using a histogram and, if necessary, for transforming a variable so that its distribution is more "normal" (e.g., logarithmitize a right-skewed variable). This can be a useful strategy. At the same time, it is important to note that essentially the assumption refers to the distribution of errors (i.e., the outcome after accounting for variables in the model) and that with a sufficiently large number of observations, a violation becomes less problematic in terms of biased standard errors.</p>
       <p>Finally, the assumption of **homoscedastic standard errors** states that the distribution of errors must be the same (or constant) for different values of the independent variable(s). If the assumption is violated and *heteroscedasticity* is present, then the standard errors are biased. Typically (but by no means always), there is an underestimation of the standard errors, which in turn is associated with overly optimistic significance tests (and type I errors). That is, we find a statistically significant result (and reject the null hypothesis) even though it is not actually a significant result. As a remedy, so-called robust standard errors can be applied.</p>
       <figure xml:id="fig-reg-5">
-        <image source="../assets/images/OLS3en.png" width="100%"/>
+        <image source="images/OLS3en.png" width="100%"/>
       </figure>
     </subsection>
     <subsection xml:id="reg-model-diagnostics">

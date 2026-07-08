@@ -3,7 +3,7 @@
   <title>Preface</title>
 
   <figure xml:id="fig-preface-cover">
-    <image source="../assets/images/BC_V3_blau1.png" width="67%"/>
+    <image source="images/BC_V3_blau1.png" width="67%"/>
   </figure>
 
   <p><em>Suggested citation:</em></p>
@@ -64,7 +64,7 @@
     <p><em>For feedback on the usefulness of the introduction and/or reports on errors and misspellings, I would be utmost thankful if you would send me a short notification at conrad.ziller@uni-due.de.</em></p>
     <p>Thanks much for engaging with this introduction!</p>
     <figure xml:id="fig-preface-license">
-      <image source="../assets/images/by-nc-sa.PNG" width="30%"/>
+      <image source="images/by-nc-sa.PNG" width="30%"/>
     </figure>
     <p>The online version of this book is licensed under the Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License: <url href="https://creativecommons.org/licenses/by-nc-sa/4.0/"/>.</p>
   </paragraphs>

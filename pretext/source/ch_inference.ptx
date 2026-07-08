@@ -6,7 +6,7 @@
     <p>In Western democracies, citizens' satisfaction with the government is critically related to the electoral success of governing parties in an upcoming election. At the same time, satisfied citizens are more willing to support non-preferred policies and are less likely to support anti-system or populist parties.</p>
     <p>If we are interested in the degree of satisfaction with the government in Germany, for example, we first need to define the population we aim to make statements about (e.g., people over 18 years old who live in Germany). Conducting interviews with each person that belongs to the population would be pointless. Instead, we can rely on the "shortcut" of random sampling, in which we randomly select observational units from this population (i.e., randomly selected Germans) and survey them. The idea is that the results (e.g., mean approval of the government using a survey item) from the random sample are representative of the underlying population - that is, a close match between the parameter estimated from the sample (e.g., mean approval) and the (unobserved) parameter of the population.</p>
     <figure xml:id="fig-inf-1">
-      <image source="../assets/images/bkamt.jpg" width="30%"/>
+      <image source="images/bkamt.jpg" width="30%"/>
       <caption>Federal Chancellery (Bundeskanzleramt)</caption>
     </figure>
     <p>Source: <url href="https://www.bundesregierung.de/breg-de/bundesregierung/bundeskanzleramt/dienstsitze-bundeskanzleramt-466834"/></p>
@@ -74,7 +74,7 @@ polygon(x=c(z[z>=qnorm(0.975)], max(z), qnorm(0.975)), y=c(dnorm(z[z>=qnorm(0.97
       <p>In general, a small number of cases leads to higher sampling variability. You may be familiar with this from the coin toss experiment. A coin is often tossed in succession. After 10 tosses, it is quite possible that heads were tossed 7 times and tails only 3 times. Nevertheless, the underlying probability is always 0.5/0.5 (or 50%/50%) and in the population of all coin tosses, heads and tails should occur equally often. If we now toss the coin even more often, after 30, 300, 3000, etc. the observed coin tosses will increasingly match the 0.5/0.5 probability distribution.</p>
       <p>The law of large numbers states that as the sample size increases, the mean of the sample will increasingly approxiamte that of the population. (Eventually, the sample would be identical to the entire population.) This means that more data is better, and the larger our sample, the more confident we can be that it matches or at least approximates the population parameter.</p>
       <figure xml:id="fig-inf-2">
-        <image source="../assets/images/zahlen.png" width="70%"/>
+        <image source="images/zahlen.png" width="70%"/>
         <caption>Law of large numbers: Coin toss</caption>
       </figure>
       <p>Source: <url href="https://link.springer.com/chapter/10.1007/978-3-030-45553-8_5"/></p>
@@ -147,13 +147,13 @@ curve(dnorm(x, mean = mean(data), sd = sd(data)), col = "black", lwd = 2, add = 
       <p>In theory, the confidence intervals (CIs) for a point estimate (e.g., a mean or a correlation coefficient) shows a range of values that contain the true population parameter with a certain probability. It is thus a measure of uncertainty (or, conversely, precision) of an estimate. There are conventionally three types of confidence intervals: 90%, 95%, and 99% confidence intervals. These three types reflect the level of probability that the true population value lies within the interval for a very large number of samples. For example, if one is interested in the population mean and conducts repeated ("infinite") sampling, 95% of the confidence intervals of the respective samples would contain the true population mean, and 5% would not contain it.</p>
       <p>This can be illustrated with the following figures.</p>
       <figure xml:id="fig-inf-3">
-        <image source="../assets/images/ci_mean.PNG" width="80%"/>
+        <image source="images/ci_mean.PNG" width="80%"/>
         <caption>Confidence interval of sample means</caption>
       </figure>
       <p>Source: <url href="https://seeing-theory.brown.edu/frequentist-inference/index.html"/></p>
       <p>In the figure, samples were repeatedly drawn from a population with five observations each (orange dots). Each time, the mean is calculated (or estimated because we are using a sample). These point estimates of the mean from each sample are represented by the green or red dots, the confidence interval is the corresponding line to the left and right of it. For the green estimates, the population mean (dashed line) is within the confidence interval, for the red it is not.</p>
       <figure xml:id="fig-inf-4">
-        <image source="../assets/images/ci_corr.PNG" width="80%"/>
+        <image source="images/ci_corr.PNG" width="80%"/>
         <caption>Confidence intervals of sample correlations</caption>
       </figure>
       <p>Source: <url href="https://github.com/simonheb/metrics1-public"/></p>
@@ -533,7 +533,7 @@ cor
       <p>The t-distribution corresponds to the z-distribution for larger samples. For small samples, the distribution is flatter and therefore has wider margins. The critical t-values (above or below we can reject the null hypothesis) are therefore larger on the right and lower on the left side. This makes it more difficult to reject the null hypothesis. In other words: We need more extreme results in small samples to reject the null hypothesis. This accounts for the fact that some outliers have greater weight in small samples. This helps to avoid the so-called alpha error (or type I error), which refers to erroneously inferring statistically significant results although the null hypothesis is true in the population. The alpha error is usually seen as a greater threat to scientific progress than failing to reject the null hypothesis although we should have done so (beta error or type II error).</p>
       <p>Df refers to degrees of freedom, which is usually the number of cases - 1 (for estimation).</p>
       <figure xml:id="fig-inf-5">
-        <image source="../assets/images/t.png" width="50%"/>
+        <image source="images/t.png" width="50%"/>
         <caption>t-distribution</caption>
       </figure>
       <p>Source: <url href="https://www.geo.fu-berlin.de/en/v/soga-py/Basics-of-statistics/Continous-Random-Variables/Students-t-Distribution/index.html"/></p>
@@ -543,7 +543,7 @@ cor
       <p>The chi-square distribution is used, for example, for testing variances. One field of application is in cross tabulations. Chi-square values are never negative, so only one-sided tests are suitable.</p>
       <p>Df refers to degrees of freedom, which in the case of crosstabs would be the table size, for example.</p>
       <figure xml:id="fig-inf-6">
-        <image source="../assets/images/chi.png" width="50%"/>
+        <image source="images/chi.png" width="50%"/>
         <caption>Chi-Square-Distribution</caption>
       </figure>
       <p>Source: <url href="https://www.geo.fu-berlin.de/en/v/soga-py/Basics-of-statistics/Continous-Random-Variables/Chi-Square-Distribution/index.html"/></p>
@@ -552,11 +552,11 @@ cor
       <title>F-Distribution</title>
       <p>The F-distribution is basically the ratio of two chi-squared distributed random variables (e.g., two variances). The F-distribution is also always positive and the functional form depends on the degrees of freedom of the two variables under consideration. F-tests are used, for example, in comparing the model fit of regression models.</p>
       <figure xml:id="fig-inf-7">
-        <image source="../assets/images/f1.png" width="50%"/>
+        <image source="images/f1.png" width="50%"/>
         <caption>F-Distribution 1</caption>
       </figure>
       <figure xml:id="fig-inf-8">
-        <image source="../assets/images/f2.png" width="50%"/>
+        <image source="images/f2.png" width="50%"/>
         <caption>F-Distribution 2</caption>
       </figure>
       <p>Source: <url href="https://www.geo.fu-berlin.de/en/v/soga-py/Basics-of-statistics/Continous-Random-Variables/F-Distribution/index.html"/></p>

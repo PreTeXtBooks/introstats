@@ -8,7 +8,7 @@
     <p>Studying the results of the 2020 US presidential election holds profound relevance in terms of understanding contemporary American politics, as well as research on electoral behavior. Analyzing the voting patterns unveils the interplay of demographics, ideology, and socio-economic factors shaping political preferences. Such insights not only inform electoral strategies but also deepen our comprehension of societal divisions and cleavages. The 2020 election also stands out through an effort to overturn the election result by Donald Trump and co-conspirators. This has caused turmoil and abet the January 6 United States Capitol attack (e.g., see <url href="https://www.britannica.com/event/January-6-U-S-Capitol-attack"/> and <url href="https://statesuniteddemocracy.org/resources/doj-charges-trump/"/>).</p>
 
     <figure xml:id="fig-bi-1">
-      <image source="../assets/images/element5-digital-ls8Kc0P9hAA-unsplash.jpg" width="50%"/>
+      <image source="images/element5-digital-ls8Kc0P9hAA-unsplash.jpg" width="50%"/>
     </figure>
 
     <p>Source: <url href="https://unsplash.com/de/s/fotos/us-election"/></p>
@@ -357,7 +357,7 @@ ggplot(data_us_counted, aes(fill=age_cat_nom, y=n, x=trump_nom)) +
     <p>Scatter plots and correlation are suitable for showing relationships between two variables. In the following, we use the average approval of Trump across US states in % (`perc_trump`) as the variable to be explained (a.k.a. the outcome or dependent variable). State-specific variations in voting patterns are illustrated in the following map. As an explanatory variable, we use the proportion of people in the state who have a high level of education (Master's or postgraduate) in % (`perc_higheducation`). Both variables originate from individual-level data of the ANES study and have been aggregated to the state level (i.e., the means per region were stored in a new dataset).</p>
 
     <figure xml:id="fig-bi-2">
-      <image source="../assets/images/map_states.png" width="50%"/>
+      <image source="images/map_states.png" width="50%"/>
       <caption>Regional US presidential election results</caption>
     </figure>
 
@@ -448,7 +448,7 @@ sc2]]></code>
       <p>Here is an overview of possible scenarios in the correlation coefficient:</p>
 
       <figure xml:id="fig-bi-3">
-        <image source="../assets/images/korr2.png" width="100%"/>
+        <image source="images/korr2.png" width="100%"/>
         <caption>Different correlations</caption>
       </figure>
 
