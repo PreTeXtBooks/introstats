@@ -7,6 +7,7 @@
 <li>First, we prepare the data and analyze the bivariate relationship between income and attitudes toward social justice.</li>
   <li>Second, we control for possible alternative explanations in a multiple regression model. Here we focus on the "confounding variables" gender of respondents and whether or not respondents have been unemployed in the past 10 years.</li>
   <li>Third, we take a look at regression diagnostics, how to model nonlinear relationships between variables, and interactions between variables.</li>
+</ol>
 </p>
   </introduction>
 
