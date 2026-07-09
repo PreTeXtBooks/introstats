@@ -8,6 +8,7 @@
     <p>Studying the results of the 2020 US presidential election holds profound relevance in terms of understanding contemporary American politics, as well as research on electoral behavior. Analyzing the voting patterns unveils the interplay of demographics, ideology, and socio-economic factors shaping political preferences. Such insights not only inform electoral strategies but also deepen our comprehension of societal divisions and cleavages. The 2020 election also stands out through an effort to overturn the election result by Donald Trump and co-conspirators. This has caused turmoil and abet the January 6 United States Capitol attack (e.g., see <url href="https://www.britannica.com/event/January-6-U-S-Capitol-attack"/> and <url href="https://statesuniteddemocracy.org/resources/doj-charges-trump/"/>).</p>
 
     <figure xml:id="fig-bi-1">
+      <caption></caption>
       <image source="images/element5-digital-ls8Kc0P9hAA-unsplash.jpg" width="50%"/>
     </figure>
 
@@ -176,7 +177,7 @@ prop.table(table(data_us$vote))]]></code>
         </statement>
         <answer>
 
-          <p>Answer: <fillin characters="40" textstyle="box"/></p>
+          <p>Answer: <fillin characters="40"/></p>
 
         </answer>
         <solution>
@@ -353,7 +354,7 @@ tab_xtab(var.row = data_us$trump, var.col = data_us$education, show.row.prc = TR
         </statement>
         <answer>
 
-          <p>Answer: <fillin characters="40" textstyle="box"/></p>
+          <p>Answer: <fillin characters="40"/></p>
 
         </answer>
         <solution>
@@ -424,7 +425,7 @@ tab_xtab(var.row = data_us$trump, var.col = data_us$education, show.cell.prc = T
         </statement>
         <answer>
 
-          <p>Answer: <fillin characters="40" textstyle="box"/></p>
+          <p>Answer: <fillin characters="40"/></p>
 
         </answer>
         <solution>
@@ -462,7 +463,7 @@ histogram( ~ age | trump ,
         </statement>
         <answer>
 
-          <p>Answer: <fillin characters="40" textstyle="box"/></p>
+          <p>Answer: <fillin characters="40"/></p>
 
         </answer>
         <solution>
@@ -471,7 +472,7 @@ histogram( ~ age | trump ,
 
       <p>In addition, here are the means and standard deviations of age by vote group.</p>
 
-      <p><em>Age mean, median, and standard deviation for Biden supporters:<em></p>
+      <p><em>Age mean, median, and standard deviation for Biden supporters:</em></p>
 
       <program language="r">
         <code><![CDATA[mean(data_us$age[data_us$trump == 0], na.rm=TRUE)
@@ -479,7 +480,7 @@ median(data_us$age[data_us$trump == 0], na.rm=TRUE)
 sd(data_us$age[data_us$trump == 0], na.rm=TRUE)]]></code>
       </program>
 
-      <p><em>Age mean, median, and standard deviation for Trump supporters:<em></p>
+      <p><em>Age mean, median, and standard deviation for Trump supporters:</em></p>
 
       <program language="r">
         <code><![CDATA[mean(data_us$age[data_us$trump == 1], na.rm=TRUE)
@@ -489,50 +490,51 @@ sd(data_us$age[data_us$trump == 1], na.rm=TRUE)]]></code>
 
       <p>By comparing the mean and median values of both groups, we find that the Trump-supporting group is older than the group that supports Biden. The standard deviation (which can be thought of as the average deviation between the age of respondents and the mean) in the Biden group is slightly larger (17.2 years) than the standard deviation of the Trump group (16.5 years). This means that the age of respondents in the Biden group is slightly more dispersed than in the Trump group.</p>
 
-    <exercise>
-      <statement>
-    <p>Question: What is the scale of measurement (nominal, ordinal, metric) of each variable?</p>
-      </statement>
-      <answer>
+        </solution>
+      </exercise>
 
-        <p>Answer: <fillin characters="40" textstyle="box"/></p>
+      <exercise>
+        <statement>
+      <p>Question: What is the scale of measurement (nominal, ordinal, metric) of each variable?</p>
+        </statement>
+        <answer>
 
-      </answer>
-      <solution>
+          <p>Answer: <fillin characters="40"/></p>
 
-    <ul>
-      <li><c>vote</c> and <c>trump</c> --&gt; nominal (i.e., information on if something is either the case or not, categories cannot be ranked and have no numerical meaning)</li>
-      <li><c>education</c> --&gt; ordinal (i.e., categories (or variable values) can be ranked, information on whether a variable value is "higher"/"more" or "lower"/"less")</li>
-      <li><c>age</c> --&gt; metric (i.e., interval between ranked variable values can be compared; e.g., moving up 2 years from 20 to 22 is equivalent to moving up from 52 to 54)</li>
-    </ul>
-
-      </solution>
-    </exercise>
+        </answer>
+        <solution>
+<p>
+      <ul>
+        <li><c>vote</c> and <c>trump</c> --&gt; nominal (i.e., information on if something is either the case or not, categories cannot be ranked and have no numerical meaning)</li>
+        <li><c>education</c> --&gt; ordinal (i.e., categories (or variable values) can be ranked, information on whether a variable value is "higher"/"more" or "lower"/"less")</li>
+        <li><c>age</c> --&gt; metric (i.e., interval between ranked variable values can be compared; e.g., moving up 2 years from 20 to 22 is equivalent to moving up from 52 to 54)</li>
+      </ul>
+    </p>
+        </solution>
+      </exercise>
 
       <p>In the next step, we recode the age variable into the categories "young" (1), "middle-aged" (2), and "old" (3). We then use a cross tab with column percentages.</p>
 
       <program language="r">
         <code><![CDATA[
-data_us &lt;- data_us %gt;%  
-  mutate(age_cat =  
-           case_when(age &lt;= 35 ~ 1,   
-                     age &gt; 36 & age &lt;= 59 ~ 2,  
-                     age &gt; 59 ~ 3))  
+data_us &lt;- data_us %gt;%
+  mutate(age_cat =
+           case_when(age &lt;= 35 ~ 1,
+                     age &gt; 36 & age &lt;= 59 ~ 2,
+                     age &gt; 59 ~ 3))
 
 
 tab_xtab(var.row = data_us$trump, var.col = data_us$age_cat, show.col.prc = TRUE, show.obs = TRUE, show.summary = FALSE)
 ]]></code>
       </program>
 
-        </solution>
-      </exercise>
       <exercise>
         <statement>
       <p>Question: Interpret the cross tab. What can be concluded? Why don't we always go straight to categorizing metric variables and using the recoded variable in a cross tab?</p>
         </statement>
         <answer>
 
-          <p>Answer: <fillin characters="40" textstyle="box"/></p>
+          <p>Answer: <fillin characters="40"/></p>
 
         </answer>
         <solution>
@@ -599,11 +601,11 @@ ggplot(data_us_counted, aes(fill=age_cat_nom, y=n, x=trump_nom)) +
     <title>Scatter plot and correlation</title>
 
     <introduction>
-    <p>Scatter plots and correlation are suitable for showing relationships between two variables. In the following, we use the average approval of Trump across US states in % (<c>perc_trump</c>`) as the variable to be explained (a.k.a. the outcome or dependent variable). State-specific variations in voting patterns are illustrated in the following map. As an explanatory variable, we use the proportion of people in the state who have a high level of education (Master's or postgraduate) in % (<c>perc_higheducation</c>`). Both variables originate from individual-level data of the ANES study and have been aggregated to the state level (i.e., the means per region were stored in a new dataset).</p>
+    <p>Scatter plots and correlation are suitable for showing relationships between two variables. In the following, we use the average approval of Trump across US states in % (<c>perc_trump</c>) as the variable to be explained (a.k.a. the outcome or dependent variable). State-specific variations in voting patterns are illustrated in the following map. As an explanatory variable, we use the proportion of people in the state who have a high level of education (Master's or postgraduate) in % (<c>perc_higheducation</c>). Both variables originate from individual-level data of the ANES study and have been aggregated to the state level (i.e., the means per region were stored in a new dataset).</p>
 
     <figure xml:id="fig-bi-2">
-      <image source="images/map_states.png" width="50%"/>
       <caption>Regional US presidential election results</caption>
+      <image source="images/map_states.png" width="50%"/>
     </figure>
 
     <p>Source: <url href="https://www.governing.com/assessments/what-painted-us-so-indelibly-red-and-blue"/></p>
@@ -648,7 +650,7 @@ sc1
         </statement>
         <answer>
 
-          <p>Answer: <fillin characters="40" textstyle="box"/></p>
+          <p>Answer: <fillin characters="40"/></p>
 
         </answer>
         <solution>
@@ -684,7 +686,7 @@ sc2]]></code>
 
       <p>To quantify the relationship, we can calculate the covariance and subsequently the correlation (= standardized covariance fitted into the value range of -1 to +1). The widely used Pearson's correlation coefficient is given as:</p>
 
-      <p><m>r=\frac{Covariance(x,y)}{SD(x)<em>SD(y)}</m></p>
+      <p><m>r=\frac{Covariance(x,y)}{SD(x)*SD(y)}</m></p>
 
       <p><m>r=\frac{\sum_{i=1}^{n}(x_i-\bar{x})(y_i-\bar{y})}{\sqrt{\sum_{i=1}^{n}(x_i-\bar{x})^2}\sqrt{\sum_{i=1}^{n}(y_i-\bar{y})^2}}</m></p>
 
@@ -693,8 +695,8 @@ sc2]]></code>
       <p>Here is an overview of possible scenarios in the correlation coefficient:</p>
 
       <figure xml:id="fig-bi-3">
-        <image source="images/korr2.png" width="100%"/>
         <caption>Different correlations</caption>
+        <image source="images/korr2.png" width="100%"/>
       </figure>
 
       <p>Source: <url href="https://en.wikipedia.org/wiki/Correlation#/media/File:Correlation_examples2.svg"/></p>
@@ -722,20 +724,14 @@ rcorr(as.matrix(cor.vars))
 ]]></code>
       </program>
 
-      <p>In the case of correlation and regression coefficients, the interpretation always begins with mentioning x (or the <alert>independent</alert> variable) which exerts an effect on y (or the <alert>dependent</alert> variable).</p>
+      <p>In the case of correlation and regression coefficients, the interpretation always begins with mentioning x (or the <alert>independent</alert> variable) which exerts an effect on y (or the <alert>dependent</alert> variable).
 
       <ul>
         <li><alert>Correlation coefficient:</alert> "If x increases, then y increases / decreases (depending on the sign of the correlation coefficient), on average. The magnitude of the correlation coefficient <em>r</em> indicates a <em>weak/moderate/strong</em> empirical association." (Rule of thumb: +/- 0.1 <em>weak</em>, +/- 0.3 <em>moderate</em>, +/- 0.5 or higher <em>strong</em> association)</li>
-      </ul>
-
-      <ul>
         <li><alert>Regression coefficient:</alert> "If x increases by one unit, then y increases / decreases (depending on the sign of the regression coefficient) by <em>coefficient</em> units, on average." The specific coefficient estimate that is referred to, is given in the regression output. To what extent the empirical relationship is strong, moderate, or weak can be determined by a standardization of the regression coefficients. Note that the details of regression analysis and its interpretation are covered in <xref ref="ch-regression"/>.</li>
-      </ul>
-
-      <ul>
         <li>Correlation is a standardized form of covariance, which comes with the advantage of being intuitively interpretable (-1 to +1) without any reference to the underlying scale the two variables are measured. However, the price to pay is that it conceals the <em>magnitude</em> by which y changes if x changes by one unit (rather it represents how dense observations cluster together in forming a linear relationship). Bivariate regression quantifies the expected increase in y if x increases by 1. We thus need to standardize (or "correct") the covariance between x and y for the scale on which x is measured. This is achieved by dividing the covariance by the variance of x: <m>b=\frac{Covariance(x,y)}{Var(x)}</m></li>
       </ul>
-
+</p>
       <p>Interpretation of the correlation coefficient from the example: The correlation between the proportion of people with high education and Trump support is negative. If the share of people with high education increases, then Trump support decreases, on average. The correlation coefficient of -0.69 indicates a strong empirical relationship between both variables.</p>
 
     </subsection>
@@ -758,11 +754,11 @@ tab_xtab(var.row = data_us$trump, var.col = data_us$education, show.col.prc = TR
 
     <p>The formula for the chi-square test for cross tabs is the following: <m>\chi^2= \sum{\frac{(O-E)^2}{E}}</m></p>
 
-    <p><m>O</m> refers to the observed frequencies and <m>E</m> to the expected ones. The expected frequencies are obtained by multiplying the marginal frequencies ("total") for each cell, divided by the total number of cases (<m>E = \frac{R\times C}{n}</m>). For the first cell in the table above, this would be (1254<em>3711)/6685=696.12. Thus, 696 observations would be theoretically expected in the first cell and 567 were observed. Quite different. This is done (usually through statistical software) for each cell and summed up according to the formula.</p>
+    <p><m>O</m> refers to the observed frequencies and <m>E</m> to the expected ones. The expected frequencies are obtained by multiplying the marginal frequencies ("total") for each cell, divided by the total number of cases (<m>E = \frac{R\times C}{n}</m>). For the first cell in the table above, this would be (1254*3711)/6685=696.12. Thus, 696 observations would be theoretically expected in the first cell and 567 were observed. Quite different. This is done (usually through statistical software) for each cell and summed up according to the formula.</p>
 
     <p>Cramér's V is a measure based on chi-square and adjusted for different-sized cross tabs. It is given by the formula: <m>V=\sqrt{\frac{\chi^2}{n\times (m-1)}}</m>, where <m>n</m> is the number of observations and <m>M</m> is the number of categories (or variable values) of the variable with the fewer categories (here <c>trump</c> with 2).</p>
 
-    <p>Regarding interpretation, the following guidelines apply:</p>
+    <p>Regarding interpretation, the following guidelines apply:
 
     <ul>
       <li>Cramér's V ranges from 0 to 1, with no negative values possible</li>
@@ -771,7 +767,7 @@ tab_xtab(var.row = data_us$trump, var.col = data_us$education, show.col.prc = TR
       <li>In a small table (e.g., 2x2): between 0.1 and 0.3 --&gt; weak, more than 0.3 and less than 0.5 --&gt; moderate, more than 0.5 --&gt; strong association</li>
       <li>In a large table (e.g., 5x5): between 0.05 and 0.15 --&gt; weak, more than 0.15 and less than 0.25 --&gt; moderate, more than 0.25 --&gt; strong association</li>
     </ul>
-
+</p>
     <p>In R, chi-square and Cramér's V can be calculated with the following commands:</p>
 
     <program language="r">
@@ -788,7 +784,7 @@ cramerV(cramerV_tabelle)
       </statement>
       <answer>
 
-        <p>Answer: <fillin characters="40" textstyle="box"/></p>
+        <p>Answer: <fillin characters="40"/></p>
 
       </answer>
       <solution>
@@ -803,7 +799,7 @@ cramerV(cramerV_tabelle)
       </statement>
       <answer>
 
-        <p>Answer: <fillin characters="40" textstyle="box"/></p>
+        <p>Answer: <fillin characters="40"/></p>
 
       </answer>
       <solution>

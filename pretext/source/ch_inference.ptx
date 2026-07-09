@@ -6,8 +6,8 @@
     <p>In Western democracies, citizens' satisfaction with the government is critically related to the electoral success of governing parties in an upcoming election. At the same time, satisfied citizens are more willing to support non-preferred policies and are less likely to support anti-system or populist parties.</p>
     <p>If we are interested in the degree of satisfaction with the government in Germany, for example, we first need to define the population we aim to make statements about (e.g., people over 18 years old who live in Germany). Conducting interviews with each person that belongs to the population would be pointless. Instead, we can rely on the "shortcut" of random sampling, in which we randomly select observational units from this population (i.e., randomly selected Germans) and survey them. The idea is that the results (e.g., mean approval of the government using a survey item) from the random sample are representative of the underlying population - that is, a close match between the parameter estimated from the sample (e.g., mean approval) and the (unobserved) parameter of the population.</p>
     <figure xml:id="fig-inf-1">
-      <image source="images/bkamt.jpg" width="30%"/>
       <caption>Federal Chancellery (Bundeskanzleramt)</caption>
+      <image source="images/bkamt.jpg" width="30%"/>
     </figure>
     <p>Source: <url href="https://www.bundesregierung.de/breg-de/bundesregierung/bundeskanzleramt/dienstsitze-bundeskanzleramt-466834"/></p>
     <p>In statistical inference, we are primarily interested in how accurately an estimate from a sample reflects the true population parameter. Thus, the goal is to find a suitable measure of precision (or uncertainty, as the other "side of the coin"). We do this by matching the estimate from the sample with a test distribution that reflects likely or unlikely values in terms of probabilities. How this is done will be discussed in this case study.</p>
@@ -74,8 +74,8 @@ polygon(x=c(z[z>=qnorm(0.975)], max(z), qnorm(0.975)), y=c(dnorm(z[z>=qnorm(0.97
       <p>In general, a small number of cases leads to higher sampling variability. You may be familiar with this from the coin toss experiment. A coin is often tossed in succession. After 10 tosses, it is quite possible that heads were tossed 7 times and tails only 3 times. Nevertheless, the underlying probability is always 0.5/0.5 (or 50%/50%) and in the population of all coin tosses, heads and tails should occur equally often. If we now toss the coin even more often, after 30, 300, 3000, etc. the observed coin tosses will increasingly match the 0.5/0.5 probability distribution.</p>
       <p>The law of large numbers states that as the sample size increases, the mean of the sample will increasingly approxiamte that of the population. (Eventually, the sample would be identical to the entire population.) This means that more data is better, and the larger our sample, the more confident we can be that it matches or at least approximates the population parameter.</p>
       <figure xml:id="fig-inf-2">
-        <image source="images/zahlen.png" width="70%"/>
         <caption>Law of large numbers: Coin toss</caption>
+        <image source="images/zahlen.png" width="70%"/>
       </figure>
       <p>Source: <url href="https://link.springer.com/chapter/10.1007/978-3-030-45553-8_5"/></p>
     </subsection>
@@ -96,16 +96,14 @@ curve(dnorm(x, mean = mean(data), sd = sd(data)), col = "black", lwd = 2, add = 
       <title>Why statistical laws are important</title>
       <subsubsection xml:id="inf-basics-why-statistical-laws-are-important-only-one-sample">
         <title>Only one sample</title>
+        <p>
         <ul>
           <li>We calculate everything on the basis of <em>one sample</em>, everything else would be too costly.</li>
           <li>We can never be completely sure that the ONE specific sample and the statistics estimated using it correspond to those of the population, but:</li>
-        </ul>
-        <ul>
           <li>The <em>larger the sample</em>, the steeper the distribution of sample estimates and the more certain we are to get an estimated parameter <em>near the population parameter</em>, even with only one sample (Law of Large Numbers).</li>
-        </ul>
-        <ul>
           <li>For a <em>sample of 30 or more observations</em>, we know that the distribution of sample estimates is normal no matter how the distribution of the population looks like; this gives us the rationale that most samples mingle around the population mean and that there is quite a high probability that the estimate from our one sample <em>is near the center of the distribution (i.e., close to the population parameter)</em>; getting an estimate that is far away from the center of the distribution is rather unlikely (Central Limit Theorem).</li>
         </ul>
+      </p>
       </subsubsection>
       <subsubsection xml:id="inf-basics-why-statistical-laws-are-important-a-primer-on-null-hypothesis-testing">
         <title>A Primer on Null Hypothesis Testing</title>
@@ -174,7 +172,7 @@ curve(dnorm(x, mean = mean(data), sd = sd(data)), col = "black", lwd = 2, add = 
       <subsubsection xml:id="inf-confidence-intervals-how-to-calculate-and-interpret-the-confidence-interval-mean">
         <title>Mean</title>
         <p>For the lower and upper 95% confidence intervals of a mean, we use: <m>95\% CIs=[\bar x - 1.96 \times {\frac{s}{\sqrt n}}, \bar x + 1.96 \times {\frac{s}{\sqrt n}}]</m>.</p>
-        <p>Let us look into this with real data from the European Social Survey (German sample). First, we read the data and get an overview of the distribution of the variable satisfaction with government `stfgov`. `stfgov` was surveyed using an 11-point scale ranging from 0 "extremely dissatisfied" to 10 "extremely satisfied."</p>
+        <p>Let us look into this with real data from the European Social Survey (German sample). First, we read the data and get an overview of the distribution of the variable satisfaction with government <c>stfgov</c>. <c>stfgov</c> was surveyed using an 11-point scale ranging from 0 "extremely dissatisfied" to 10 "extremely satisfied."</p>
         <program language="r">
           <code><![CDATA[data_ess <- read_dta("data/ESS9_DE.dta", encoding = "latin1") 
 
@@ -216,7 +214,7 @@ t.test(data_ess$stfgov, conf.level = 0.95)
         <p>Question: Interpret the confidence interval.</p>
           </statement>
           <answer>
-            <p>Answer: <fillin characters="40" textstyle="box"/></p>
+            <p>Answer: <fillin characters="40"/></p>
           </answer>
           <solution>
         <p><em>Interpretation:</em> Likely values for the population mean are within the limits of 4.2 and 4.4.</p>
@@ -279,7 +277,7 @@ t.test(data_ess$stfgov_di, conf.level = 0.95)]]></code>
         <p>Question: Interpret the confidence interval.</p>
           </statement>
           <answer>
-            <p>Answer: <fillin characters="40" textstyle="box"/></p>
+            <p>Answer: <fillin characters="40"/></p>
           </answer>
           <solution>
         <p><em>Interpretation:</em> Likely values for the population proportion are within the limits of 0.29 and 0.33.</p>
@@ -288,7 +286,7 @@ t.test(data_ess$stfgov_di, conf.level = 0.95)]]></code>
       </subsubsection>
       <subsubsection xml:id="inf-confidence-intervals-how-to-calculate-and-interpret-the-confidence-interval-correlation-coefficient">
         <title>Correlation coefficient</title>
-        <p>Next, we look at how a confidence interval for a correlation is computed. For this, we use the following formula: <m>95\% CIs=r\pm 1.96 \times SE</m>, where the standard error SE is calculated as follows: <m>SE_r=\sqrt {\frac{(1-r^2)}{n-2}}</m>. To illustrate that, we let the software compute the confidence interval of the correlation between household income and satisfaction with the government.  `hinctnta` measures respondents' net household income (after deductions) across 10 quantiles ("deciles" 1-10) - the reason for this measurement is that this way income becomes adjusted to a country's income distribution and is thus comparable across countries. Regarding the correlation, we assume that - in line with economic voting theory - people with a higher income are more satisfied with the government than people with a lower income.</p>
+        <p>Next, we look at how a confidence interval for a correlation is computed. For this, we use the following formula: <m>95\% CIs=r\pm 1.96 \times SE</m>, where the standard error SE is calculated as follows: <m>SE_r=\sqrt {\frac{(1-r^2)}{n-2}}</m>. To illustrate that, we let the software compute the confidence interval of the correlation between household income and satisfaction with the government.  <c>hinctnta</c> measures respondents' net household income (after deductions) across 10 quantiles ("deciles" 1-10) - the reason for this measurement is that this way income becomes adjusted to a country's income distribution and is thus comparable across countries. Regarding the correlation, we assume that - in line with economic voting theory - people with a higher income are more satisfied with the government than people with a lower income.</p>
         <program language="r">
           <code><![CDATA[cor <- cor.test(data_ess$hinctnta, data_ess$stfgov)
 cor
@@ -299,7 +297,7 @@ cor
         <p>Question: Interpret the confidence interval.</p>
           </statement>
           <answer>
-            <p>Answer: <fillin characters="40" textstyle="box"/></p>
+            <p>Answer: <fillin characters="40"/></p>
           </answer>
           <solution>
         <p><em>Interpretation:</em> Likely values for correlation in the population are within the limits of -0.003 and 0.08.</p>
@@ -319,7 +317,7 @@ ciplot
         <p>Question: The shown figure displays 95% confidence intervals. Would 90% confidence intervals be narrower or wider?</p>
           </statement>
           <answer>
-            <p>Answer: <fillin characters="40" textstyle="box"/></p>
+            <p>Answer: <fillin characters="40"/></p>
           </answer>
           <solution>
         <p>The 90% confidence intervals would be narrower. Going back to the probability-world interpretation: If we only want to capture the true population parameter 90 percent of the time (instead of 95), this means that we could narrow down the range of values in which the parameter will fall. In contrast, if we decrease our readiness to err to 1% (i.e., a 99% confidence interval), the range of values to fulfill this assumption would increase - the confidence interval would get wider.</p>
@@ -355,7 +353,7 @@ ciplot
     <subsection xml:id="inf-null-hypothesis-testing-hypothesis-test-of-a-difference-in-means">
       <title>Hypothesis test of a difference in means</title>
       <introduction>
-      <p>Differences in means usually refer to a comparison of the mean of a variable between two groups. To illustrate that, we use the example of income and government satisfaction again. We leave the variable government satisfaction `stfgov` in its original metric form so that we can calculate the mean. However, we dichotomize the variable income `hinctnta` into two groups: low earners and high earners.</p>
+      <p>Differences in means usually refer to a comparison of the mean of a variable between two groups. To illustrate that, we use the example of income and government satisfaction again. We leave the variable government satisfaction <c>stfgov</c> in its original metric form so that we can calculate the mean. However, we dichotomize the variable income <c>hinctnta</c> into two groups: low earners and high earners.</p>
       <program language="r">
         <code><![CDATA[data_ess <- data_ess %>%  
   mutate(hinctnta_di =
@@ -394,9 +392,9 @@ summary(data_ess$hinctnta_di)
         <p>Question: Formulate the null and alternative hypotheses if we assume that persons with a high-income are more satisfied with the government.</p>
           </statement>
           <answer>
-            <p>Answer: <fillin characters="40" textstyle="box"/></p>
-            <p>H_0: <fillin characters="40" textstyle="box"/></p>
-            <p>H_A: <fillin characters="40" textstyle="box"/></p>
+            <p>Answer: <fillin characters="40"/></p>
+            <p>H_0: <fillin characters="40"/></p>
+            <p>H_A: <fillin characters="40"/></p>
           </answer>
           <solution>
         <p>Typically, it is easier to start with formulating the alternative hypothesis.</p>
@@ -440,7 +438,7 @@ polygon(x=c(z[z<=qnorm(0.05)], qnorm(0.05), min(z)), y=c(dnorm(z[z<=qnorm(0.05)]
         <p>Question: How would the rejection area change if we test one-sided? What would change if we set a 1% probability of error (two-sided test)?</p>
           </statement>
           <answer>
-            <p>Answer: <fillin characters="40" textstyle="box"/></p>
+            <p>Answer: <fillin characters="40"/></p>
           </answer>
           <solution>
         <p>Assuming a positive mean difference or correlation, the rejection area would be located only on the right side of the distribution. Since we still use an error probability of 5%, this area would be larger than in the two-sided case. Consequently, the critical value c thus moves a bit in the direction of the center of the distribution. For the z-distribution, this value is +1.645 for a positive alternative hypothesis (and -1.645 for a negative hypothesis).</p>
@@ -473,7 +471,7 @@ t.test(data_ess$stfgov[data_ess$hinctnta_di==1], data_ess$stfgov[data_ess$hinctn
         <p>Question: Interpret the result of the statistical test in detail with reference to the specific p-value.</p>
           </statement>
           <answer>
-            <p>Answer: <fillin characters="40" textstyle="box"/></p>
+            <p>Answer: <fillin characters="40"/></p>
           </answer>
           <solution>
         <p>The probability of obtaining such a result from the sample, although <m>H_0</m> is true in the population, is 0.11 or 11%. Since this exceeds the threshold of our willingness to err of 5%, we cannot reject the null hypothesis (and thus find no evidence in favor of <m>H_A</m>).</p>
@@ -490,9 +488,9 @@ t.test(data_ess$stfgov[data_ess$hinctnta_di==1], data_ess$stfgov[data_ess$hinctn
       <p>Question: Assume that higher income is either positively or negatively related to satisfaction with government. Formulate the null and alternative hypotheses (undirected).</p>
         </statement>
         <answer>
-          <p>Answer: <fillin characters="40" textstyle="box"/></p>
-          <p>H_0: <fillin characters="40" textstyle="box"/></p>
-          <p>H_A: <fillin characters="40" textstyle="box"/></p>
+          <p>Answer: <fillin characters="40"/></p>
+          <p>H_0: <fillin characters="40"/></p>
+          <p>H_A: <fillin characters="40"/></p>
         </answer>
         <solution>
       <p><m>H_A</m>:</p>
@@ -514,7 +512,7 @@ cor
       <p>Question: Interpret the result of the statistical test (two-sided test) with reference to the t-value and p-value.</p>
         </statement>
         <answer>
-          <p>Answer: <fillin characters="40" textstyle="box"/></p>
+          <p>Answer: <fillin characters="40"/></p>
         </answer>
         <solution>
       <p>The probability of obtaining such a result from the sample, although <m>H_0</m> is true in the population, is 0.07 or 7%. Since this exceeds the threshold of our willingness to err of 5%, the result is not statistically significant and we cannot reject the null hypothesis (and thus find no evidence in favor of <m>H_A</m>).</p>

@@ -12,13 +12,13 @@
     <p>The report and underlying data we are dealing with in this case study can be accessed online via <url href="https://www.sozialberichte.nrw.de">https://www.sozialberichte.nrw.de</url>.</p>
 
     <figure xml:id="fig-cover-sozialbericht">
-      <image source="images/cover.png" width="50%"/>
       <caption>Cover Sozialbericht</caption>
+      <image source="images/cover.png" width="50%"/>
     </figure>
 
     <p>Analyses based on data from the socio-demographic report are politically relevant. Insights from data analyses may provide politicians and public officials with information on social problems that need to be addressed by political measures. It is thus important that interpretations derived from data analyses are accurate. In the following case study, we take a closer look at the data and use methods from univariate statistics. Please note that the analyses and interpretations below are meant to illustrate data analysis techniques and do not reflect any policy advice.</p>
 
-    <p>We will use the following indicators or <em>variables</em> (source <url href="https://www.inkar.de">https://www.inkar.de</url>):</p>
+    <p>We will use the following indicators or <em>variables</em> (source <url href="https://www.inkar.de">https://www.inkar.de</url>):
 
     <ul>
       <li>Population density</li>
@@ -27,7 +27,7 @@
       <li>Crime rate</li>
       <li>Average age</li>
     </ul>
-
+    </p>
   </section>
 
   <section xml:id="uni-preparing-data">
@@ -237,19 +237,20 @@ ggtitle("North-Rhine Westphalia, Germany") +
 
     <exercise>
       <statement>
-    <p><strong>Question:</strong> What information is conveyed by the map? What information remains implicit?</p>
+    <p><alert>Question:</alert> What information is conveyed by the map? What information remains implicit?</p>
       </statement>
       <answer>
-        <p>Answer: <fillin characters="40" textstyle="box"/></p>
+        <p>Answer: <fillin characters="40"/></p>
 
       </answer>
       <solution>
+        <p>
     <ul>
       <li>Maps give a good first impression of the spatial distribution of data.</li>
       <li>However, insights depend on further (implicit) information ("What are the specifics of the high-unemployment cities in the middle of the map? Which areas are rural, which are urban?").</li>
       <li>Difficult to make general statements about maps and to compare maps (especially if the breaks that underly the colorization differ).</li>
     </ul>
-
+  </p>
       </solution>
     </exercise>
   </section>
@@ -283,10 +284,10 @@ histogram( ~ popdens + unemp + avage + crimerate,
 
     <exercise>
       <statement>
-    <p><strong>Question:</strong> Which characteristics of the data can be identified with histograms? Which aspects remain hidden?</p>
+    <p><alert>Question:</alert> Which characteristics of the data can be identified with histograms? Which aspects remain hidden?</p>
       </statement>
       <answer>
-        <p>Answer: <fillin characters="40" textstyle="box"/></p>
+        <p>Answer: <fillin characters="40"/></p>
 
       </answer>
       <solution>
@@ -302,7 +303,7 @@ histogram( ~ popdens + unemp + avage + crimerate,
 
     <p>The mean of a variable is also referred to as a measure of central tendency. It thus represents a good first impression of what is a typical (or expectable) value of a measured characteristic (i.e., a variable). Comparing the mean and the variable value of a specific observation provides information about whether the observation is close to or far from the mean. Besides the arithmetic mean, other measures exist (e.g., the geometric mean), but we do not consider them here.</p>
 
-    <p><strong>For the calculation of the mean, all observed values for a variable are added and the sum is then divided by the total number of observations (n).</strong></p>
+    <p><alert>For the calculation of the mean, all observed values for a variable are added and the sum is then divided by the total number of observations (n).</alert></p>
 
     <p><m>\bar x = \frac{1}{n}\sum_{i=1}^n x_i</m> or <m>\mu = \frac{1}{N}\sum_{i=1}^N x_i</m></p>
 
@@ -316,29 +317,29 @@ histogram( ~ popdens + unemp + avage + crimerate,
 
     <exercise>
       <statement>
-    <p><strong>Question:</strong> Interpret two means of your choice. Why is no mean displayed for the variable <c>area</c>?</p>
+    <p><alert>Question:</alert> Interpret two means of your choice. Why is no mean displayed for the variable <c>area</c>?</p>
       </statement>
       <answer>
-        <p>Answer: <fillin characters="40" textstyle="box"/></p>
+        <p>Answer: <fillin characters="40"/></p>
 
       </answer>
       <solution>
       <p>The average unemployment rate across the observed districts is 7.4 percent. The mean of the population variable is 338,218, which means that about 338,218 people live in a region, on average.</p>
     <p>Means can only be calculated for metric or quasi-metric (typically an ordinal variable with five or more categories) variables. <c>area</c> is a nominal variable.</p>
 
-    <p>The displayed tables contain more information than means:</p>
-
+    <p>The displayed tables contain more information than means:
     <ul>
-      <li>The <strong>median</strong> is another measure of centrality (besides the mean and the mode, i.e., the variable value that occurs the most often for a given set of observations):
+      <li>
+        The <alert>median</alert> is another measure of centrality (besides the mean and the mode, i.e., the variable value that occurs the most often for a given set of observations):
         <ul>
           <li>The median is the midpoint of a frequency distribution of observed variable values (i.e., it divides ordered observed data into two equal parts).</li>
           <li>Often preferred over the mean for skewed data because the median is not sensitive to outliers (i.e., extreme values).</li>
         </ul>
       </li>
-      <li>Measures of dispersion, such as the <strong>range</strong> (i.e., maximum value – minimum value) and the <strong>standard deviation</strong>, both providing information about how the data is distributed.</li>
-      <li>Measures of position, such as <strong>quartiles</strong> and the interquartile range, which are often graphically depicted using boxplots.</li>
+      <li>Measures of dispersion, such as the <alert>range</alert> (i.e., maximum value – minimum value) and the <alert>standard deviation</alert>, both providing information about how the data is distributed.</li>
+      <li>Measures of position, such as <alert>quartiles</alert> and the interquartile range, which are often graphically depicted using boxplots.</li>
     </ul>
-
+  </p>
       </solution>
     </exercise>
   </section>
@@ -348,12 +349,13 @@ histogram( ~ popdens + unemp + avage + crimerate,
 
     <p>Imagine for a moment that we not only have the socio-demographic report of NRW available but also a report from another German state. Comparing county characteristics, such as crime rates, across the two states might result in finding that both have the exact same mean. However, the crime rate in State 1 is much more extremely distributed, with particularly high and low values for some counties. In State 2, in contrast, the crime rate is much more evenly distributed around the mean. Determining the degree of dispersion (or scatteredness) of data is an important piece of information that is useful for several further statistical analyses It might also yield practical relevance, as different patterns of dispersion of crime may lead to different policy measures for combating crime. Let us start with calculating the variance.</p>
 
-    <p><strong>The variance is the sum of squared deviations</strong>.</p>
+    <p><alert>The variance is the sum of squared deviations</alert>.</p>
+    <p>
+    <md>\sigma^2 = \frac{\sum_{i=1}^n (x_i-\mu)^2}{N}</md> (Notation for the population)
+    <md>s^2 = \frac{\sum_{i=1}^n (x_i-\bar x)^2}{n-1}</md> (Notation for the sample; If we apply statistical inference and use a random sample, we need to apply a correction in the denominator "n-1" - referred to as Bessel's correction)
+  </p>
 
-    <p><m>\sigma^2 = \frac{\sum_{i=1}^n (x_i-\mu)^2}{N}</m> (Notation for the population)<br/>
-<m>s^2 = \frac{\sum_{i=1}^n (x_i-\bar x)^2}{n-1}</m> (Notation for the sample; If we apply statistical inference and use a random sample, we need to apply a correction in the denominator "n-1" – referred to as Bessel’s correction)</p>
-
-    <p><strong>The standard deviation re-transforms the value back to the scale on which the variable is measured, it is therefore easier to interpret and more commonly used</strong>.</p>
+    <p><alert>The standard deviation re-transforms the value back to the scale on which the variable is measured, it is therefore easier to interpret and more commonly used</alert>.</p>
 
     <p><m>s = \sqrt{\frac{\sum_{i=1}^n (x_i-\bar x)^2}{n-1}}</m></p>
 
@@ -378,10 +380,10 @@ s_crime + geom_hline(yintercept=6244, linetype="solid", color = "red", size=0.1)
 
     <exercise>
       <statement>
-    <p><strong>Question:</strong> Can you spot which district has the highest unemployment rate? Which county has the lowest crime rate? Can we infer from the graphs which of the two variables is more dispersed?</p>
+    <p><alert>Question:</alert> Can you spot which district has the highest unemployment rate? Which county has the lowest crime rate? Can we infer from the graphs which of the two variables is more dispersed?</p>
       </statement>
       <answer>
-        <p>Answer: <fillin characters="40" textstyle="box"/></p>
+        <p>Answer: <fillin characters="40"/></p>
 
       </answer>
       <solution>
@@ -412,7 +414,7 @@ varcoef]]></code>
     <p>To compare the dispersion of variables measured on different scales, we cannot use the variance or standard deviation (as they are measured on the units of the scale) but employ the coefficient of variation (i.e., standard deviation over the mean times 100). Here, higher values imply a higher dispersion of the data.</p>
 
     <blockquote>
-      <p><em><strong>Interpretation: The variable unemployment is more heterogeneously dispersed (varcoef = 33.3) than the variable crime rate (varcoef = 28.4).</strong></em></p>
+      <p><alert>Interpretation: The variable unemployment is more heterogeneously dispersed (varcoef = 33.3) than the variable crime rate (varcoef = 28.4).</alert></p>
     </blockquote>
 
       </solution>
@@ -425,8 +427,8 @@ varcoef]]></code>
     <p>Quartiles divide the ordered data into four parts (Q1 to Q4, where Q4 is the maximum of the observed values), and the median is represented by Q2. Hence, 25% of the observations are below or at Q1, 75% above. Q3-Q1 = interquartile range (IQR), which reflects the range in which the middle 50% of the observations are located.</p>
 
     <figure xml:id="fig-quartiles">
-      <image source="images/quartiles.PNG" width="50%"/>
       <caption>Quartiles</caption>
+      <image source="images/quartiles.PNG" width="50%"/>
     </figure>
 
     <p>Quartiles and IQR for unemployment rate:</p>
@@ -481,14 +483,14 @@ boxplot(data_nrw$crimerate,
     <introduction>
     <p>To test causal claims like "more unemployment leads to more crime" with observational data (i.e., from surveys or official records) is heroic and rests on various assumptions that need to be fulfilled. The main reason why causal inference with observational (i.e., non-experimental) data is so difficult is that all possible alternative explanations must be eliminated. Otherwise, we cannot be sure whether unemployment is the cause or some other unobserved phenomenon that correlates with unemployment.</p>
 
-    <p>For causal inference, the following three conditions must be met:</p>
+    <p>For causal inference, the following three conditions must be met:
 
     <ul>
       <li>X (cause) and Y (effect) must be empirically related to each other (e.g., correlate with each other).</li>
       <li>X must precede Y in time (e.g., can be mapped with panel data).</li>
       <li>Most importantly: All possible alternative explanations must be excluded (e.g., via a randomized experiment or by using control variables in multiple regression).</li>
     </ul>
-
+    </p>
     <p>We will revisit these assumptions in the case study on regression analysis.</p>
 
     </introduction>
@@ -520,7 +522,7 @@ sc1]]></code>
       </program>
 
       <blockquote>
-        <p><em><strong>Interpretation: The depicted observations and the fitted line imply a positive correlation. (The higher the unemployment rate, the higher the crime rate.)</strong></em></p>
+        <p><alert>Interpretation: The depicted observations and the fitted line imply a positive correlation. (The higher the unemployment rate, the higher the crime rate.)</alert></p>
       </blockquote>
 
       <p>Pearson's correlation coefficient "r" quantifies the correlation: -1 = perfect neg. correlation, 0 = no correlation, +1 = perfect pos. correlation.</p>
@@ -532,7 +534,7 @@ rcorr(as.matrix(cor.vars))]]></code>
       </program>
 
       <blockquote>
-        <p><em><strong>Interpretation: In this case, the correlation coefficient is r = 0.72 with a p-value of &lt; 0.001. That means that we find a strong positive correlation. The correlation is also statistically significant (we typically speak of a statistically significant result if the p-value is below 0.05), which means that we can be fairly certain that the result is not due to chance but can be interpreted as systematic.</strong></em></p>
+        <p><alert>Interpretation: In this case, the correlation coefficient is r = 0.72 with a p-value of &lt; 0.001. That means that we find a strong positive correlation. The correlation is also statistically significant (we typically speak of a statistically significant result if the p-value is below 0.05), which means that we can be fairly certain that the result is not due to chance but can be interpreted as systematic.</alert></p>
       </blockquote>
 
     </subsection>
@@ -540,13 +542,13 @@ rcorr(as.matrix(cor.vars))]]></code>
     <subsection xml:id="uni-regression-with-control-variables">
       <title>Regression with control variables</title>
 
-      <p>The correlation showed that there is a positive (and statistically significant) bivariate relationship between unemployment and crime. But is this relationship causal? One way to assess this is to control for alternative explanations using multiple regression. We use population density as an alternative explanation. After all, it may well be that unemployment and crime occur primarily in an urban context. If that was the case, part of the correlation would not be due to unemployment, but to population density, and unemployment would so to say partly “transport” the effect of population density (if not included in the regression model). Let's take a look at this.</p>
+      <p>The correlation showed that there is a positive (and statistically significant) bivariate relationship between unemployment and crime. But is this relationship causal? One way to assess this is to control for alternative explanations using multiple regression. We use population density as an alternative explanation. After all, it may well be that unemployment and crime occur primarily in an urban context. If that was the case, part of the correlation would not be due to unemployment, but to population density, and unemployment would so to say partly “transport” the effect of population density (if not included in the regression model). Let's take a look at this.
 
       <ul>
         <li>Model 1 includes unemployment as an explanatory variable</li>
-        <li>Model 2 includes unemployment <strong>and</strong> population density</li>
+        <li>Model 2 includes unemployment <alert>and</alert> population density</li>
       </ul>
-
+</p>
       <program language="r">
         <code><![CDATA[
 model1 <- lm(crimerate ~ 1 + unemp, data = data_nrw)
@@ -556,10 +558,10 @@ stargazer(model1, model2, type = "text")]]></code>
       </program>
 
       <blockquote>
-        <p><em><strong>Interpretation: If unemployment increases by one percentage point, crime increases by 517 cases per 100,000 inhabitants (Model 1). The relationship is statistically significant. If we now control for population density in Model 2 (and thus hold the influence of population density constant), a one-unit increase in unemployment is associated with an increase of only 215 cases. Population density is also positively associated with crime. Both coefficient estimates are statistically significant at p &lt; 0.01. It thus seems to be a good idea to control for the influence of population density. We might be now much closer to the real effect of unemployment on crime now. However, we do not know this for certain because other alternative explanations are still possible to think of (e.g., the role of age composition or local social policies, as well as alternative explanations at the level of individuals).</strong></em></p>
+        <p><alert>Interpretation: If unemployment increases by one percentage point, crime increases by 517 cases per 100,000 inhabitants (Model 1). The relationship is statistically significant. If we now control for population density in Model 2 (and thus hold the influence of population density constant), a one-unit increase in unemployment is associated with an increase of only 215 cases. Population density is also positively associated with crime. Both coefficient estimates are statistically significant at p &lt; 0.01. It thus seems to be a good idea to control for the influence of population density. We might be now much closer to the real effect of unemployment on crime now. However, we do not know this for certain because other alternative explanations are still possible to think of (e.g., the role of age composition or local social policies, as well as alternative explanations at the level of individuals).</alert></p>
       </blockquote>
 
-      <p><strong>Disclaimer: If this outlook has been too complex, no worries. We will go through all the steps in detail in the subsequent case studies.</strong></p>
+      <p><alert>Disclaimer: If this outlook has been too complex, no worries. We will go through all the steps in detail in the subsequent case studies.</alert></p>
 
     </subsection>
 
