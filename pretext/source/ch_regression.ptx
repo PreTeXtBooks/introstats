@@ -2,64 +2,279 @@
 <chapter xml:id="ch-regression" xmlns:xi="http://www.w3.org/2001/XInclude">
   <title>Regression Analysis - Case Study Attitudes Toward Justice</title>
   <introduction>
-  <p>In this case study, we use survey data from the 2021 German General Population Survey of the Social Sciences (German: ALLBUS). Specifically, we examine the relationship between <alert>income</alert> and <alert>attitudes toward social justice</alert>.</p>
-  <p>(1) First, we prepare the data and analyze the bivariate relationship between income and attitudes toward social justice.</p>
-  <p>(2) Second, we control for possible alternative explanations in a multiple regression model. Here we focus on the "confounding variables" gender of respondents and whether or not respondents have been unemployed in the past 10 years.</p>
-  <p>(3) Third, we take a look at regression diagnostics, how to model nonlinear relationships between variables, and interactions between variables.</p>
+  <p>In this case study, we use survey data from the 2021 German General Population Survey of the Social Sciences (German: ALLBUS). Specifically, we examine the relationship between <alert>income</alert> and <alert>attitudes toward social justice</alert>.
+  <ol>
+<li>First, we prepare the data and analyze the bivariate relationship between income and attitudes toward social justice.</li>
+  <li>Second, we control for possible alternative explanations in a multiple regression model. Here we focus on the "confounding variables" gender of respondents and whether or not respondents have been unemployed in the past 10 years.</li>
+  <li>Third, we take a look at regression diagnostics, how to model nonlinear relationships between variables, and interactions between variables.</li>
+</p>
   </introduction>
 
   <section xml:id="reg-data-prep-bivariate">
     <title>Data preparation and bivariate regression</title>
     <introduction>
     <p>First, we read the data set and get an overview of the variables in the data set.</p>
+
     <program language="r">
-      <code><![CDATA[knitr::opts_chunk$set(echo = TRUE)]]></code>
-    </program>
-    <program language="r">
-      <code><![CDATA[# Required packages are installed and loaded here. If more packages are needed, this can be added to the list
-packages <- c("haven", "readxl" , "dplyr", "descr", "lattice", "knitr", "ggplot2", "Hmisc", "stargazer", "interactions", "car", "lmtest", "kableExtra")
-installed_packages <- packages %in% rownames(installed.packages())
-if (any(installed_packages == FALSE)) {
-  install.packages(packages[!installed_packages], repos = "https://cran.r-project.org/")
-}
-invisible(lapply(packages, library, character.only = TRUE))]]></code>
-    </program>
-    <program language="r">
-      <code><![CDATA[data_allbus <- read_dta("data/allbus2021_reduziert.dta") 
+      <code>data_allbus &lt;- read_dta("data/allbus2021_reduziert.dta") 
 
 # Here all cases are deleted, which have missing values on any of the variables. This is only recommended for reduced data sets with few variables, otherwise you would "throw out" observations based on non-relevant variables
-data_allbus <- na.omit(data_allbus)
+data_allbus &lt;- na.omit(data_allbus)
 
 # We also delete three observations that indicated "diverse" for the gender variable, as this simplifies hypothesis generation
-data_allbus<-subset(data_allbus, sex!=3)
+data_allbus&lt;-subset(data_allbus, sex!=3)
 
 # We now recode variables
-data_allbus$income <- data_allbus$incc
+data_allbus$income &lt;- data_allbus$incc
 
-data_allbus <- data_allbus %>%  
+data_allbus &lt;- data_allbus %>%  
   mutate(female =
            case_when(sex == 1 ~ 0,
                      sex == 2 ~ 1))
 
-data_allbus <- data_allbus %>%  
+data_allbus &lt;- data_allbus %>%  
   mutate(east =
            case_when(eastwest == 1 ~ 0,
                      eastwest == 2 ~ 1))
 
-data_allbus <- data_allbus %>%  
+data_allbus &lt;- data_allbus %>%  
   mutate(unemployed =
            case_when(dw18 == 1 ~ 1,
                      dw18 == 2 ~ 0))
 
 # Summarize and overview data
 summary(data_allbus)
+</code>
+    </program>
+<pre>
+##     eastwest          sex             im19            im20           im21      
+##  Min.   :1.000   Min.   :1.000   Min.   :1.000   Min.   :1.00   Min.   :1.000  
+##  1st Qu.:1.000   1st Qu.:1.000   1st Qu.:2.000   1st Qu.:2.00   1st Qu.:2.000  
+##  Median :1.000   Median :1.000   Median :3.000   Median :3.00   Median :3.000  
+##  Mean   :1.308   Mean   :1.486   Mean   :2.771   Mean   :2.82   Mean   :2.984  
+##  3rd Qu.:2.000   3rd Qu.:2.000   3rd Qu.:3.000   3rd Qu.:3.00   3rd Qu.:4.000  
+##  Max.   :2.000   Max.   :2.000   Max.   :4.000   Max.   :4.00   Max.   :4.000  
+##       dw18            incc          income         female      
+##  Min.   :1.000   Min.   : 1.0   Min.   : 1.0   Min.   :0.0000  
+##  1st Qu.:2.000   1st Qu.:13.0   1st Qu.:13.0   1st Qu.:0.0000  
+##  Median :2.000   Median :15.0   Median :15.0   Median :0.0000  
+##  Mean   :1.812   Mean   :15.3   Mean   :15.3   Mean   :0.4859  
+##  3rd Qu.:2.000   3rd Qu.:19.0   3rd Qu.:19.0   3rd Qu.:1.0000  
+##  Max.   :2.000   Max.   :26.0   Max.   :26.0   Max.   :1.0000  
+##       east          unemployed    
+##  Min.   :0.0000   Min.   :0.0000  
+##  1st Qu.:0.0000   1st Qu.:0.0000  
+##  Median :0.0000   Median :0.0000  
+##  Mean   :0.3079   Mean   :0.1884  
+##  3rd Qu.:1.0000   3rd Qu.:0.0000  
+##  Max.   :1.0000   Max.   :1.0000
+</pre>
+<program>
+<code>
 kable(head(data_allbus, 10), format = "html", booktabs = TRUE, caption = "ALLBUS survey data") %>%
     kable_paper() %>% #Font scheme of the table
     scroll_box(width = "100%", height = "100%") #Scrollable box
-]]></code>
-    </program>
+</code>
+</program>
+<table xml:id="table-survey-data">
+  <title>Survey Data</title>
+  <tabular halign="right">
+    <row header="yes">
+      <cell>eastwest</cell>
+      <cell>sex</cell>
+      <cell>im19</cell>
+      <cell>im20</cell>
+      <cell>im21</cell>
+      <cell>dw18</cell>
+      <cell>incc</cell>
+      <cell>income</cell>
+      <cell>female</cell>
+      <cell>east</cell>
+      <cell>unemployed</cell>
+    </row>
+    <row>
+      <cell>1</cell>
+      <cell>2</cell>
+      <cell>4</cell>
+      <cell>3</cell>
+      <cell>4</cell>
+      <cell>2</cell>
+      <cell>9</cell>
+      <cell>9</cell>
+      <cell>1</cell>
+      <cell>0</cell>
+      <cell>0</cell>
+    </row>
+    <row>
+      <cell>1</cell>
+      <cell>1</cell>
+      <cell>4</cell>
+      <cell>4</cell>
+      <cell>4</cell>
+      <cell>2</cell>
+      <cell>17</cell>
+      <cell>17</cell>
+      <cell>0</cell>
+      <cell>0</cell>
+      <cell>0</cell>
+    </row>
+    <row>
+      <cell>1</cell>
+      <cell>2</cell>
+      <cell>2</cell>
+      <cell>3</cell>
+      <cell>4</cell>
+      <cell>2</cell>
+      <cell>7</cell>
+      <cell>7</cell>
+      <cell>1</cell>
+      <cell>0</cell>
+      <cell>0</cell>
+    </row>
+    <row>
+      <cell>1</cell>
+      <cell>2</cell>
+      <cell>4</cell>
+      <cell>4</cell>
+      <cell>3</cell>
+      <cell>2</cell>
+      <cell>21</cell>
+      <cell>21</cell>
+      <cell>1</cell>
+      <cell>0</cell>
+      <cell>0</cell>
+    </row>
+    <row>
+      <cell>1</cell>
+      <cell>1</cell>
+      <cell>2</cell>
+      <cell>3</cell>
+      <cell>3</cell>
+      <cell>2</cell>
+      <cell>21</cell>
+      <cell>21</cell>
+      <cell>0</cell>
+      <cell>0</cell>
+      <cell>0</cell>
+    </row>
+    <row>
+      <cell>1</cell>
+      <cell>2</cell>
+      <cell>2</cell>
+      <cell>3</cell>
+      <cell>3</cell>
+      <cell>2</cell>
+      <cell>4</cell>
+      <cell>4</cell>
+      <cell>1</cell>
+      <cell>0</cell>
+      <cell>0</cell>
+    </row>
+    <row>
+      <cell>1</cell>
+      <cell>2</cell>
+      <cell>2</cell>
+      <cell>2</cell>
+      <cell>3</cell>
+      <cell>2</cell>
+      <cell>13</cell>
+      <cell>13</cell>
+      <cell>1</cell>
+      <cell>0</cell>
+      <cell>0</cell>
+    </row>
+    <row>
+      <cell>1</cell>
+      <cell>1</cell>
+      <cell>4</cell>
+      <cell>4</cell>
+      <cell>3</cell>
+      <cell>2</cell>
+      <cell>20</cell>
+      <cell>20</cell>
+      <cell>0</cell>
+      <cell>0</cell>
+      <cell>0</cell>
+    </row>
+    <row>
+      <cell>1</cell>
+      <cell>1</cell>
+      <cell>1</cell>
+      <cell>2</cell>
+      <cell>3</cell>
+      <cell>2</cell>
+      <cell>17</cell>
+      <cell>17</cell>
+      <cell>0</cell>
+      <cell>0</cell>
+      <cell>0</cell>
+    </row>
+    <row>
+      <cell>1</cell>
+      <cell>2</cell>
+      <cell>2</cell>
+      <cell>3</cell>
+      <cell>3</cell>
+      <cell>2</cell>
+      <cell>7</cell>
+      <cell>7</cell>
+      <cell>1</cell>
+      <cell>0</cell>
+      <cell>0</cell>
+    </row>
+  </tabular>
+</table>
     <p>Next, we build an index from the variables <c>im19</c> (agreement: income differences increase motivation), <c>im20</c> (agreement: rank differences between people are acceptable) and <c>im21</c> (agreement: social differences are fair). Since high values on those variables indicate disagreement, we can label the index <alert><c>morejustice</c></alert> for which high values represent disagreement with social inequality (i.e., advocacy of more justice).</p>
-    </introduction>
+
+      <exercise>
+        <statement>
+      <p>Question: Could we have recoded the variables differently? What would change? And what would happen if, for example, we recoded only two of the three variables and then built an index with all three variables?</p>
+</statement>
+        <answer>
+          <p>Answer: <fillin characters="40"/></p>
+        </answer>
+        <solution>
+      <p>Yes, if we were to recode all items, that would be just as possible. We would then have to label an index as “less justice” or “inequality,” since high values represent acceptance of social inequality. Recoding only a few variables is inadmissible, the index would no longer be valid.</p>        </solution>
+      </exercise>
+
+<p>
+For building scales or indices of items, it is always a good idea to check whether there are substantial correlations between the items. There are also other ways to look at the reliability of an index, for example, by calculating Cronbach’s alpha. We go with correlations and also look at the distribution of the index variable.
+</p>
+<program><code>
+# Do the items correlate sufficiently high for the index? (>.4 would be desirable)
+# Calculate correlation and output 
+vars &lt;- c("im19", "im20", "im21")
+cor.vars &lt;- data_allbus[vars]
+rcorr(as.matrix(cor.vars))
+</code></program>
+<pre>
+##      im19 im20 im21
+## im19 1.00 0.46 0.33
+## im20 0.46 1.00 0.51
+## im21 0.33 0.51 1.00
+## 
+## n= 2595 
+## 
+## 
+## P
+##      im19 im20 im21
+## im19       0    0  
+## im20  0         0  
+## im21  0    0
+</pre>
+
+<program><code>
+# Index creation
+data_allbus$morejustice &lt;- (data_allbus$im19 + data_allbus$im20 + data_allbus$im21)/3
+hist(data_allbus$morejustice)
+</code></program>
+      <figure>
+        <image source="images/unnamed-chunk-4-1.png" width="90%"/>
+      </figure>
+<p>
+The correlations show that at least most of the indicators are correlated with each other by r &gt; .4. The histogram suggests that the variable values are approximately normally distributed.
+</p>
+</introduction>
 
     <subsection xml:id="reg-the-foundations-of-bivariate-regression">
       <title>The foundations of (bivariate) regression</title>
@@ -73,10 +288,32 @@ kable(head(data_allbus, 10), format = "html", booktabs = TRUE, caption = "ALLBUS
       <p><alert>If <m>X_1</m> increases by one unit, then <m>Y</m> increases or decreases by <m>\beta_1</m> units (depending on the sign).</alert></p>
       <p>Let us now briefly remember the example from <xref ref="uni-outlook"/>, where we focused in the outlook on the empirical relationship between unemployment and crime rates in German counties. There we found a positive bivariate relationship between the two variables. The table below shows the coefficient estimate and the figure that depicts the positive association. If unemployment increases by one unit (here: 1 percentage point), then crime rates increase by 517.46 units (here: cases per 100T inhabitants), on average.</p>
       <program language="r">
-        <code><![CDATA[data_nrw <- read_excel("data/inkar_nrw.xls") 
-model1 <- lm(crimerate ~ 1 + unemp, data = data_nrw)
-stargazer(model1, type = "text")]]></code>
+        <code>data_nrw &lt;- read_excel("data/inkar_nrw.xls") 
+model1 &lt;- lm(crimerate ~ 1 + unemp, data = data_nrw)
+stargazer(model1, type = "text")</code>
       </program>
+<pre>
+## 
+## ===============================================
+##                         Dependent variable:    
+##                     ---------------------------
+##                              crimerate         
+## -----------------------------------------------
+## unemp                       517.460***         
+##                              (69.412)          
+##                                                
+## Constant                   2,398.594***        
+##                              (543.248)         
+##                                                
+## -----------------------------------------------
+## Observations                    53             
+## R2                             0.521           
+## Adjusted R2                    0.512           
+## Residual Std. Error     1,240.129 (df = 51)    
+## F Statistic           55.575*** (df = 1; 51)   
+## ===============================================
+## Note:               *p&lt;0.1; **p&lt;0.05; ***p&lt;0.01
+</pre>
       <figure xml:id="fig-reg-2">
         <image source="images/interpret_en.png"/>
       </figure>
@@ -107,14 +344,61 @@ stargazer(model1, type = "text")]]></code>
         </answer>
         <solution>
       <p>Yes: For example, the higher the income, the higher the preference for social justice (since wealthier people can afford it). Which hypothesis makes sense depends on theory and previous research.</p>
-      <p>In a next step, the bivariate regression model is estimated. To do so, we use the index <c>morejustice</c> as the outcome and the variable <c>income</c> as an independent variable (or predictor), which measures income classes in 26 levels (e.g., 1 = under 200 EUR monthly net income; 14 = 1750 - 1999 EUR; 26 = 10000 EUR and more).</p>
-      <program language="r">
-        <code><![CDATA[model_biv <- lm(morejustice ~ 1 + income, data = data_allbus) # 1 refers to the constant or intercept 
-summary(model_biv)
-stargazer(model_biv, type = "text")]]></code>
-      </program>
         </solution>
       </exercise>
+
+      <p>In a next step, the bivariate regression model is estimated. To do so, we use the index <c>morejustice</c> as the outcome and the variable <c>income</c> as an independent variable (or predictor), which measures income classes in 26 levels (e.g., 1 = under 200 EUR monthly net income; 14 = 1750 - 1999 EUR; 26 = 10000 EUR and more).</p>
+      <program language="r">
+        <code>model_biv &lt;- lm(morejustice ~ 1 + income, data = data_allbus) # 1 refers to the constant or intercept 
+summary(model_biv)
+</code></program>
+
+<pre>
+## 
+## Call:
+## lm(formula = morejustice ~ 1 + income, data = data_allbus)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -2.12251 -0.49371  0.06216  0.46936  1.33916 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  3.140981   0.045227  69.449  &lt; 2e-16 ***
+## income      -0.018467   0.002833  -6.518 8.53e-11 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.6574 on 2593 degrees of freedom
+## Multiple R-squared:  0.01612,    Adjusted R-squared:  0.01574 
+## F-statistic: 42.48 on 1 and 2593 DF,  p-value: 8.532e-11
+</pre>
+
+<program><code>
+stargazer(model_biv, type = "text")</code>
+      </program>
+<pre>
+## ===============================================
+##                         Dependent variable:    
+##                     ---------------------------
+##                             morejustice        
+## -----------------------------------------------
+## income                       -0.018***         
+##                               (0.003)          
+##                                                
+## Constant                     3.141***          
+##                               (0.045)          
+##                                                
+## -----------------------------------------------
+## Observations                   2,595           
+## R2                             0.016           
+## Adjusted R2                    0.016           
+## Residual Std. Error      0.657 (df = 2593)     
+## F Statistic          42.484*** (df = 1; 2593)  
+## ===============================================
+## Note:               *p&lt;0.1; **p&lt;0.05; ***p&lt;0.01
+</pre>
+
       <exercise>
         <statement>
       <p>Task: Interpret the output from the regression model using the following heuristics.</p>
@@ -140,53 +424,72 @@ stargazer(model_biv, type = "text")]]></code>
       </exercise>
     </subsection>
 
-    <exercise>
-      <statement>
-    <p>Question: Could we have recoded the variables differently? What would change? And what would happen if, for example, we recoded only two of the three variables and then built an index with all three variables?</p>
-      </statement>
-      <answer>
-        <p>Answer: <fillin characters="40"/></p>
-      </answer>
-      <solution>
-    <p>Yes, if we were to recode all items, that would be just as possible. We would then have to label an index as "less justice" or "inequality," since high values represent acceptance of social inequality. Recoding only a few variables is inadmissible, the index would no longer be valid.</p>
-    <p>For building scales or indices of items, it is always a good idea to check whether there are substantial correlations between the items. There are also other ways to look at the reliability of an index, for example, by calculating Cronbach's alpha. We go with correlations and also look at the distribution of the index variable.</p>
-    <program language="r">
-      <code><![CDATA[# Do the items correlate sufficiently high for the index? (>.4 would be desirable)
-# Calculate correlation and output
-vars <- c("im19", "im20", "im21")
-cor.vars <- data_allbus[vars]
-rcorr(as.matrix(cor.vars))]]></code>
-    </program>
-    <program language="r">
-      <code><![CDATA[# Index creation
-data_allbus$morejustice <- (data_allbus$im19 + data_allbus$im20 + data_allbus$im21)/3
-hist(data_allbus$morejustice)]]></code>
-    </program>
-    <p>The correlations show that at least most of the indicators are correlated with each other by r &gt; .4. The histogram suggests that the variable values are approximately normally distributed.</p>
-      </solution>
-    </exercise>
     <subsection xml:id="reg-on-the-correspondence-of-correlation-coefficient-and-standardized-regression-coefficient-in-the-bivariate-case">
       <title>On the correspondence of correlation coefficient and standardized regression coefficient in the bivariate case</title>
       <p>Pearson's correlation coefficient is the standardized covariance between two variables and corresponds to the so-called <em>standardized</em> regression coefficient from bivariate regression. To obtain the standardized regression coefficient, we can either z-transform the variables (<m>z=\frac{(x-\bar{x})}{S_x}</m>) before they enter the regression model or transform the coefficient after estimation by multiplying the unstandardized regression coefficient by the standard deviation of <m>X</m> and dividing the result by the standard deviation of <m>Y</m>: <m>\beta_s=\frac{(\beta*S_y)}{S_x}</m>. In the present case, we obtain the standard deviations and then calculate the standardized coefficient by hand, as well as use the <c>scale</c> function in R that automatically z-transforms variables and then estimates the regression model. We will check whether both procedures and the correlation correspond to each other.</p>
       <program language="r">
-        <code><![CDATA[
+        <code>
 # Standardized regression coefficient by hand
-sdx <- sd(data_allbus$income)
-sdy <- sd(data_allbus$morejustice)
+sdx &lt;- sd(data_allbus$income)
+sdy &lt;- sd(data_allbus$morejustice)
 
-beta_s <- (-0.018281*sdx)/sdy
+beta_s &lt;- (-0.018281*sdx)/sdy
 beta_s
+</code></program>
 
+<pre>
+## [1] -0.1256859
+</pre>
+
+      <program language="r">
+        <code>
 # Standardized regression coefficient with model
-model_biv_s <- lm(scale(morejustice) ~ 1 + scale(income), data = data_allbus)
+model_biv_s &lt;- lm(scale(morejustice) ~ 1 + scale(income), data = data_allbus)
 summary(model_biv_s)
-
-# Calculate correlation
-vars <- c("income", "morejustice")
-cor.vars <- data_allbus[vars]
-rcorr(as.matrix(cor.vars))
-]]></code>
+</code>
       </program>
+
+<pre>
+## Call:
+## lm(formula = scale(morejustice) ~ 1 + scale(income), data = data_allbus)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -3.2030 -0.7450  0.0938  0.7083  2.0209 
+## 
+## Coefficients:
+##                 Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)    2.553e-17  1.948e-02   0.000        1    
+## scale(income) -1.270e-01  1.948e-02  -6.518 8.53e-11 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.9921 on 2593 degrees of freedom
+## Multiple R-squared:  0.01612,    Adjusted R-squared:  0.01574 
+## F-statistic: 42.48 on 1 and 2593 DF,  p-value: 8.532e-11
+</pre>
+
+      <program language="r">
+        <code>
+# Calculate correlation
+vars &lt;- c("income", "morejustice")
+cor.vars &lt;- data_allbus[vars]
+rcorr(as.matrix(cor.vars))
+</code>
+      </program>
+<pre>
+##             income morejustice
+## income        1.00       -0.13
+## morejustice  -0.13        1.00
+## 
+## n= 2595 
+## 
+## 
+## P
+##             income morejustice
+## income              0         
+## morejustice  0
+</pre>
       <p><alert>Interpret the standardized regression coefficient as follows: If <m>X</m> (income) increases by one <em>standard deviation</em>, then Y increases/decreases by <m>\beta_s</m>-<em>standard deviations</em>. Here, it is a decrease by 0.13 <em>standard deviations</em>.</alert></p>
       <p>Standardized regression coefficients are also widely used in multiple regression (i.e., regressions with more than one independent variable). The advantage is that we "free" the variables from their original scale of measurement and use "standard deviations" as a comparable scale of measurement. We can thus directly compare regression coefficients. If a coefficient is larger, then it also has a larger "effect" on the outcome variable. For example, an increase of one unit on a scale of income that is measured on a scale ranging between 0 and 10,000 would result in a smaller change in the outcome variable than if it was measured on a scale with only 12 categories. Using standardized versions of each variable and using these two versions in two separate regression models should lead to comparable results. As an example of competing explanations that are represented by two independent variables in the same model: If income has a standardized coefficient of -0.13 and age has a standardized coefficient of -0.05, then income has a "greater effect" (on the outcome variable) than age.</p>
       <p>Note that we typically report z-standardized coefficients only for metric (but not binary) predictor variables and that there are other routines for comparing coefficients, such as the min-max normalization where all variables have a minimum of 0 and a maximum of 1 (and ordinal or metric variables additional values in between 0 and 1).</p>
@@ -251,10 +554,42 @@ rcorr(as.matrix(cor.vars))
       <title>Estimation and result interpretation</title>
       <p>We now estimate the corresponding regression model. The bivariate model has already been estimated above and is included for comparison.</p>
       <program language="r">
-        <code><![CDATA[model_mult <- lm(morejustice ~ 1 + income + female + unemployed + east, data = data_allbus)
+        <code>model_mult &lt;- lm(morejustice ~ 1 + income + female + unemployed + east, data = data_allbus)
 
-stargazer(model_biv, model_mult, type = "text")]]></code>
+stargazer(model_biv, model_mult, type = "text")</code>
       </program>
+<pre>
+## 
+## =====================================================================
+##                                    Dependent variable:               
+##                     -------------------------------------------------
+##                                        morejustice                   
+##                               (1)                      (2)           
+## ---------------------------------------------------------------------
+## income                     -0.018***                -0.011***        
+##                             (0.003)                  (0.003)         
+##                                                                      
+## female                                               0.128***        
+##                                                      (0.028)         
+##                                                                      
+## unemployed                                           0.066**         
+##                                                      (0.033)         
+##                                                                      
+## east                                                 0.075***        
+##                                                      (0.028)         
+##                                                                      
+## Constant                    3.141***                 2.936***        
+##                             (0.045)                  (0.059)         
+##                                                                      
+## ---------------------------------------------------------------------
+## Observations                 2,595                    2,595          
+## R2                           0.016                    0.027          
+## Adjusted R2                  0.016                    0.026          
+## Residual Std. Error    0.657 (df = 2593)        0.654 (df = 2590)    
+## F Statistic         42.484*** (df = 1; 2593) 18.263*** (df = 4; 2590)
+## =====================================================================
+## Note:                                     *p&lt;0.1; **p&lt;0.05; ***p&lt;0.01
+</pre>
       <p>We can now insert the regression coefficients into the two formulas from above:</p>
       <p>General form: <m>y = 2.936-0.011 * x_1 + 0.128 * x_2 + 0.066 * x_3 + 0.075 * x_4 + e</m></p>
       <p>Specific form: <m>morejustice = 2.936-0.011 * income + 0.128 * female + 0.066 * unemployed + 0.075 * east + e</m></p>
@@ -298,17 +633,13 @@ stargazer(model_biv, model_mult, type = "text")]]></code>
       <p>To obtain unbiased and efficient coefficient estimates from OLS regression models, several assumptions must be met. These assumptions refer to three areas.</p>
       <ol>
         <li>The first area ensures that the <alert>estimation method</alert> works at all. The first assumption is that the <em>coefficients</em> are additive because otherwise, the coefficients would not be estimable by the least squares method. This assumption is trivial and usually holds. Note that some statistic books erroneously cite this assumption that the empirical relationship between the independent and dependent variables must be linear. This is not the case and multiple linear regression can easily address non-linear relationships by multiplying <em>variables</em> with each other (see also below). The second assumption relates to the collinearity of independent variables. This means that two independent variables must not be perfectly correlated. Otherwise, the influence of one variable would be completely displaced by the influence of the other variable, which inhibits the reliable estimation of coefficients. It is rather rare that variables are too highly correlated with each other, and if there are variables in the dataset that measure similar constructs (and are thus highly correlated), one would build an index from those variables, anyway.</li>
-      </ol>
       <figure xml:id="fig-reg-3">
         <image source="images/OLS1en.png" width="100%"/>
       </figure>
-      <ol>
         <li>The second area concerns the unbiasedness of coefficient estimates. The underlying assumption is <alert>exogeneity of independent variables</alert>. If a variable is exogenous, this ensures that the coefficient of this variable reflects the actual relationship and does not represent something else. This is defined as the error term (i.e., the variance of the outcome left unexplained which represents possible unobserved factors that yield an influence on the outcome) is unrelated to the predictor variables. In a randomized experiment, the treatment variable is an exogenous predictor (per design due to the randomization) that is unrelated to unobserved third variables. In a model with observational data (e.g., from a survey), the exogeneity assumption requires the exclusion of alternative explanations by including relevant control variables. If we have all relevant control variables in the model, this assumption would be met. However, if there are unobserved variables that are correlated with the predictor and the outcome variable (which is the rule rather than the exception), we have a problem: the exogeneity assumption is not met and the regression coefficient is biased. We cannot empirically determine the extent of this bias: <em>There are no diagnostic tests for this assumption</em>. This means that we need to do good theory work to get clarity about causal relationships between variables and to include relevant control variables in the regression model. Another way to go is - as already mentioned - using experimental designs to rule out alternative explanations.</li>
-      </ol>
       <figure xml:id="fig-reg-4">
         <image source="images/OLS2en.png" width="100%"/>
       </figure>
-      <ol>
         <li>The third area refers to the process of <alert>statistical inference</alert>. If the assumptions are violated, the standard errors and thus the test statistics (e.g., t/z statistics), and significance tests are biased. The unbiasedness of the coefficients (as in 2.) operates independently of this. The first assumption in this area relates to whether we work with a random sample. Without one, there is no basis for inferential statistics, although in practice inferential statistics are done even without a random sample. (Here one uses, for example, significance tests as information about how "reliable" or precise an empirical relationship is estimated.)</li>
       </ol>
       <p>The assumption of <alert>uncorrelated errors</alert> means that each observation must carry a unique piece of information, independent of the information content of other observations in the sample. If we use, for example, cross-national survey data from different countries, observations within countries are possibly similar to each other regarding the outcome variable. For panel data, where the same units are observed multiple times over time, the similarity between observations from the same units is labeled serial correlation. If such a similarity between observations is not addressed by specific modeling choices (e.g., using multilevel models) or the variables included in the regression model, standard errors are biased. There are formal tests of uncorrelated errors, such as the Durbin-Watson Test.</p>
@@ -325,9 +656,13 @@ stargazer(model_biv, model_mult, type = "text")]]></code>
         <p>To illustrate how to employ several existing tests of OLS assumptions, we use the above-estimated model <c>model_mult</c>.</p>
         <p>The variance inflation factor (VIF) provides information on whether variables in the model are excessively correlated with other variables (this would also be registered in a correlation matrix of the variables, and one should be cautious if variables correlate with each other by more than 0.85). Regarding the VIF, a VIF above 5 is already a bit suspicious and a value above 10 indicates strong collinearity.</p>
         <program language="r">
-          <code><![CDATA[##Regression diagnostics
-vif(model_mult)]]></code>
+          <code>##Regression diagnostics
+vif(model_mult)</code>
         </program>
+<pre>
+##     income     female unemployed       east 
+##   1.215933   1.175482   1.037561   1.014182
+</pre>
         <p>The VIF is modest (&lt; 5) for all variables in the model. We can conclude that there is no multicollinearity present.</p>
       </subsubsection>
       <subsubsection xml:id="reg-uncorrelated-errors">
@@ -338,16 +673,29 @@ vif(model_mult)]]></code>
         <title>Normality of the residuals</title>
         <p>As a test for normality, we can (a) look at the distribution of residuals using a histogram, (b) plot a so-called Q-Q plot and interpret it, or (c) look at the distribution of variables in the model using a histogram (note that this can only give an indirect cue about the distribution of errors).</p>
         <program language="r">
-          <code><![CDATA[
-predict.model <- fitted(model_mult)
-error.model <- residuals(model_mult)
+          <code>
+predict.model &lt;- fitted(model_mult)
+error.model &lt;- residuals(model_mult)
 
-hist(error.model)]]></code>
+hist(error.model)</code>
         </program>
+
+      <figure>
+        <image source="images/unnamed-chunk-10-1.png" width="90%"/>
+      </figure>
+
         <program language="r">
-          <code><![CDATA[qqPlot(error.model)
-]]></code>
+          <code>qqPlot(error.model)
+</code>
         </program>
+
+      <figure>
+        <image source="images/unnamed-chunk-11-1.png" width="90%"/>
+      </figure>
+
+<pre>
+## [1]  741 1011
+</pre>
         <p>From the visual inspection, the distribution of errors looks similar to a normal distribution. The center of the distribution is about zero and the distribution is only slightly left-skewed.</p>
         <p>Regarding the Q-Q plot, the residual values shown should be on (or close to) the line as best as possible. A bit of "fraying" for high or low values is acceptable. We see slight deviations on the right, so there are a little too few values in the positive extreme range. Otherwise, it looks fine.</p>
       </subsubsection>
@@ -355,14 +703,24 @@ hist(error.model)]]></code>
         <title>Homoscedasticity</title>
         <p>Next, we inspect the assumption of homoscedasticity. We compare the predicted values from the model with the residual values. The more evenly the dots are scattered around the blue line, the more likely we can assume that the assumption is met.</p>
         <program language="r">
-          <code><![CDATA[
+          <code>
 scatterplot(error.model~predict.model, regLine=TRUE, smooth=FALSE, boxplots=FALSE)
-]]></code>
+</code>
         </program>
+      <figure>
+        <image source="images/unnamed-chunk-12-1.png" width="90%"/>
+      </figure>
         <p>In our case, the errors scatter quite evenly. This means that the model fits similarly at low, medium, and high prediction values. To be certain, we could plot the (standardized) residuals for all independent variables in the model and their ranges of values. Furthermore, there is a statistical test for homoscedasticity: the <em>Breusch-Pagan test</em>. The null hypothesis here would be that homoscedasticity exists (i.e., the residuals are independent of the predictors). A non-significant result is therefore the desired result of the test.</p>
         <program language="r">
-          <code><![CDATA[bptest(model_mult)]]></code>
+          <code>bptest(model_mult)</code>
         </program>
+<pre>
+## 
+##  studentized Breusch-Pagan test
+## 
+## data:  model_mult
+## BP = 5.4228, df = 4, p-value = 0.2466
+</pre>
         <p>The non-significant result indicates that the assumption of homoscedasticity appears to be met. If this was not the case, we would have to work with robust standard errors.</p>
       </subsubsection>
     </subsection>
@@ -372,26 +730,66 @@ scatterplot(error.model~predict.model, regLine=TRUE, smooth=FALSE, boxplots=FALS
       <p>Below, we test whether or not income has a non-linear effect on attitudes toward justice. Specifically, we assume that particularly middle-class individuals prefer justice and poor and rich individuals do so less. For rich people, the reason could be self-interest, while people with a low income might oppose redistributive policies because they are afraid of welfare state overuse by newcomers such as immigrants. The latter phenomenon has been discussed in the literature as "welfare chauvinism."</p>
       <p>Let us first look at the relationship graphically.</p>
       <program language="r">
-        <code><![CDATA[#Create and print scatter plot
-sc1 <- ggplot(data=data_allbus, aes(income, morejustice)) +
+        <code>#Create and print scatter plot
+sc1 &lt;- ggplot(data=data_allbus, aes(income, morejustice)) +
   geom_point() 
-sc1]]></code>
+sc1</code>
       </program>
+      <figure>
+        <image source="images/unnamed-chunk-14-1.png" width="90%"/>
+      </figure>
       <program language="r">
-        <code><![CDATA[sc2 <- ggplot(data=data_allbus, aes(income, morejustice)) +
+        <code>sc2 &lt;- ggplot(data=data_allbus, aes(income, morejustice)) +
   geom_jitter(aes(income = morejustice), size = 0.5) + geom_smooth()
 sc2
-]]></code>
+</code>
       </program>
+      <figure>
+        <image source="images/unnamed-chunk-15-1.png" width="90%"/>
+      </figure>
       <p>In the first figure, one cannot see a pattern because many points are simply stacked on top of each other. To make the density of the points more visible, we can add a small random fluctuation. This makes the plot somewhat less accurate, but we can now see the pattern, which is also illustrated by the smoothed correlation function (and confidence intervals) represented by the blue line. There is some visual evidence for a non-linear relationship.</p>
       <p>We now test for the non-linear relationship in the regression model. To do so, we add the squared variable for income as an additional predictor in the multiple model. The idea here is that the effect of income now depends on the value of "another" variable, namely income itself. In other words, the effect of income on attitudes toward justice is now allowed to vary depending on where you are on the income scale.</p>
       <program language="r">
-        <code><![CDATA[data_allbus$income_squared <-  data_allbus$income*data_allbus$income
+        <code>data_allbus$income_squared &lt;-  data_allbus$income*data_allbus$income
 
-model_nlin <- lm(morejustice ~ 1 + income + income_squared + female + unemployed + east, data = data_allbus)
+model_nlin &lt;- lm(morejustice ~ 1 + income + income_squared + female + unemployed + east, data = data_allbus)
 
-stargazer(model_biv, model_mult, model_nlin, type = "text")]]></code>
+stargazer(model_biv, model_mult, model_nlin, type = "text")</code>
       </program>
+<pre>
+## ==============================================================================================
+##                                                Dependent variable:                            
+##                     --------------------------------------------------------------------------
+##                                                    morejustice                                
+##                               (1)                      (2)                      (3)           
+## ----------------------------------------------------------------------------------------------
+## income                     -0.018***                -0.011***                 0.048***        
+##                             (0.003)                  (0.003)                  (0.013)         
+##                                                                                               
+## income_squared                                                               -0.002***        
+##                                                                               (0.0004)        
+##                                                                                               
+## female                                               0.128***                 0.125***        
+##                                                      (0.028)                  (0.028)         
+##                                                                                               
+## unemployed                                           0.066**                   0.055*         
+##                                                      (0.033)                  (0.033)         
+##                                                                                               
+## east                                                 0.075***                 0.058**         
+##                                                      (0.028)                  (0.028)         
+##                                                                                               
+## Constant                    3.141***                 2.936***                 2.546***        
+##                             (0.045)                  (0.059)                  (0.101)         
+##                                                                                               
+## ----------------------------------------------------------------------------------------------
+## Observations                 2,595                    2,595                    2,595          
+## R2                           0.016                    0.027                    0.036          
+## Adjusted R2                  0.016                    0.026                    0.034          
+## Residual Std. Error    0.657 (df = 2593)        0.654 (df = 2590)        0.651 (df = 2589)    
+## F Statistic         42.484*** (df = 1; 2593) 18.263*** (df = 4; 2590) 19.189*** (df = 5; 2589)
+## ==============================================================================================
+## Note:                                                              *p&lt;0.1; **p&lt;0.05; ***p&lt;0.01
+</pre>
       <p><alert>Interpretation:</alert></p>
       <ul>
         <li>First, we look if the coefficient for the squared variable <c>income_squared</c> is statistically significant -&gt; <alert>yes, so we can infer a non-linear relationship</alert></li>
@@ -422,16 +820,50 @@ stargazer(model_biv, model_mult, model_nlin, type = "text")]]></code>
       <p>Another important tool in regression analysis is to model interactions between variables. The idea is that the effect of one variable on the outcome variable depends on the <em>value</em> of another variable in the model. Specifically, the question we ask here is whether the effect of gender on attitudes toward justice differs between West and East Germany. The assumption would be that in East Germany the difference between men and women in justice attitudes is less pronounced than in West Germany. On the one hand, this may be because men in East Germany are more supportive of justice (and thus have similarly high levels of support compared to women). On the other hand, it could be (but this is implausible) that women in the East have similarly "low" values as men.</p>
       <p>Let us look at this as an interaction in the regression model. For this, it is important to have the two variables <c>female</c> and <c>east</c> in the model, as well as a variable that is the product of both variables (interaction). This variable can be built beforehand or we build it "on the fly" in R by adding a ":" between two existing variables ("*" also works).</p>
       <program language="r">
-        <code><![CDATA[# Letting R know that the two nominal variables "female" and "east" are indeed nominal or "factor variables" is important for the graphical representation of the interaction below
+        <code># Letting R know that the two nominal variables "female" and "east" are indeed nominal or "factor variables" is important for the graphical representation of the interaction below
 
-data_allbus$female <- factor(data_allbus$female)
-data_allbus$east <- factor(data_allbus$east)
+data_allbus$female &lt;- factor(data_allbus$female)
+data_allbus$east &lt;- factor(data_allbus$east)
 
 # The interactions can be specified with ":" or "*".
-model_interaktion <- lm(morejustice ~ 1 + income + unemployed + female + east + female : east , data = data_allbus)
+model_interaktion &lt;- lm(morejustice ~ 1 + income + unemployed + female + east + female : east , data = data_allbus)
 
-stargazer(model_interaktion, type = "text")]]></code>
+stargazer(model_interaktion, type = "text")</code>
       </program>
+<pre>
+## 
+## ===============================================
+##                         Dependent variable:    
+##                     ---------------------------
+##                             morejustice        
+## -----------------------------------------------
+## income                       -0.011***         
+##                               (0.003)          
+##                                                
+## unemployed                    0.065*           
+##                               (0.033)          
+##                                                
+## female1                      0.163***          
+##                               (0.033)          
+##                                                
+## east1                        0.128***          
+##                               (0.040)          
+##                                                
+## female1:east1                 -0.106*          
+##                               (0.056)          
+##                                                
+## Constant                     2.912***          
+##                               (0.060)          
+##                                                
+## -----------------------------------------------
+## Observations                   2,595           
+## R2                             0.029           
+## Adjusted R2                    0.027           
+## Residual Std. Error      0.654 (df = 2589)     
+## F Statistic          15.351*** (df = 5; 2589)  
+## ===============================================
+## Note:               *p&lt;0.1; **p&lt;0.05; ***p&lt;0.01
+</pre>
       <p><alert>Interpretation:</alert></p>
       <ul>
         <li>First, we look to see if the coefficient for the interaction variable <c>female1:east1</c> is statistically significant -&gt; <alert>Yes, so we can assume that the effect of <c>female</c> on <c>morejustice</c> depends on the value of <c>east</c>. In other words, the gender difference in justice attitudes differs between the two parts of Germany. (Note: It would also be correct to interpret the interaction effect symmetrically: The effect of <c>east</c> on <c>morejustice</c> depends on the value of <c>female</c>. For simplicity, we do not pursue this interpretation here.)</alert></li>
@@ -447,19 +879,18 @@ stargazer(model_interaktion, type = "text")]]></code>
       </ul>
       <p>Below, we see a graphical representation of the package <c>interactions</c> (see <url href="https://interactions.jacob-long.com/index.html"/> for more examples).</p>
       <program language="r">
-        <code><![CDATA[
+        <code>
 cat_plot(model_interaktion, pred = female, modx = east, geom = "line", point.shape = TRUE,
-         vary.lty = TRUE)]]></code>
+         vary.lty = TRUE)</code>
       </program>
+      <figure>
+        <image source="images/unnamed-chunk-18-1.png" width="90%"/>
+      </figure>
       <p>The blue line represents West Germany, and the orange line East Germany. The lines with the bars at the end are 95% confidence intervals, thus indirectly showing how "significant" the respective effects are estimated to be.</p>
       <p>Three things stand out:</p>
       <ul>
         <li>Women and men in East Germany are more supportive of social justice than women and men in West Germany (orange triangles compared to blue dots). The difference is statistically significant for men in West Germany (confidence intervals on the left side do not overlap). To know whether the overall level of support (women and men combined) is statistically significantly higher in the East, we have to go back to <c>model_mult</c> and look at the <em>average</em> relationship (<m>\beta_4 = 0.075, p &lt; 0.01</m>).</li>
-      </ul>
-      <ul>
         <li>Looking at the lines and thus the effect of gender separately for both parts of the country, the difference between women and men is statistically significant in West Germany (see coefficient for <c>female</c>, 0.163). In East Germany, the difference is not significant. (This can also be visually inferred by comparing the orange and the blue estimates to each other.)</li>
-      </ul>
-      <ul>
         <li>The effect of being a woman is larger in West Germany than in East Germany (the blue line is steeper than the orange line). This is represented by the coefficient for the interaction term.</li>
       </ul>
       <p><alert>We can now insert the regression coefficients into a regression formula:</alert></p>
@@ -469,37 +900,23 @@ cat_plot(model_interaktion, pred = female, modx = east, geom = "line", point.sha
       <p><m>dy/d(east) = 0.128 – 0.106*female</m></p>
       <p>
         <ol>
-        <li>Marginal Effect for the variable <c>east</c> (first derivative)</li>
-      </ol>
+        <li>Marginal Effect for the variable <c>east</c> (first derivative)
       <ul>
         <li>We can substitute 0 for the variable female, i.e., the effect of <c>east</c> for men: <m>b(east=1, female=0) = 0.128 – 0.106 * 0 = 0.128</m>.</li>
-      </ul>
-      <ul>
         <li>This refers to the difference between East and West in men (plot: distance between blue dot and orange triangle on the left).</li>
-      </ul>
-      <ul>
         <li>If we substitute 1 for the variable female: i.e., the effect of <c>east</c> for women: <m>b(east=1, female=1) = 0.128 – 0.106 * 1 = 0.022</m>.</li>
-      </ul>
-      <ul>
         <li>This refers to the small difference between East and West in women (distance between blue dot and orange triangle on the right side).</li>
       </ul>
       <p><m>dy/d(female) = 0.163 – 0.106*east</m></p>
-      <ol>
-        <li>Marginal Effect for the variable <c>female</c> (first derivative)</li>
-      </ol>
+     </li>
+        <li>Marginal Effect for the variable <c>female</c> (first derivative)
       <ul>
         <li>We can substitute 0 for the variable east, i.e., the effect of <c>female</c> for West Germans: <m>b(female=1, east=0) = 0.163 – 0.106 * 0 = 0.163</m>.</li>
-      </ul>
-      <ul>
         <li>This refers to the difference between women and men in West Germany (plot: distance between both blue dots).</li>
-      </ul>
-      <ul>
         <li>If we substitute 1 for the variable east, i.e., the effect of <c>female</c> for East Germans: <m>b(female=1, east=1) = 0.163 – 0.106 * 1 = 0.057</m>.</li>
-      </ul>
-      <ul>
         <li>This refers to the difference between women and men in East Germany (distance between both orange triangles).</li>
       </ul>
-      <ol>
+</li>
         <li>The effect difference of women (different in both slopes) is represented by the coefficient for the interaction, i.e., –0.106.</li>
       </ol>
     </p>
