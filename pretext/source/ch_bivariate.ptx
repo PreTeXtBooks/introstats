@@ -119,6 +119,26 @@ knitr::kable(head(data_us, 10), booktabs = TRUE,  caption = 'A table of the firs
 
     <p><c>age</c> = age of respondent in years.</p>
 
+      <exercise>
+        <statement>
+      <p>Question: What is the scale of measurement (nominal, ordinal, metric) of each variable?</p>
+        </statement>
+        <answer>
+
+          <p>Answer: <fillin characters="40"/></p>
+
+        </answer>
+        <solution>
+<p>
+      <ul>
+        <li><c>vote</c> and <c>trump</c> --&gt; nominal (i.e., information on if something is either the case or not, categories cannot be ranked and have no numerical meaning)</li>
+        <li><c>education</c> --&gt; ordinal (i.e., categories (or variable values) can be ranked, information on whether a variable value is "higher"/"more" or "lower"/"less")</li>
+        <li><c>age</c> --&gt; metric (i.e., interval between ranked variable values can be compared; e.g., moving up 2 years from 20 to 22 is equivalent to moving up from 52 to 54)</li>
+      </ul>
+    </p>
+        </solution>
+      </exercise>
+
     </introduction>
 
     <subsection xml:id="bi-frequency-tables">
@@ -457,6 +477,10 @@ histogram( ~ age | trump ,
 ]]></code>
       </program>
 
+    <figure>
+      <image source="images/unnamed-chunk-10-1 (1).png" width="50%"/>
+    </figure>
+
       <exercise>
         <statement>
       <p>Question: What can be inferred from the graphs?</p>
@@ -470,6 +494,8 @@ histogram( ~ age | trump ,
 
       <p>The age distribution of the respondents supporting Biden (left-hand) is a bit more even than the distribution of those supporting Trump (right-hand side). The latter is also more skewed to the left and its center is more on the right, which indicates that respondents who support Trump are older, on average, than those who support Biden.</p>
 
+        </solution>
+      </exercise>
       <p>In addition, here are the means and standard deviations of age by vote group.</p>
 
       <p><em>Age mean, median, and standard deviation for Biden supporters:</em></p>
@@ -479,6 +505,11 @@ histogram( ~ age | trump ,
 median(data_us$age[data_us$trump == 0], na.rm=TRUE)
 sd(data_us$age[data_us$trump == 0], na.rm=TRUE)]]></code>
       </program>
+<pre>
+## [1] 51.22253
+## [1] 52
+## [1] 17.22161
+</pre>
 
       <p><em>Age mean, median, and standard deviation for Trump supporters:</em></p>
 
@@ -487,31 +518,12 @@ sd(data_us$age[data_us$trump == 0], na.rm=TRUE)]]></code>
 median(data_us$age[data_us$trump == 1], na.rm=TRUE)
 sd(data_us$age[data_us$trump == 1], na.rm=TRUE)]]></code>
       </program>
-
+<pre>
+## [1] 54.2871
+## [1] 56
+## [1] 16.51148
+</pre>
       <p>By comparing the mean and median values of both groups, we find that the Trump-supporting group is older than the group that supports Biden. The standard deviation (which can be thought of as the average deviation between the age of respondents and the mean) in the Biden group is slightly larger (17.2 years) than the standard deviation of the Trump group (16.5 years). This means that the age of respondents in the Biden group is slightly more dispersed than in the Trump group.</p>
-
-        </solution>
-      </exercise>
-
-      <exercise>
-        <statement>
-      <p>Question: What is the scale of measurement (nominal, ordinal, metric) of each variable?</p>
-        </statement>
-        <answer>
-
-          <p>Answer: <fillin characters="40"/></p>
-
-        </answer>
-        <solution>
-<p>
-      <ul>
-        <li><c>vote</c> and <c>trump</c> --&gt; nominal (i.e., information on if something is either the case or not, categories cannot be ranked and have no numerical meaning)</li>
-        <li><c>education</c> --&gt; ordinal (i.e., categories (or variable values) can be ranked, information on whether a variable value is "higher"/"more" or "lower"/"less")</li>
-        <li><c>age</c> --&gt; metric (i.e., interval between ranked variable values can be compared; e.g., moving up 2 years from 20 to 22 is equivalent to moving up from 52 to 54)</li>
-      </ul>
-    </p>
-        </solution>
-      </exercise>
 
       <p>In the next step, we recode the age variable into the categories "young" (1), "middle-aged" (2), and "old" (3). We then use a cross tab with column percentages.</p>
 
@@ -528,6 +540,50 @@ tab_xtab(var.row = data_us$trump, var.col = data_us$age_cat, show.col.prc = TRUE
 ]]></code>
       </program>
 
+<table xml:id="table-trump-age-crosstab">
+  <title>Trump Support by Age Category</title>
+  <tabular halign="right">
+    <col halign="right"/>
+    <col halign="right"/>
+    <col halign="right"/>
+    <col halign="right"/>
+    <col halign="right"/>
+    <row header="yes">
+      <cell>trump</cell>
+      <cell colspan="3">age_cat</cell>
+      <cell>Total</cell>
+    </row>
+    <row>
+      <cell></cell>
+      <cell>1</cell>
+      <cell>2</cell>
+      <cell>3</cell>
+      <cell></cell>
+    </row>
+    <row>
+      <cell>0</cell>
+      <cell>838 (63.1%)</cell>
+      <cell>1373 (55.7%)</cell>
+      <cell>1375 (52.4%)</cell>
+      <cell>3586 (55.9%)</cell>
+    </row>
+    <row>
+      <cell>1</cell>
+      <cell>491 (36.9%)</cell>
+      <cell>1092 (44.3%)</cell>
+      <cell>1250 (47.6%)</cell>
+      <cell>2833 (44.1%)</cell>
+    </row>
+    <row>
+      <cell>Total</cell>
+      <cell>1329 (100%)</cell>
+      <cell>2465 (100%)</cell>
+      <cell>2625 (100%)</cell>
+      <cell>6419 (100%)</cell>
+    </row>
+  </tabular>
+</table>
+
       <exercise>
         <statement>
       <p>Question: Interpret the cross tab. What can be concluded? Why don't we always go straight to categorizing metric variables and using the recoded variable in a cross tab?</p>
@@ -542,6 +598,8 @@ tab_xtab(var.row = data_us$trump, var.col = data_us$age_cat, show.col.prc = TRUE
       <p>Looking at the category of young respondents (age_cat = 1), 36.9% prefer Trump as president, whereas among old respondents (age_cat = 3), 47.6% opt for Trump. This difference of 10.7 percentage points indicates a systematic (positive) empirical relationship between age and Trump support: Older respondents tend to prefer Trump more than younger voters.</p>
 
       <p>The reason why it is not always recommended to categorize metric variables is that the process of categorization involves a loss of information. Usually, more information is better as it produces more detailed results. Note that there are exceptions to this such as striving for a simplified description of empirical relationships.</p>
+        </solution>
+      </exercise>
 
       <p>Here is a way to visualize a cross tab with stacked bar charts. The first figure corresponds to a cross tab with column percentages and the second figure relates to a cross tab with row percentages.</p>
 
@@ -576,6 +634,9 @@ ggplot(data_us_counted, aes(fill=trump_nom, y=n, x=age_cat_nom)) +
     theme_minimal()
 ]]></code>
       </program>
+    <figure>
+      <image source="images/unnamed-chunk-14-1 (2).png" width="50%"/>
+    </figure>
 
       <program language="r">
         <code><![CDATA[
@@ -590,10 +651,10 @@ ggplot(data_us_counted, aes(fill=age_cat_nom, y=n, x=trump_nom)) +
  
 ]]></code>
       </program>
-
-        </solution>
-      </exercise>
-    </subsection>
+    <figure>
+      <image source="images/unnamed-chunk-15-1 (1).png" width="50%"/>
+    </figure>
+</subsection>
 
   </section>
 
@@ -622,6 +683,70 @@ knitr::kable(
 ]]></code>
     </program>
 
+<table xml:id="table-regional-vote-data">
+  <title>A table of the first 10 rows of the regional vote data</title>
+  <tabular halign="right">
+    <col halign="left"/>
+    <col halign="right"/>
+    <col halign="right"/>
+    <row header="yes">
+      <cell>state</cell>
+      <cell>perc_trump</cell>
+      <cell>perc_higheducation</cell>
+    </row>
+    <row>
+      <cell>South Dakota</cell>
+      <cell>0.7333334</cell>
+      <cell>0.0588235</cell>
+    </row>
+    <row>
+      <cell>Nebraska</cell>
+      <cell>0.5416667</cell>
+      <cell>0.0816327</cell>
+    </row>
+    <row>
+      <cell>South Carolina</cell>
+      <cell>0.5000000</cell>
+      <cell>0.0840336</cell>
+    </row>
+    <row>
+      <cell>North Dakota</cell>
+      <cell>0.7619048</cell>
+      <cell>0.0869565</cell>
+    </row>
+    <row>
+      <cell>Montana</cell>
+      <cell>0.5238095</cell>
+      <cell>0.0869565</cell>
+    </row>
+    <row>
+      <cell>Arkansas</cell>
+      <cell>0.7142857</cell>
+      <cell>0.1132075</cell>
+    </row>
+    <row>
+      <cell>Louisiana</cell>
+      <cell>0.6022728</cell>
+      <cell>0.1170213</cell>
+    </row>
+    <row>
+      <cell>Wisconsin</cell>
+      <cell>0.5031056</cell>
+      <cell>0.1180124</cell>
+    </row>
+    <row>
+      <cell>Alaska</cell>
+      <cell>0.7500000</cell>
+      <cell>0.1250000</cell>
+    </row>
+    <row>
+      <cell>Utah</cell>
+      <cell>0.5526316</cell>
+      <cell>0.1250000</cell>
+    </row>
+  </tabular>
+</table>
+
     <p>The variable <c>state</c> identifies the region.</p>
 
     </introduction>
@@ -643,7 +768,9 @@ sc1 &lt;- ggplot(data=data_states, aes(x = perc_higheducation, y = perc_trump)) 
 sc1
 ]]></code>
       </program>
-
+      <figure>
+        <image source="images/unnamed-chunk-17-1.png" width="100%"/>
+      </figure>
       <exercise>
         <statement>
       <p>Question: What can be inferred from the figure?</p>
@@ -669,9 +796,21 @@ sc1
       <program language="r">
         <code><![CDATA[#Obtaining means for each variable
 mean(data_states$perc_trump, na.rm=TRUE)
+]]></code>
+      </program>
+<pre>
+## [1] 0.470922
+</pre>
+      <program language="r">
+        <code><![CDATA[
 mean(data_states$perc_higheducation, na.rm=TRUE)
-
-
+]]></code>
+      </program>
+<pre>
+## [1] 0.1927645
+</pre>
+      <program language="r">
+        <code><![CDATA[
 #Scatter plot using percentages as scale units
 sc2 &lt;- ggplot(data=data_states, aes(x = perc_higheducation, y = perc_trump)) + 
   geom_point() + 
@@ -683,6 +822,9 @@ sc2 &lt;- ggplot(data=data_states, aes(x = perc_higheducation, y = perc_trump)) 
   geom_vline(xintercept=0.1927645, linetype="dashed", color = "red", size=1)
 sc2]]></code>
       </program>
+      <figure>
+        <image source="images/unnamed-chunk-18-1 (1).png" width="100%"/>
+      </figure>
 
       <p>To quantify the relationship, we can calculate the covariance and subsequently the correlation (= standardized covariance fitted into the value range of -1 to +1). The widely used Pearson's correlation coefficient is given as:</p>
 
@@ -716,14 +858,28 @@ sc3 &lt;- ggplot(data=data_states, aes(x = perc_higheducation, y = perc_trump)) 
   geom_smooth(method = lm, se = FALSE)
 sc3]]></code>
       </program>
-
+      <figure>
+        <image source="images/unnamed-chunk-19-1.png" width="100%"/>
+      </figure>
       <program language="r">
         <code><![CDATA[vars &lt;- c("perc_higheducation", "perc_trump")
 cor.vars &lt;- data_states[vars]
 rcorr(as.matrix(cor.vars))
 ]]></code>
       </program>
-
+<pre>
+##                    perc_higheducation perc_trump
+## perc_higheducation               1.00      -0.69
+## perc_trump                      -0.69       1.00
+## 
+## n= 51 
+## 
+## 
+## P
+##                    perc_higheducation perc_trump
+## perc_higheducation                     0        
+## perc_trump          0
+</pre>
       <p>In the case of correlation and regression coefficients, the interpretation always begins with mentioning x (or the <alert>independent</alert> variable) which exerts an effect on y (or the <alert>dependent</alert> variable).
 
       <ul>
@@ -750,6 +906,61 @@ tab_xtab(var.row = data_us$trump, var.col = data_us$education, show.col.prc = TR
 ]]></code>
     </program>
 
+<table xml:id="table-trump-education-crosstab-chi">
+  <title>Trump Support by Education Level</title>
+  <tabular halign="right">
+    <col halign="right"/>
+    <col halign="right"/>
+    <col halign="right"/>
+    <col halign="right"/>
+    <col halign="right"/>
+    <col halign="right"/>
+    <row header="yes">
+      <cell>trump</cell>
+      <cell colspan="4">education</cell>
+      <cell>Total</cell>
+    </row>
+    <row>
+      <cell></cell>
+      <cell>1</cell>
+      <cell>2</cell>
+      <cell>3</cell>
+      <cell>4</cell>
+      <cell></cell>
+    </row>
+    <row>
+      <cell>0</cell>
+      <cell>567 (45.2%)</cell>
+      <cell>687 (50.1%)</cell>
+      <cell>1483 (55.4%)</cell>
+      <cell>974 (70.5%)</cell>
+      <cell>3711 (55.5%)</cell>
+    </row>
+    <row>
+      <cell>1</cell>
+      <cell>687 (54.8%)</cell>
+      <cell>685 (49.9%)</cell>
+      <cell>1195 (44.6%)</cell>
+      <cell>407 (29.5%)</cell>
+      <cell>2974 (44.5%)</cell>
+    </row>
+    <row>
+      <cell>Total</cell>
+      <cell>1254 (100%)</cell>
+      <cell>1372 (100%)</cell>
+      <cell>2678 (100%)</cell>
+      <cell>1381 (100%)</cell>
+      <cell>6685 (100%)</cell>
+    </row>
+  </tabular>
+  <p>
+    <m>\chi^2 = 196.388</m> <m>\cdot</m> 
+    <m>df = 3</m> <m>\cdot</m> 
+    Cramer's <m>V = 0.171</m> <m>\cdot</m> 
+    <m>p = 0.000</m>
+  </p>
+</table>
+
     <p>It has already become quite clear that low-educated people were more likely to support Trump compared to high-educated people (who were more in favor of Biden). To quantify the empirical association, we can calculate Cramér's V. This measure quantifies empirical relationships if a nominal variable is involved (here: <c>trump</c>). It is based on a chi-square test for independence. The chi-square value indicates how strongly the real observations deviate from a theoretical distribution, wherein all observations are equally distributed (relative to marginal distribution) across the cells of the cross tab. The more the measured observations deviate from the theoretical distribution, the higher the chi-square value and subsequently Cramér's V gets, which is normalized for the table size and ranges between 0 (= no association) and 1 (= exceedingly strong association).</p>
 
     <p>The formula for the chi-square test for cross tabs is the following: <m>\chi^2= \sum{\frac{(O-E)^2}{E}}</m></p>
@@ -773,11 +984,25 @@ tab_xtab(var.row = data_us$trump, var.col = data_us$education, show.col.prc = TR
     <program language="r">
       <code><![CDATA[
 chisq.test(data_us$trump, data_us$education)
+]]></code>
+    </program>
+<pre>
+## 
+##  Pearson's Chi-squared test
+## 
+## data:  data_us$trump and data_us$education
+## X-squared = 196.39, df = 3, p-value &lt; 2.2e-16
+</pre>
+    <program language="r">
+      <code><![CDATA[
 cramerV_tabelle &lt;- table(data_us$trump, data_us$education)
 cramerV(cramerV_tabelle)
 ]]></code>
     </program>
-
+<pre>
+## Cramer V 
+##   0.1714
+</pre>
     <exercise>
       <statement>
     <p>Question: How can Cramér's V be interpreted in this case?</p>
