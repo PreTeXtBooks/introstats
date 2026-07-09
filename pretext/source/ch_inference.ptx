@@ -535,7 +535,7 @@ polygon(x=c(z[z&lt;=qnorm(0.05)], qnorm(0.05), min(z)), y=c(dnorm(z[z&lt;=qnorm(
 <ul>
           <li>If the confidence interval includes the null hypothesis value (usually 0), this is consistent with a high p-value, indicating weak evidence against the null hypothesis.</li>
           <li>If the confidence interval does not include 0, it is consistent with a low p-value, suggesting strong evidence against the null hypothesis.</li>
-          <li>For example: A mean difference of 0.5 with a 95% confidence interval of [0.35; 0.65] is statistically significant at the <m>\alpha</m&gt;=0.05 level (reject <m>H_0</m>). However, a mean difference of -0.1 with a 95% confidence interval of [-0.25; 0.05] is statistically <em>not</em> significant at the <m>\alpha</m&gt;=0.05 level (confidence intervals include 0, fail to reject <m>H_0</m>).</li>
+          <li>For example: A mean difference of 0.5 with a 95% confidence interval of [0.35; 0.65] is statistically significant at the <m>\alpha</m>=0.05 level (reject <m>H_0</m>). However, a mean difference of -0.1 with a 95% confidence interval of [-0.25; 0.05] is statistically <em>not</em> significant at the <m>\alpha</m>=0.05 level (confidence intervals include 0, fail to reject <m>H_0</m>).</li>
         </ul>
 </li>
           <li>To calculate the exact p-value, we rely on tables or statistical software.</li>
