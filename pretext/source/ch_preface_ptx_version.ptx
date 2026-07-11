@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<preface xml:id="preface-ptx-version" xmlns:xi="http://www.w3.org/2001/XInclude">
+    <title>Note on This PreTeXt Edition</title>
+
+    <p>
+      This is a <url href="https://pretextbook.org/" visual="pretextbook.org">PreTeXt</url>
+      conversion of <em>Introduction to Statistics and Data Analysis – A Case-Based Approach</em>, originally written by
+      <url href="https://conradziller.com/">Conrad Ziller</url>.
+      The original work is available online at
+      <url href="https://introstatistics.netlify.app/">https://introstatistics.netlify.app/</url>.</p>
+
+    <p>
+      This PreTeXt edition was prepared by
+      <url href="https://pretextbooks.github.io/introstats/">the PreTeXtBooks project</url>
+      to make the content available in the PreTeXt format, enabling accessible and structured
+      output in HTML, PDF, and other formats.   All prose, code examples, figures, and mathematical content are intended to be 
+  faithful reproductions of the original work, though occasional typographical errors 
+  may have been introduced in the conversion process. Report any issues to our
+  <url href = "https://github.com/PreTeXtBooks/introstats/issues">GitHub Issues Page.</url>
+
+    </p>
+
+    <p>
+      The original work by Conrad Ziller is licensed under a
+      <url href="https://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons
+           Attribution-NonCommercial-ShareAlike 4.0 International License.</url>.
+    </p>
+  </preface>
