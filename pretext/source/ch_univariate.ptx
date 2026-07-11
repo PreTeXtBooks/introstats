@@ -220,6 +220,19 @@ data_nrw <- read_excel("data/inkar_nrw.xls") # Reads data from Excel format; the
       <code><![CDATA[
 # Read a so-called shape file for NRW which contains the polygones (e.g., district boundaries) necessary to build maps and merging with structural data
 nrw_shp <- st_read("data/dvg2krs_nw.shp")
+]]></code></program>
+<pre>
+## Reading layer `dvg2krs_nw' from data source 
+##   `C:\Users\ziller\OneDrive - Universitaet Duisburg-Essen\Statistik Bookdown\IntroStats\IS\data\dvg2krs_nw.shp' 
+##   using driver `ESRI Shapefile'
+## Simple feature collection with 53 features and 8 fields
+## Geometry type: MULTIPOLYGON
+## Dimension:     XY
+## Bounding box:  xmin: 280375 ymin: 5577680 xmax: 531791.2 ymax: 5820212
+## Projected CRS: ETRS89 / UTM zone 32N
+</pre>
+    <program language="r">
+      <code><![CDATA[
 nrw_shp$KN <- as.numeric(as.character(nrw_shp$KN))
 nrw_shp <- nrw_shp %>%
   right_join(data_nrw, by = c("KN"))
@@ -234,6 +247,10 @@ ggtitle("North-Rhine Westphalia, Germany") +
                        na.value = "grey100", 
                       ) ]]></code>
     </program>
+
+    <figure>
+      <image source="images/unnamed-chunk-4-1 (2).png" width="80%"/>
+    </figure>
 
     <exercise>
       <statement>
@@ -282,6 +299,10 @@ histogram( ~ popdens + unemp + avage + crimerate,
 #hist(data_nrw$crimerate)]]></code>
     </program>
 
+    <figure>
+      <image source="images/unnamed-chunk-5-1 (1).png" width="80%"/>
+    </figure>
+
     <exercise>
       <statement>
     <p><alert>Question:</alert> Which characteristics of the data can be identified with histograms? Which aspects remain hidden?</p>
@@ -314,7 +335,29 @@ histogram( ~ popdens + unemp + avage + crimerate,
     <program language="r">
       <code><![CDATA[summary(data_nrw)]]></code>
     </program>
-
+<pre>
+##     kkziff              area             aggregat          nonnational   
+##  Length:53          Length:53          Length:53          Min.   : 6.05  
+##  Class :character   Class :character   Class :character   1st Qu.: 9.82  
+##  Mode  :character   Mode  :character   Mode  :character   Median :12.19  
+##                                                           Mean   :13.45  
+##                                                           3rd Qu.:16.87  
+##                                                           Max.   :21.86  
+##    population         flaeche           unemp            avage      
+##  Min.   : 111516   Min.   :  51.0   Min.   : 3.110   Min.   :40.97  
+##  1st Qu.: 226844   1st Qu.: 170.0   1st Qu.: 5.740   1st Qu.:43.33  
+##  Median : 308335   Median : 543.0   Median : 6.950   Median :44.15  
+##  Mean   : 338218   Mean   : 643.6   Mean   : 7.432   Mean   :44.01  
+##  3rd Qu.: 408662   3rd Qu.:1112.0   3rd Qu.: 8.850   3rd Qu.:44.62  
+##  Max.   :1083498   Max.   :1960.0   Max.   :14.870   Max.   :45.81  
+##    crimerate           KN             popdens      
+##  Min.   : 3718   Min.   :5111000   Min.   : 116.3  
+##  1st Qu.: 4906   1st Qu.:5166000   1st Qu.: 278.5  
+##  Median : 5636   Median :5512000   Median : 784.7  
+##  Mean   : 6244   Mean   :5506094   Mean   :1072.0  
+##  3rd Qu.: 7568   3rd Qu.:5770000   3rd Qu.:1768.8  
+##  Max.   :10500   Max.   :5978000   Max.   :3077.3
+</pre>
     <exercise>
       <statement>
     <p><alert>Question:</alert> Interpret two means of your choice. Why is no mean displayed for the variable <c>area</c>?</p>
@@ -326,6 +369,8 @@ histogram( ~ popdens + unemp + avage + crimerate,
       <solution>
       <p>The average unemployment rate across the observed districts is 7.4 percent. The mean of the population variable is 338,218, which means that about 338,218 people live in a region, on average.</p>
     <p>Means can only be calculated for metric or quasi-metric (typically an ordinal variable with five or more categories) variables. <c>area</c> is a nominal variable.</p>
+      </solution>
+    </exercise>
 
     <p>The displayed tables contain more information than means:
     <ul>
@@ -340,8 +385,6 @@ histogram( ~ popdens + unemp + avage + crimerate,
       <li>Measures of position, such as <alert>quartiles</alert> and the interquartile range, which are often graphically depicted using boxplots.</li>
     </ul>
   </p>
-      </solution>
-    </exercise>
   </section>
 
   <section xml:id="uni-dispersion">
@@ -367,9 +410,15 @@ s_unemp <- ggplot(data=data_nrw, aes(y=unemp, x=reorder(area, area), color=area)
   geom_jitter(height = 0) + 
   ggtitle("Unemployment rate 2020 in %")
 s_unemp + geom_hline(yintercept=7.432, linetype="solid", color = "red", size=0.1) + theme(legend.position="bottom") + theme(legend.text = element_text(size=5)) + theme(axis.title.x=element_blank(),        axis.text.x=element_blank(),        axis.ticks.x=element_blank())
+]]></code>
+</program>
 
+    <figure>
+      <image source="images/unnamed-chunk-7-1.png" width="80%"/>
+    </figure>
 
-
+    <program language="r">
+      <code><![CDATA[
 s_crime <- ggplot(data=data_nrw, aes(y=crimerate, x=reorder(area, area), color=area)) +
   geom_jitter(height = 0) + 
   ggtitle("Crime rate 2020")
@@ -377,6 +426,9 @@ s_crime <- ggplot(data=data_nrw, aes(y=crimerate, x=reorder(area, area), color=a
 s_crime + geom_hline(yintercept=6244, linetype="solid", color = "red", size=0.1)  + theme(legend.position="bottom") + theme(legend.text = element_text(size=5)) + theme(axis.title.x=element_blank(),        axis.text.x=element_blank(),        axis.ticks.x=element_blank())
 ]]></code>
     </program>
+    <figure>
+      <image source="images/unnamed-chunk-7-2.png" width="80%"/>
+    </figure>
 
     <exercise>
       <statement>
@@ -390,35 +442,63 @@ s_crime + geom_hline(yintercept=6244, linetype="solid", color = "red", size=0.1)
       <p>It is quite hard to match the color of the dots with the ones of the legend. Gelsenkirchen has the highest unemployment rate at 14.9%. The district with the lowest crime rate is Lippe.</p>
 
     <p>Because of the different scaling of the variables, it is not possible to infer from this plot which variable is more dispersed. To do so, we would need to calculate the so-called coefficient of variation (see below).</p>
+      </solution>
+    </exercise>
 
     <p>Standard deviation, range, and coefficient of variation calculated with R (unemployment):</p>
 
     <program language="r">
       <code><![CDATA[sd(data_nrw$unemp)
+]]></code>
+    </program>
+<pre>
+## [1] 2.477591
+</pre>
+<program language="r">
+      <code><![CDATA[
 range <- max(data_nrw$unemp, na.rm=TRUE) - min(data_nrw$unemp, na.rm=TRUE)
-range 
+range ]]></code>
+    </program>
+<pre>
+## [1] 11.76
+</pre>
+<program language="r">
+      <code><![CDATA[
 varcoef <- sd(data_nrw$unemp) / mean(data_nrw$unemp) * 100 #how much percent of the mean is the standard deviation?
 varcoef]]></code>
     </program>
-
+<pre>
+## [1] 33.33815
+</pre>
     <p>Standard deviation, min/max, and coefficient of variation calculated with R (crime rate):</p>
 
     <program language="r">
-      <code><![CDATA[sd(data_nrw$crimerate)
+      <code><![CDATA[sd(data_nrw$crimerate)]]></code>
+    </program>
+<pre>
+## [1] 1775.389
+</pre>
+<program language="r">
+      <code><![CDATA[
 range <- max(data_nrw$crimerate, na.rm=TRUE) - min(data_nrw$crimerate, na.rm=TRUE)
-range 
+range ]]></code>
+    </program>
+<pre>
+## [1] 6782.056
+</pre>
+<program language="r">
+      <code><![CDATA[
 varcoef <- sd(data_nrw$crimerate) / mean(data_nrw$crimerate) * 100
 varcoef]]></code>
     </program>
-
+<pre>
+## [1] 28.43261
+</pre>
     <p>To compare the dispersion of variables measured on different scales, we cannot use the variance or standard deviation (as they are measured on the units of the scale) but employ the coefficient of variation (i.e., standard deviation over the mean times 100). Here, higher values imply a higher dispersion of the data.</p>
 
     <blockquote>
       <p><alert>Interpretation: The variable unemployment is more heterogeneously dispersed (varcoef = 33.3) than the variable crime rate (varcoef = 28.4).</alert></p>
     </blockquote>
-
-      </solution>
-    </exercise>
   </section>
 
   <section xml:id="uni-position-measures">
@@ -434,20 +514,40 @@ varcoef]]></code>
     <p>Quartiles and IQR for unemployment rate:</p>
 
     <program language="r">
-      <code><![CDATA[quantile(data_nrw$unemp)
+      <code><![CDATA[quantile(data_nrw$unemp)]]></code>
+    </program>
+<pre>
+##    0%   25%   50%   75%  100% 
+##  3.11  5.74  6.95  8.85 14.87
+</pre>
+<program language="r">
+      <code><![CDATA[
 
 unemp.score.quart <- quantile(data_nrw$unemp, names = FALSE)
 unemp.score.quart[4] - unemp.score.quart[2]]]></code>
     </program>
+<pre>
+## [1] 3.11
+</pre>
 
     <p>Quartiles and IQR for crime rate:</p>
 
     <program language="r">
-      <code><![CDATA[quantile(data_nrw$crimerate)
+      <code><![CDATA[quantile(data_nrw$crimerate)]]></code>
+    </program>
+<pre>
+##        0%       25%       50%       75%      100% 
+##  3718.411  4906.122  5635.991  7568.376 10500.467
+</pre>
+<program language="r">
+      <code><![CDATA[
 
 crimerate.score.quart <- quantile(data_nrw$crimerate, names = FALSE)
 crimerate.score.quart[4] - crimerate.score.quart[2]]]></code>
     </program>
+<pre>
+## [1] 2662.254
+</pre>
 
     <p>Boxplots graphically represent the key figures Q1, Q2, Q3. The lower and upper ends of the whiskers are usually the minimum and maximum observed values. To mark observations that are far away from the median (so-called outliers), the maximal width of a whisker is restricted to Q1 - 1.5 x IQR (for the lower whisker) and Q3 + 1.5 x IQR (for the higher upper whisker) respectively. Outliers are represented by points outside of the range of the whisker. The lowest and highest outlier would then mark the minimum/maximum value. For crime rate, the end of the whiskers represent the minimum/maximum value. For unemployment, we find an outlier that represents the maximum of observed values (i.e., Gelsenkirchen with 14.9% unemployment).</p>
 
@@ -459,7 +559,15 @@ boxplot(data_nrw$unemp,
         col = 'blue', 
         horizontal = FALSE,
         ylab = 'in %', 
-        main = 'Unemployment rate')
+        main = 'Unemployment rate')]]></code>
+    </program>
+
+    <figure>
+      <image source="images/unnamed-chunk-12-1 (1).png" width="80%"/>
+    </figure>
+
+<program language="r">
+      <code><![CDATA[
 
 boxplot(data_nrw$crimerate, 
         col = 'orange', 
@@ -467,7 +575,9 @@ boxplot(data_nrw$crimerate,
         ylab = 'in cases per 100.000 inhab.', 
         main = 'Crime rate')]]></code>
     </program>
-
+    <figure>
+      <image source="images/unnamed-chunk-12-2.png" width="80%"/>
+    </figure>
   </section>
 
   <section xml:id="uni-conclusion">
@@ -508,7 +618,9 @@ sc1 <- ggplot(data=data_nrw, aes(x = unemp, y = crimerate)) +
   ylab("Crime rate")
 sc1]]></code>
       </program>
-
+    <figure>
+      <image source="images/unnamed-chunk-13-1.png" width="80%"/>
+    </figure>
       <p>A line that describes the linear relationship between the two variables can be added:</p>
 
       <program language="r">
@@ -520,6 +632,9 @@ sc1 <- ggplot(data=data_nrw, aes(x = unemp, y = crimerate)) +
   ylab("Crime rate")
 sc1]]></code>
       </program>
+    <figure>
+      <image source="images/unnamed-chunk-14-1 (3).png" width="80%"/>
+    </figure>
 
       <blockquote>
         <p><alert>Interpretation: The depicted observations and the fitted line imply a positive correlation. (The higher the unemployment rate, the higher the crime rate.)</alert></p>
@@ -532,6 +647,19 @@ sc1]]></code>
 cor.vars <- data_nrw[vars]
 rcorr(as.matrix(cor.vars))]]></code>
       </program>
+<pre>
+##           unemp crimerate
+## unemp      1.00      0.72
+## crimerate  0.72      1.00
+## 
+## n= 53 
+## 
+## 
+## P
+##           unemp crimerate
+## unemp            0       
+## crimerate  0
+</pre>
 
       <blockquote>
         <p><alert>Interpretation: In this case, the correlation coefficient is r = 0.72 with a p-value of &lt; 0.001. That means that we find a strong positive correlation. The correlation is also statistically significant (we typically speak of a statistically significant result if the p-value is below 0.05), which means that we can be fairly certain that the result is not due to chance but can be interpreted as systematic.</alert></p>
@@ -556,6 +684,32 @@ model2 <- lm(crimerate ~ 1 + unemp + popdens, data = data_nrw)
 
 stargazer(model1, model2, type = "text")]]></code>
       </program>
+<pre>
+## 
+## =================================================================
+##                                  Dependent variable:             
+##                     ---------------------------------------------
+##                                       crimerate                  
+##                              (1)                    (2)          
+## -----------------------------------------------------------------
+## unemp                     517.460***             215.409**       
+##                            (69.412)              (100.125)       
+##                                                                  
+## popdens                                           1.054***       
+##                                                   (0.275)        
+##                                                                  
+## Constant                 2,398.594***           3,513.062***     
+##                           (543.248)              (563.493)       
+##                                                                  
+## -----------------------------------------------------------------
+## Observations                  53                     53          
+## R2                          0.521                  0.630         
+## Adjusted R2                 0.512                  0.615         
+## Residual Std. Error  1,240.129 (df = 51)    1,101.398 (df = 50)  
+## F Statistic         55.575*** (df = 1; 51) 42.557*** (df = 2; 50)
+## =================================================================
+## Note:                                 *p&lt;0.1; **p&lt;0.05; ***p&lt;0.01
+</pre>
 
       <blockquote>
         <p><alert>Interpretation: If unemployment increases by one percentage point, crime increases by 517 cases per 100,000 inhabitants (Model 1). The relationship is statistically significant. If we now control for population density in Model 2 (and thus hold the influence of population density constant), a one-unit increase in unemployment is associated with an increase of only 215 cases. Population density is also positively associated with crime. Both coefficient estimates are statistically significant at p &lt; 0.01. It thus seems to be a good idea to control for the influence of population density. We might be now much closer to the real effect of unemployment on crime now. However, we do not know this for certain because other alternative explanations are still possible to think of (e.g., the role of age composition or local social policies, as well as alternative explanations at the level of individuals).</alert></p>
