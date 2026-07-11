@@ -1,5 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <frontmatter xmlns:xi="http://www.w3.org/2001/XInclude" xml:id="meta-front">
+  <bibinfo>
+    <author>
+      <personname>Conrad Ziller</personname>
+      <website>
+        <url href="https://conradziller.com/"/>
+      </website>
+    </author>
+    <date>
+      <today/>
+    </date>
+  </bibinfo>
+
   <xi:include href="./ch_preface_ptx_version.ptx" />
   <xi:include href="./ch_preface.ptx" />
 </frontmatter>
