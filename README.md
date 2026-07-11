@@ -1,10 +1,6 @@
-# PreTeXt Skeleton Template
+# Introduction to Statistics and Data Analysis – A Case-Based Approach
 
-This repository is a skeleton template for creating a new PreTeXt book project.
-You can use it as a starting point, then customize the content, structure, and assets for your own book.
+This repository is a PreTeXt version of "Introduction to Statistics and Data Analysis – A Case-Based Approach"
+The original version by Conrad Ziller can be found at https://introstatistics.netlify.app/
 
-## More Information
-
-For more information about PreTeXt, visit:
-
-- https://github.com/PreTeXtBook/pretext
+The online version of this book is licensed under the Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
